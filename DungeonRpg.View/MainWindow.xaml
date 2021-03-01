@@ -8,7 +8,7 @@
         mc:Ignorable="d"
 		DataContext="{x:Static helper:ViewModelLocator.GetMainWindowViewModel}"
         Title="MainWindow" Height="450" Width="800">
-    <Grid>
-        
-    </Grid>
+	<Grid>
+
+	</Grid>
 </Window>
