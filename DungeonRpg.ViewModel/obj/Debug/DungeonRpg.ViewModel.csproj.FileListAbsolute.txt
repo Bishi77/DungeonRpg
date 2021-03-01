@@ -1,0 +1,9 @@
+E:\MyPrograms\DungeonRpg\DungeonRpg.ViewModel\obj\Debug\DungeonRpg.ViewModel.csproj.CoreCompileInputs.cache
+E:\MyPrograms\DungeonRpg\DungeonRpg.ViewModel\obj\Debug\DungeonRpg.ViewModel.csprojAssemblyReference.cache
+E:\MyPrograms\DungeonRpg\DungeonRpg.ViewModel\bin\Debug\DungeonRpg.ViewModel.dll
+E:\MyPrograms\DungeonRpg\DungeonRpg.ViewModel\bin\Debug\DungeonRpg.ViewModel.pdb
+E:\MyPrograms\DungeonRpg\DungeonRpg.ViewModel\bin\Debug\DungeonRpg.Model.dll
+E:\MyPrograms\DungeonRpg\DungeonRpg.ViewModel\bin\Debug\DungeonRpg.Model.pdb
+E:\MyPrograms\DungeonRpg\DungeonRpg.ViewModel\obj\Debug\DungeonRpg.ViewModel.csproj.CopyComplete
+E:\MyPrograms\DungeonRpg\DungeonRpg.ViewModel\obj\Debug\DungeonRpg.ViewModel.dll
+E:\MyPrograms\DungeonRpg\DungeonRpg.ViewModel\obj\Debug\DungeonRpg.ViewModel.pdb
