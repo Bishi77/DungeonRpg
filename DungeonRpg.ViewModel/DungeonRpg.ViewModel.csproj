@@ -35,8 +35,8 @@
   <PropertyGroup>
     <StartupObject />
   </PropertyGroup>
-  <ItemGroup />
   <ItemGroup>
+    <Compile Include="Helpers\CommandImplementation.cs" />
     <Compile Include="ViewModels\MainWindowViewModel.cs" />
     <Compile Include="Helpers\ViewModelLocator.cs" />
   </ItemGroup>
@@ -45,6 +45,9 @@
       <Project>{202699a0-5b32-44a5-ba81-b7c505fc19b3}</Project>
       <Name>DungeonRpg.Model</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Reference Include="System" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

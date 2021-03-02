@@ -4,11 +4,21 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:DungeonRpg.View"
-		xmlns:helper="clr-namespace:DungeonRpg.ViewModel.Helpers;assembly=DungeonRpg.ViewModel"
+		xmlns:helper="clr-namespace:DungeonRpg.Helpers"
         mc:Ignorable="d"
 		DataContext="{x:Static helper:ViewModelLocator.GetMainWindowViewModel}"
-        Title="MainWindow" Height="450" Width="800">
+        Title="Dungeon RPG" Height="450" Width="800">
 	<Grid>
-
+		<Grid.ColumnDefinitions>
+			<ColumnDefinition Width="1*"/>
+			<ColumnDefinition Width="1*"/>
+			<ColumnDefinition Width="1*"/>
+		</Grid.ColumnDefinitions>
+		<Grid.RowDefinitions>
+			<RowDefinition Height="1*"/>
+			<RowDefinition Height="1*"/>
+			<RowDefinition Height="1*"/>
+			<RowDefinition Height="1*"/>
+		</Grid.RowDefinitions>
 	</Grid>
 </Window>

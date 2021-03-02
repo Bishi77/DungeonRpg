@@ -1,0 +1,14 @@
+E:\MyPrograms\DungeonRpg\DungeonRpg.View\obj\Debug\App.g.cs
+E:\MyPrograms\DungeonRpg\DungeonRpg.View\obj\Debug\DungeonRpg.View_MarkupCompile.cache
+E:\MyPrograms\DungeonRpg\DungeonRpg.View\obj\Debug\DungeonRpg.View_MarkupCompile.lref
+E:\MyPrograms\DungeonRpg\DungeonRpg.View\obj\Debug\View\MainWindow.g.cs
+E:\MyPrograms\DungeonRpg\DungeonRpg.View\bin\Debug\DungeonRpg.View.exe.config
+E:\MyPrograms\DungeonRpg\DungeonRpg.View\bin\Debug\DungeonRpg.View.exe
+E:\MyPrograms\DungeonRpg\DungeonRpg.View\bin\Debug\DungeonRpg.View.pdb
+E:\MyPrograms\DungeonRpg\DungeonRpg.View\obj\Debug\View\MainWindow.baml
+E:\MyPrograms\DungeonRpg\DungeonRpg.View\obj\Debug\DungeonRpg.View.g.resources
+E:\MyPrograms\DungeonRpg\DungeonRpg.View\obj\Debug\DungeonRpg.View.Properties.Resources.resources
+E:\MyPrograms\DungeonRpg\DungeonRpg.View\obj\Debug\DungeonRpg.csproj.GenerateResource.cache
+E:\MyPrograms\DungeonRpg\DungeonRpg.View\obj\Debug\DungeonRpg.csproj.CoreCompileInputs.cache
+E:\MyPrograms\DungeonRpg\DungeonRpg.View\obj\Debug\DungeonRpg.View.exe
+E:\MyPrograms\DungeonRpg\DungeonRpg.View\obj\Debug\DungeonRpg.View.pdb

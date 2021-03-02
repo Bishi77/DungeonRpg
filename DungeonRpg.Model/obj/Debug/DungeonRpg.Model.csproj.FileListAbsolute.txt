@@ -3,3 +3,4 @@ E:\MyPrograms\DungeonRpg\DungeonRpg.Model\bin\Debug\DungeonRpg.Model.dll
 E:\MyPrograms\DungeonRpg\DungeonRpg.Model\bin\Debug\DungeonRpg.Model.pdb
 E:\MyPrograms\DungeonRpg\DungeonRpg.Model\obj\Debug\DungeonRpg.Model.dll
 E:\MyPrograms\DungeonRpg\DungeonRpg.Model\obj\Debug\DungeonRpg.Model.pdb
+E:\MyPrograms\DungeonRpg\DungeonRpg.Model\obj\Debug\DungeonRpg.Model.csprojAssemblyReference.cache

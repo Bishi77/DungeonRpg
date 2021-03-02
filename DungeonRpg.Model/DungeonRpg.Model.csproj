@@ -35,5 +35,10 @@
   <PropertyGroup>
     <StartupObject />
   </PropertyGroup>
+  <ItemGroup>
+    <Compile Include="Character.cs" />
+    <Compile Include="IInventory.cs" />
+    <Compile Include="IInventoryItem.cs" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
