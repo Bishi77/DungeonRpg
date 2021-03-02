@@ -1,0 +1,27 @@
+Game:
+-----
+RogueLike random based dungeon crawler
+Windowson fut
+Kód private Giten
+
+Random dungeon
+ - Több szintű
+ - Van cél
+ - Karakter mozog benne
+ - Helyszínen lehet tárgy, szörny, karakter, lépcső (fel, le)
+
+Karakter:
+ - Vannak értékei (DND20 base?), abi, mp, hp, level
+ - Vannak Tárgyai
+ - Van neve
+
+Tárgy:
+ - Dungeonban és Inventoryban
+ - Létrehoz hatásokat
+
+Harc:
+ - Körökre osztott
+ - Tárgyakkal (hatások)
+ - Képességekkel (hatások)
+ - Varázslatokkal (hatások) 
+ 
