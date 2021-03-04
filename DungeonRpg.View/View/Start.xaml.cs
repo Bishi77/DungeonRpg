@@ -1,4 +1,5 @@
-﻿using System;
+﻿using DungeonRpg.ViewModel;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -10,19 +11,26 @@ using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
 using System.Windows.Shapes;
 
 namespace DungeonRpg.View
 {
 	/// <summary>
-	/// Interaction logic for MainWindow.xaml
+	/// Interaction logic for Start.xaml
 	/// </summary>
-	public partial class MainWindow : Window
+	public partial class Start : Window
 	{
-		public MainWindow()
+		public Start()
 		{
 			InitializeComponent();
+		}
+
+		private void OpenMainWindow_Click(object sender, RoutedEventArgs e)
+		{
+			Window main = new Game(new ViewModel.Game());
+			App.Current.MainWindow = main;
+			this.Close();
+			main.Show();
 		}
 	}
 }

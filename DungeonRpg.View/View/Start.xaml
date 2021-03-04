@@ -1,13 +1,11 @@
-﻿<Window x:Class="DungeonRpg.View.MainWindow"
+﻿<Window x:Class="DungeonRpg.View.Start"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:DungeonRpg.View"
-		xmlns:helper="clr-namespace:DungeonRpg.Helpers"
         mc:Ignorable="d"
-		DataContext="{x:Static helper:ViewModelLocator.GetMainWindowViewModel}"
-        Title="Dungeon RPG" Height="450" Width="800">
+        Title="DungeonCrawler" Height="450" Width="800">
 	<Grid>
 		<Grid.ColumnDefinitions>
 			<ColumnDefinition Width="1*"/>
@@ -18,7 +16,10 @@
 			<RowDefinition Height="1*"/>
 			<RowDefinition Height="1*"/>
 			<RowDefinition Height="1*"/>
-			<RowDefinition Height="1*"/>
 		</Grid.RowDefinitions>
+
+		<Button Grid.Column="1" Grid.Row="1" x:Name="OpenMainWindow" 
+				IsEnabled="{Binding ElementName=CharacterName, Path=Text.Length, Mode=OneWay}" Click="OpenMainWindow_Click">
+			Játék kezdése</Button>
 	</Grid>
 </Window>

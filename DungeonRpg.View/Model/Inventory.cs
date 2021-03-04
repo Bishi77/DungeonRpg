@@ -1,16 +1,27 @@
 ﻿using DungeonRpg.Model.Interface;
+using DungeonRpg.View.Model;
 using System.Collections.Generic;
 
 namespace DungeonRpg.Model
 {
 	public class Inventory : IInventory
 	{
-		private List<IInventoryItem> itemList = new List<IInventoryItem>();
+		private List<IInventoryItem> _itemList = new List<IInventoryItem>();
 
-		public List<IInventoryItem> ItemList 
-		{ 
-			get => itemList; 
-			private set => itemList = value; 
+		public Inventory(List<IInventoryItem> itemList)
+		{
+			this._itemList = itemList;
+		}
+
+		public List<IInventoryItem> ItemList
+		{
+			get { return _itemList; }
+			private set { _itemList = value; }
+		}
+
+		public IList<IInventoryItem> GetInventoryItem()
+		{
+			throw new System.NotImplementedException();
 		}
 
 		public void AddItem(IInventoryItem item)

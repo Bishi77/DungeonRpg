@@ -9,40 +9,67 @@ namespace DungeonRpg.Model
 {
 	public class Character
 	{
-		private IInventory Inventory;
+
+		private IInventory _inventory;
 
 		private string _name;
+		private int _strength;
+		private int _dexterity;
+		private int _intelligence;
+
+		private int _level;
+		private int _hp;
+		private int _mp;
+
+		#region properties
+
 		public string Name
 		{
 			get { return _name; }
 			set { _name = value; }
 		}
-
-		private int _level;
+		
 		public int Level
 		{
 			get { return _level; }
 			set { _level = value; }
 		}
 
-		private int _hp;
 		public int HP
 		{
 			get { return _hp; }
 			set { _hp = value; }
 		}
 
-		private int _mp;
 		public int MP
 		{
 			get { return _mp; }
 			set { _mp = value; }
 		}
 
-		public Character(string name, IInventory inventory)
+		public int Strength 
 		{
-			Name = name;
-			Inventory = inventory;
+			get { return _strength; }
+			set { _strength = value; } 
 		}
+		
+		public int Dexterity
+		{
+			get { return _dexterity; }
+			set{ _dexterity = value; }
+		}
+		
+		public int Intelligence 
+		{
+			get { return _intelligence; }
+			set { _intelligence = value; } 
+		}
+
+		public IInventory Inventory
+		{
+			get { return _inventory; }
+			set { _inventory = value; }
+		}
+		#endregion properties
 	}
 }

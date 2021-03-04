@@ -1,27 +1,31 @@
 Game:
 -----
-RogueLike random based dungeon crawler
-Windowson fut
-Kód private Giten
+RogueLike random based dungeon crawler for Windows
+WPF MVVM
+
+Játék célja eljutni valahova
+Egyszerű szövegű leírás
 
 Random dungeon
- - Több szintű
+ (- Több szintű)
  - Van cél
  - Karakter mozog benne
- - Helyszínen lehet tárgy, szörny, karakter, lépcső (fel, le)
+ - Helyszínen lehet tárgy, szörny, karakter, lépcső (fel, le), etc.
 
-Karakter:
- - Vannak értékei (DND20 base?), abi, mp, hp, level
- - Vannak Tárgyai
+Karakter (játékos és szörnyek):
+ - Véletlenszerűen generálódik
+ - Vannak értékei (DND szerű próbák), 
+	STR, DEX, INT, MP, HP, LEVEL
+ - Vannak Tárgyai (Inventory)
  - Van neve
 
 Tárgy:
- - Dungeonban és Inventoryban
- - Létrehoz hatásokat
+ - Dungeon pozíciókban és karakter Inventory(k)ban lehet
+ - Név, leírás, kategória, Használattal hatása van (karakteren, dungeonon, szörnyön), hatás használható-e ellenőrzés 
 
 Harc:
  - Körökre osztott
  - Tárgyakkal (hatások)
- - Képességekkel (hatások)
- - Varázslatokkal (hatások) 
+ - Képességek, varázslatok (hatások)
+ 
  

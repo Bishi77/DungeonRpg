@@ -1,0 +1,27 @@
+Dungeon
+- SizeX,SizeY
+- DungeonPlace[SizeX,SizeY]
+
+DungeonPlace
+- bool IsVisited
+- List<Object> DungeonPlaceObjects (karakterek, tárgyak, stb)  
+
+Character
+- int STR, DEX, INT, MP, HP, LEVEL
+- Inventory
+
+Inventory
+- List<Item> Items
+
+ItemCategory
+- string Name, Desciption
+
+Item
+- ItemCategory Category
+- EffectAction ItemEffect
+ 
+Effect (Varázslat, képesség)
+- string Name
+- string Description
+- Action EffectAction  	(hatás metódusa)
+- Func CanAction	(hatás végrehajtható-e függvény)

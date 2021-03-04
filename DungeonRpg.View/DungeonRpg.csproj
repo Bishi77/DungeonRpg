@@ -55,12 +55,20 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Model\CharacterGenerator.cs" />
+    <Compile Include="Model\Dungeon.cs" />
+    <Compile Include="Model\DungeonGenerator.cs" />
+    <Compile Include="Model\InventoryItem.cs" />
     <Compile Include="Model\Character.cs" />
     <Compile Include="Model\Interface\IInventory.cs" />
     <Compile Include="Model\Inventory.cs" />
     <Compile Include="Model\Interface\IInventoryItem.cs" />
-    <Compile Include="ViewModel\MainWindowViewModel.cs" />
-    <Page Include="View\MainWindow.xaml">
+    <Compile Include="ViewModel\Game.cs" />
+    <Page Include="View\Start.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\Game.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
@@ -69,9 +77,11 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Helpers\CommandImplementation.cs" />
-    <Compile Include="Helpers\ViewModelLocator.cs" />
-    <Compile Include="View\MainWindow.xaml.cs">
-      <DependentUpon>MainWindow.xaml</DependentUpon>
+    <Compile Include="View\Start.xaml.cs">
+      <DependentUpon>Start.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\Game.xaml.cs">
+      <DependentUpon>Game.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
   </ItemGroup>
