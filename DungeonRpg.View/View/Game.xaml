@@ -20,6 +20,8 @@
 			<RowDefinition Height="1*"/>
 			<RowDefinition Height="1*"/>
 		</Grid.RowDefinitions>
-		<TextBox x:Name="CharName" Text="{Binding Character.Name}"/>
+		<TextBox Grid.Column="0" Grid.Row="0" x:Name="CharName" Text="{Binding Character.Name}"/>
+		
+		
 	</Grid>
 </Window>

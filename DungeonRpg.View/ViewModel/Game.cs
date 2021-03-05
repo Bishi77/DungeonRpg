@@ -1,9 +1,10 @@
 ﻿using DungeonRpg.Model;
 using DungeonRpg.View.Model;
+using System.ComponentModel;
 
 namespace DungeonRpg.ViewModel
 {
-	public class Game
+	public class Game : INotifyPropertyChanged
 	{
 		private Dungeon _dungeon = new Dungeon();
 		private Character _character = new Character();
@@ -20,6 +21,7 @@ namespace DungeonRpg.ViewModel
 			set
 			{
 				_dungeon = value;
+				OnPropertyChanged(nameof(Dungeon));
 			}
 		}
 
@@ -31,5 +33,15 @@ namespace DungeonRpg.ViewModel
 				_character = value;
 			}
 		}
+
+		#region change notify 
+		public event PropertyChangedEventHandler PropertyChanged;
+
+		private void OnPropertyChanged(string propertyName)
+		{
+			PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+		}
+		#endregion change notify 
+
 	}
 }
