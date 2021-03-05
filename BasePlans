@@ -1,0 +1,32 @@
+Játék:
+-----
+RogueLike játék véletlen szerű labirintusban Windowsra WPF MVVM-el elkészítve, Unit tesztekkel
+
+Játék célja eljutni valahova a labirintusban
+Egyszerű szövegű leírás
+
+Új játék, Betöltés, Mentés, Előző játék folytatása
+
+Labirintus
+ (- Több szintű)
+ - Véletlenszerűen generálódik
+ - Van cél
+ - Karakter mozog benne
+ - Helyszínen lehet tárgy, szörny, karakter, lépcső (fel, le), stb.
+
+Karakter (játékos és szörnyek egyaránt):
+ - Véletlenszerűen generálódik
+ - Vannak értékei (DND szerű próbák - pl. érték alá dobás D20-al siker), 
+	 STR, DEX, INT, MP, HP, LEVEL
+ - Vannak Tárgyai (Inventory)
+ - Van neve (véletlenszerű) 
+
+Tárgy:
+ - Labirintus pozíciókban és karakter Inventory(k)ban lehet
+ - Név, leírás, kategória, használattal hatása van (karakteren, dungeonon, szörnyön, stb), hatás használható-e ellenőrzés 
+
+Harc - fegyveres és nem fegyveres megközelítés is lehet:
+ - Körökre osztott
+ - Tárgyakkal (hatások)
+ - Képességek, varázslatok (hatások)
+ 
