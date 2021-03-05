@@ -11,7 +11,7 @@ namespace DungeonRpg.View.Model
 	{
 		public static Character Generate(bool isPlayerCharacter = false)
 		{
-			throw new NotImplementedException();
+			return new Character(); 
 		}
 	}
 }

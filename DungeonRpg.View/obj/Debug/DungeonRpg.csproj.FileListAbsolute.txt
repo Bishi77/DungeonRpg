@@ -14,4 +14,4 @@ E:\MyPrograms\DungeonRpg\DungeonRpg.View\obj\Debug\View\Start.g.cs
 E:\MyPrograms\DungeonRpg\DungeonRpg.View\obj\Debug\View\Game.g.cs
 E:\MyPrograms\DungeonRpg\DungeonRpg.View\obj\Debug\View\Start.baml
 E:\MyPrograms\DungeonRpg\DungeonRpg.View\obj\Debug\View\Game.baml
-E:\MyPrograms\DungeonRpg\DungeonRpg.View\obj\Debug\DungeonRpg.csprojAssemblyReference.cache
+E:\MyPrograms\DungeonRpg\DungeonRpg.View\obj\Debug\GeneratedInternalTypeHelper.g.cs

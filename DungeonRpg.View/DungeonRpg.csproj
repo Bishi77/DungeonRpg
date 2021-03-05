@@ -55,6 +55,9 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Model\CoordinateValue.cs" />
+    <Compile Include="ViewModel\Helpers\ConversionFunctions.cs" />
+    <Compile Include="ViewModel\Helpers\Ref.cs" />
     <Compile Include="Model\CharacterGenerator.cs" />
     <Compile Include="Model\Dungeon.cs" />
     <Compile Include="Model\DungeonGenerator.cs" />
@@ -76,7 +79,7 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Helpers\CommandImplementation.cs" />
+    <Compile Include="ViewModel\Helpers\CommandImplementation.cs" />
     <Compile Include="View\Start.xaml.cs">
       <DependentUpon>Start.xaml</DependentUpon>
     </Compile>

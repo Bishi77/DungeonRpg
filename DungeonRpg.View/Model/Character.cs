@@ -20,6 +20,7 @@ namespace DungeonRpg.Model
 		private int _level;
 		private int _hp;
 		private int _mp;
+		private (int, int) _position = (-1, -1);
 
 		#region properties
 
@@ -69,6 +70,15 @@ namespace DungeonRpg.Model
 		{
 			get { return _inventory; }
 			set { _inventory = value; }
+		}
+
+		public (int, int) Position
+		{
+			get { return _position; }
+			set
+			{
+				_position = value;
+			}
 		}
 		#endregion properties
 	}

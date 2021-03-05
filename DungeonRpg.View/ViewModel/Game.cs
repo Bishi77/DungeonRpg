@@ -1,19 +1,26 @@
 ﻿using DungeonRpg.Model;
 using DungeonRpg.View.Model;
+using DungeonRpg.ViewModel.Helpers;
 using System.ComponentModel;
+using System.Data;
 
 namespace DungeonRpg.ViewModel
 {
 	public class Game : INotifyPropertyChanged
 	{
-		private Dungeon _dungeon = new Dungeon();
+		private Dungeon _dungeon = new Dungeon(new float[0,0]);
 		private Character _character = new Character();
+		private DataView _map = new DataView();
 
 		public Game()
 		{
-			_dungeon = DungeonGenerator.Generate(10, 10);
-			_character = CharacterGenerator.Generate(true);
+			DungeonGenerator generator = new DungeonGenerator();
+			Dungeon.LevelData = generator.GenerateDungeonLevel(10, 10, 25);
+			Character = CharacterGenerator.Generate(true);
+			Character.Position = Dungeon.GetValuePosition((int)DungeonGenerator.FieldTypes.Start);
 		}
+
+		
 
 		public Dungeon Dungeon
 		{
@@ -32,6 +39,12 @@ namespace DungeonRpg.ViewModel
 			{
 				_character = value;
 			}
+		}
+
+		public DataView Map 
+		{ 
+			get => ConversionFunctions.GetBindable2DArray<float>(Dungeon.LevelData); 
+			set => _map = value; 
 		}
 
 		#region change notify 

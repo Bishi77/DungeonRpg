@@ -19,7 +19,7 @@
 		</Grid.RowDefinitions>
 
 		<Button Grid.Column="1" Grid.Row="1" x:Name="OpenMainWindow" 
-				IsEnabled="{Binding ElementName=CharacterName, Path=Text.Length, Mode=OneWay}" Click="OpenMainWindow_Click">
+				Click="OpenMainWindow_Click">
 			Játék kezdése</Button>
 	</Grid>
 </Window>

@@ -29,11 +29,34 @@ namespace DungeonRpg.View
 		public Game(ViewModel.Game vm)
 		{
 			this.DataContext = vm;
+			InitializeComponent();
 		}
 
-		private void Button_Click(object sender, RoutedEventArgs e)
+		private void c_dataGrid_AutoGeneratingColumn(object sender, DataGridAutoGeneratingColumnEventArgs e)
 		{
-			CharName.Text = ((ViewModel.Game)DataContext).Character.Name;
+			DataGridTextColumn column = e.Column as DataGridTextColumn;
+			Binding binding = column.Binding as Binding;
+			binding.Path = new PropertyPath(binding.Path.Path + ".Value");
+		}
+
+		private void Up_Click(object sender, RoutedEventArgs e)
+		{
+
+		}
+
+		private void Down_Click(object sender, RoutedEventArgs e)
+		{
+
+		}
+
+		private void Left_Click(object sender, RoutedEventArgs e)
+		{
+
+		}
+
+		private void Right_Click(object sender, RoutedEventArgs e)
+		{
+
 		}
 	}
 }
