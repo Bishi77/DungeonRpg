@@ -1,4 +1,5 @@
 ﻿using DungeonRpg.Model.Interface;
+using DungeonRpg.View.Model;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -19,7 +20,9 @@ namespace DungeonRpg.Model
 
 		private int _level;
 		private int _hp;
+		private int _maxHp;
 		private int _mp;
+		private int _maxMp;
 		private (int, int) _position = (-1, -1);
 
 		#region properties
@@ -72,12 +75,35 @@ namespace DungeonRpg.Model
 			set { _inventory = value; }
 		}
 
+		internal void Move(DungeonGenerator.Direction direction)
+		{
+			
+		}
+
 		public (int, int) Position
 		{
 			get { return _position; }
 			set
 			{
 				_position = value;
+			}
+		}
+
+		public int MaxHp
+		{
+			get { return _maxHp; }
+			set
+			{
+				_maxHp = value;
+			}
+		}
+
+		public int MaxMp
+		{
+			get { return _maxMp; }
+			set
+			{
+				_maxMp = value;
 			}
 		}
 		#endregion properties

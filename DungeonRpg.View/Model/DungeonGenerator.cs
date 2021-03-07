@@ -9,14 +9,14 @@ namespace DungeonRpg.View.Model
 	public class DungeonGenerator
 	{
         public enum FieldTypes { Wall = 0, Finish = 1, Down = 2, Up = 3, Monster = 4, Way = 5, Start = 6 };
-        private enum Direction { UP, DOWN, LEFT, RIGHT };
-        private const int wayConnectionPercent = 10;
-        private bool enableConnection
+        public enum Direction { UP, DOWN, LEFT, RIGHT };
+        private const int _wayConnectionPercent = 10;
+        private bool _enableConnection
         {
             get
             {
                 Random rnd = new Random();
-                return rnd.Next(0, 100) < wayConnectionPercent;
+                return rnd.Next(0, 100) < _wayConnectionPercent;
             }
         }
 
@@ -39,7 +39,7 @@ namespace DungeonRpg.View.Model
         {
             Random rnd = new Random();
 
-            //ha nincs fix érték megadva
+            //ha nincs fix érték megadva, generálunk egy általános gyakoriságot
             if (fillPercent==-1)
 			{
                 int minFillPercent = 20, maxFillPercent = 30;
@@ -135,7 +135,7 @@ namespace DungeonRpg.View.Model
                 {
                     done = true;
                 }
-                else if (!enableConnection && HasConnectedWay(levelData, coord.Item1, coord.Item2))
+                else if (!_enableConnection && HasConnectedWay(levelData, coord.Item1, coord.Item2))
                 {
                     typecoords.RemoveAt(coordNr);
                 }
@@ -146,7 +146,7 @@ namespace DungeonRpg.View.Model
             }
             return coord;
 
-            /*régi kódban benne volt itt, nem néztem miért, talán altzernatív megoldás miatt? akkor meg tesztelendő melyik a jobb
+            /*régi kódban benne volt itt, nem néztem miért, talán alternatív megoldás miatt? akkor meg tesztelendő melyik a jobb
             int xPos, yPos;
             xPos = yPos = -1;
             while (xPos == -1 || (Math.Truncate(levelData[yPos, xPos]) != (int)fieldtype) && (!enableConnection && HasConnectedWay(levelData, yPos, xPos)))
@@ -159,17 +159,25 @@ namespace DungeonRpg.View.Model
              */
         }
 
-        private string GetPossibleDirections(float[,] levelData, int row, int col)
+        /// <summary>
+        /// Lehetséges irányok kigyűjtése egy pozícióból
+        /// A térkép széle, azaz a pálya első vagy utolsó sora, oszlopa nem járható.
+        /// </summary>
+        /// <param name="levelData"></param>
+        /// <param name="row"></param>
+        /// <param name="col"></param>
+        /// <returns></returns>
+        public string GetPossibleDirections(float[,] levelData, int row, int col)
         {
-            string result = ""; ;
+            string result = "";
 
-            if (row > 1 && levelData[row - 1, col] == 0 && (enableConnection || !HasConnectedWay(levelData, row - 1, col)))
+            if (row > 1 && levelData[row - 1, col] == 0 && (_enableConnection || !HasConnectedWay(levelData, row - 1, col)))
                 result += "U";
-            if (row < levelData.GetLength(0) - 2 && levelData[row + 1, col] == 0 && (enableConnection || !HasConnectedWay(levelData, row + 1, col)))
+            if (row < levelData.GetLength(0) - 2 && levelData[row + 1, col] == 0 && (_enableConnection || !HasConnectedWay(levelData, row + 1, col)))
                 result += "D";
-            if (col > 1 && levelData[row, col - 1] == 0 && (enableConnection || !HasConnectedWay(levelData, row, col - 1)))
+            if (col > 1 && levelData[row, col - 1] == 0 && (_enableConnection || !HasConnectedWay(levelData, row, col - 1)))
                 result += "L";
-            if (col < levelData.GetLength(1) - 2 && levelData[row, col + 1] == 0 && (enableConnection || !HasConnectedWay(levelData, row, col + 1)))
+            if (col < levelData.GetLength(1) - 2 && levelData[row, col + 1] == 0 && (_enableConnection || !HasConnectedWay(levelData, row, col + 1)))
                 result += "R";
             return result;
         }

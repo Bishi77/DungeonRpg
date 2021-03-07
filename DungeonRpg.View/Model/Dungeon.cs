@@ -22,19 +22,7 @@ namespace DungeonRpg.View.Model
 			}
 		}
 
-		public (int, int) GetValuePosition(int Value)
-		{
-			return GetFirstCoordinateValueFromArray(Value);
-		}
-
-		private string GetFieldView(float f)
-		{
-			int type = (int)Math.Truncate(f);
-			FieldTypes ft = (FieldTypes)type;
-			return ft == FieldTypes.Way ? " " : ft.ToString()[0].ToString();
-		}
-
-		private (int, int) GetFirstCoordinateValueFromArray(int searchedValue)
+		public (int, int) GetValuePosition(int searchedValue)
 		{
 			for (int r = 0; r < LevelData.GetLength(0); r++)
 				for (int c = 0; c < LevelData.GetLength(1); c++)
@@ -43,6 +31,16 @@ namespace DungeonRpg.View.Model
 						return (r, c);
 				}
 			throw new Exception($"Keresett érték ({searchedValue}) nem található a tömbben!");
-		} 
+		}
+
+		//private string GetFieldView(float f)
+		//{
+		//	int type = (int)Math.Truncate(f);
+		//	FieldTypes ft = (FieldTypes)type;
+		//	return ft == FieldTypes.Way ? " " : ft.ToString()[0].ToString();
+		//}
+
+
+		
 	}
 }
