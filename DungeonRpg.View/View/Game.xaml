@@ -79,19 +79,19 @@
 						<RowDefinition Height="1*"/>
 						<RowDefinition Height="1*"/>
 					</Grid.RowDefinitions>
-					<Button Grid.Column="1" x:Name="Up" 
+					<Button Grid.Column="1" x:Name="MoveUp" 
 							Height="50" Width="50" 
 							Content="^" Click="Up_Click"
 							IsEnabled="{Binding Path=CanEnable.U}"/>
-					<Button Grid.Column="1" Grid.Row="2" x:Name="Down" 
+					<Button Grid.Column="1" Grid.Row="2" x:Name="MoveDown" 
 							Height="50" Width="50" 
 							Content="v" Click="Down_Click"
 							IsEnabled="{Binding Path=CanEnable.D}"/>
-					<Button Grid.Column="0" Grid.Row="1" x:Name="Left" 
+					<Button Grid.Column="0" Grid.Row="1" x:Name="MoveLeft" 
 							Height="50" Width="50" 
 							Content="&lt;" Click="Left_Click"
 							IsEnabled="{Binding Path=CanEnable.R}"/>
-					<Button Grid.Column="2" Grid.Row="1" x:Name="Right" 
+					<Button Grid.Column="2" Grid.Row="1" x:Name="MoveRight" 
 							Height="50" Width="50" 
 							Content="&gt;" Click="Right_Click"
 							IsEnabled="{Binding Path=CanEnable.L}"/>

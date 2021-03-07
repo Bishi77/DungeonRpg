@@ -16,11 +16,11 @@ namespace DungeonRpg.Tests
         {
             dgt = new DungeonGenerator();
         }
-        
+
         [When(@"létrehozzuk a pályát (.*) rows és (.*) columns")]
         public void MajdLetrehozzukAPalyatRowsEsColumns(int rows, int columns)
         {
-            level = dgt.GenerateDungeonLevel(rows, columns); 
+            level = dgt.GenerateDungeonLevel(rows, columns);
         }
 
         [Then(@"az eredmény float\[(.*)] tömb lesz\.")]
