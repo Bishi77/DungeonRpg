@@ -9,8 +9,8 @@ namespace DungeonRpg.Tests
     public class DungeonGeneratorSteps
     {
         private DungeonGenerator dgt;
-        private Dungeon dungeon = new Dungeon(new float[0,0]);
-        private float[,] level = new float[0,0];
+        private Dungeon dungeon = new Dungeon(new float[0, 0]);
+        private float[,] level = new float[0, 0];
 
 
         [Given(@"egy DungeonGenerator példány")]
