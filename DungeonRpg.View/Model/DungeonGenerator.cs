@@ -25,24 +25,20 @@ namespace DungeonRpg.View.Model
         /// </summary>
         /// <param name="rows">pálya mérete, sorok</param>
         /// <param name="columns">pálya mérete, oszlopok</param>
-        /// <param name="fillPercent">kitöltés százaléka</param>
         /// <returns>generált pálya</returns>
-        public float[,] GenerateDungeonLevel(int rows, int columns, int fillPercent = -1)
+        public float[,] GenerateDungeonLevel(int rows, int columns)
 		{
-			float[,] dungeon = new float[rows, columns];
-			dungeon = AddWays(dungeon, fillPercent);
-			dungeon = PlacePOIs(dungeon, true, true);
-			return dungeon;
+			return new float[rows, columns];			
 		}
 
-        private float[,] AddWays(float[,] levelData, int fillPercent = -1)
+        public float[,] AddWaysToDungeonLevel(float[,] levelData, int fillPercent = -1)
         {
             Random rnd = new Random();
 
             //ha nincs fix érték megadva, generálunk egy általános gyakoriságot
             if (fillPercent==-1)
 			{
-                int minFillPercent = 20, maxFillPercent = 30;
+                int minFillPercent = 20, maxFillPercent = 50;
                 fillPercent = rnd.Next(minFillPercent, maxFillPercent);
             }
 
@@ -84,13 +80,16 @@ namespace DungeonRpg.View.Model
         }
 
         /// <summary>
-        /// Térképen speciális elemek elhelyezése, akár többszintes dungeonhoz
+        /// Térképen speciális elemek elhelyezése, akár többszintes dungeonhoz is. 
+        /// Ha kezdőszint, akkor kezdőpontot generál, 
+        /// ha végszint, akkor vég pontot generál,
+        /// A kezdő és végszinteknek megfelelően, lépcsőket generál a szintek közt.
         /// </summary>
         /// <param name="levelData">Térkép adata</param>
-        /// <param name="isStartLevel">Kezdőszint-e. Ehhez kellő elemeket generáljon-e.</param>
-        /// <param name="isEndLevel">Vég szint-e. Ehhez kellő elemeket generáljon-e.</param>
+        /// <param name="isStartLevel">Kezdőszint-e. Ehhez kellő elemeket generáljon-e. (Kezdő pont)</param>
+        /// <param name="isEndLevel">Vég szint-e. Ehhez kellő elemeket generáljon-e. (Vég pont)</param>
         /// <returns></returns>
-        private float[,] PlacePOIs(float[,] levelData, bool isStartLevel, bool isEndLevel)
+        public float[,] AddPlacePOIsToDungeonLevel(float[,] levelData, bool isStartLevel, bool isEndLevel, int monsterGeneratePercent)
         {
             Random rnd = new Random();
             var point = GetRandomFieldTypePointFromLevel(levelData, FieldTypes.Way, true);
@@ -99,7 +98,8 @@ namespace DungeonRpg.View.Model
             point = GetRandomFieldTypePointFromLevel(levelData, FieldTypes.Way, true); ;
             levelData[point.Item1, point.Item2] = isEndLevel ? (int)FieldTypes.Finish : (int)FieldTypes.Up;
 
-            for (int m = 0; m < rnd.Next(10, 20); m++)
+            int monsterNumber = levelData.GetLength(0) * levelData.GetLength(1) * monsterGeneratePercent / 100;
+            for (int actMonster = 0; actMonster < monsterNumber; actMonster++)
             {
                 point = GetRandomFieldTypePointFromLevel(levelData, FieldTypes.Way, true);
                 
@@ -109,35 +109,42 @@ namespace DungeonRpg.View.Model
             return levelData;
         }
 
-        private (int, int) GetRandomFieldTypePointFromLevel(float[,] levelData, FieldTypes fieldtype, bool withoutConnectionVerify)
+        /// <summary>
+        /// A keresett mezőtípusú pályaelemek közül választunk egyet véletlenszerűen
+        /// </summary>
+        /// <param name="levelData">pálya adata</param>
+        /// <param name="searchedFieldType">keresett mezőtípus</param>
+        /// <param name="withoutConnectionVerify"></param>
+        /// <returns></returns>
+        private (int, int) GetRandomFieldTypePointFromLevel(float[,] levelData, FieldTypes searchedFieldType, bool withoutConnectionVerify)
         {
             Random rnd = new Random();
-            List<object> typecoords = new List<object>();
+            List<object> searchedFieldTypeCoords = new List<object>();
             (int, int) coord = (-1, -1);  
 
             for (int row = 0; row < levelData.GetLength(0); row++)
             {
                 for (int col = 0; col < levelData.GetLength(1); col++)
                 {
-                    if (levelData[row, col] == (int)fieldtype)
+                    if (levelData[row, col] == (int)searchedFieldType)
                     {
-                        typecoords.Add((row,col));
+                        searchedFieldTypeCoords.Add((row,col));
                     }
                 }
             }
 
             bool done = false;
-            while (typecoords.Count>=0 && !done)
+            while (searchedFieldTypeCoords.Count > 0 && !done)
             {
-                var coordNr = rnd.Next(0, typecoords.Count);
-                coord = ((int, int))typecoords.ToArray()[coordNr];
+                var coordNr = rnd.Next(0, searchedFieldTypeCoords.Count);
+                coord = ((int, int))searchedFieldTypeCoords.ToArray()[coordNr];
                 if (withoutConnectionVerify)
                 {
                     done = true;
                 }
                 else if (!_enableConnection && HasConnectedWay(levelData, coord.Item1, coord.Item2))
                 {
-                    typecoords.RemoveAt(coordNr);
+                    searchedFieldTypeCoords.RemoveAt(coordNr);
                 }
                 else
                 {
