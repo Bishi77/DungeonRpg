@@ -3,7 +3,8 @@
 	ami létrehozza a bejárható térképet, kezdő, végpontokkal, 
 	falakkal, utakkal, szörnyekkel, stb.
 
-Forgatókönyv: Üres pálya generálás
+Forgatókönyv: Pálya generálás
 Adott egy DungeonGenerator példány
-Ha létrehozzuk a pályát 3 rows és 5 columns
-Akkor az eredmény float[3,5] tömb lesz.
+Ha létrehozzuk a pályát 10 rows és 8 columns
+Majd létrehozunk egy Dungeon példányt a pályával
+Akkor a Dungeon.Leveldata mérete 10 és 8 lesz.

@@ -18,7 +18,7 @@ namespace DungeonRpg.ViewModel
 		public Game()
 		{
 			_generator = new DungeonGenerator();
-			Dungeon.LevelData = _generator.GenerateDungeonLevel(10, 10, 25);
+			Dungeon = new Dungeon(_generator.GenerateDungeonLevel(10, 10, 25));
 			Character = CharacterGenerator.Generate(true);
 			Character.Position = Dungeon.GetValuePosition((int)DungeonGenerator.FieldTypes.Start);
 			SetPossibleDirection();

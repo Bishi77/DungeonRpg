@@ -127,7 +127,7 @@ namespace DungeonRpg.View.Model
             }
 
             bool done = false;
-            while (!done)
+            while (typecoords.Count>=0 && !done)
             {
                 var coordNr = rnd.Next(0, typecoords.Count);
                 coord = ((int, int))typecoords.ToArray()[coordNr];

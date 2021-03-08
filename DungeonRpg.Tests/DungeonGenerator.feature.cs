@@ -29,7 +29,7 @@ namespace DungeonRpg.Tests
         
         private string[] _featureTags = ((string[])(null));
         
-#line 1 "SpecFlowFeature1.feature"
+#line 1 "DungeonGenerator.feature"
 #line hidden
         
         public virtual Microsoft.VisualStudio.TestTools.UnitTesting.TestContext TestContext
@@ -93,13 +93,13 @@ namespace DungeonRpg.Tests
         }
         
         [Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute()]
-        [Microsoft.VisualStudio.TestTools.UnitTesting.DescriptionAttribute("Üres pálya generálás")]
+        [Microsoft.VisualStudio.TestTools.UnitTesting.DescriptionAttribute("Pálya generálás")]
         [Microsoft.VisualStudio.TestTools.UnitTesting.TestPropertyAttribute("FeatureTitle", "DungeonGenerator")]
-        public virtual void UresPalyaGeneralas()
+        public virtual void PalyaGeneralas()
         {
             string[] tagsOfScenario = ((string[])(null));
             System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
-            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Üres pálya generálás", null, tagsOfScenario, argumentsOfScenario, this._featureTags);
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Pálya generálás", null, tagsOfScenario, argumentsOfScenario, this._featureTags);
 #line 6
 this.ScenarioInitialize(scenarioInfo);
 #line hidden
@@ -124,10 +124,13 @@ this.ScenarioInitialize(scenarioInfo);
 testRunner.Given("egy DungeonGenerator példány", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Adott ");
 #line hidden
 #line 8
-testRunner.When("létrehozzuk a pályát 3 rows és 5 columns", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Ha ");
+testRunner.When("létrehozzuk a pályát 10 rows és 8 columns", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Ha ");
 #line hidden
 #line 9
-testRunner.Then("az eredmény float[3,5] tömb lesz.", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Akkor ");
+testRunner.When("létrehozunk egy Dungeon példányt a pályával", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Majd ");
+#line hidden
+#line 10
+testRunner.Then("a Dungeon.Leveldata mérete 10 és 8 lesz.", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Akkor ");
 #line hidden
             }
             this.ScenarioCleanup();

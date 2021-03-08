@@ -9,7 +9,9 @@ namespace DungeonRpg.Tests
     public class DungeonGeneratorSteps
     {
         private DungeonGenerator dgt;
-        private float[,] level;
+        private Dungeon dungeon = new Dungeon(new float[0,0]);
+        private float[,] level = new float[0,0];
+
 
         [Given(@"egy DungeonGenerator példány")]
         public void AmennyibenEgyDungeonGeneratorPeldany()
@@ -23,11 +25,16 @@ namespace DungeonRpg.Tests
             level = dgt.GenerateDungeonLevel(rows, columns);
         }
 
-        [Then(@"az eredmény float\[(.*)] tömb lesz\.")]
-        public void AkkorAzEredmenyFloatTombLesz_(int rows, int columns)
+        [When(@"létrehozunk egy Dungeon példányt a pályával")]
+        public void MajdLetrehozunkEgyDungeonPeldanytAPalyaval()
         {
-            Assert.IsTrue((level.GetLength(0) == rows) && (level.GetLength(1) == columns));
+            dungeon = new Dungeon(level);
         }
 
+        [Then(@"a Dungeon\.Leveldata mérete (.*) és (.*) lesz\.")]
+        public void AkkorADungeon_LeveldataMereteTombLesz_(int rows, int columns)
+        {
+            Assert.IsTrue((dungeon.LevelData.GetLength(0) == rows) && (dungeon.LevelData.GetLength(1) == columns));
+        }
     }
 }
