@@ -36,7 +36,8 @@
 				ColumnHeaderHeight="0"
 				AutoGenerateColumns="True"
 				AutoGeneratingColumn="c_dataGrid_AutoGeneratingColumn"
-				IsReadOnly="True">
+				IsReadOnly="True"
+				SelectionUnit="Cell">
 				<DataGrid.CellStyle>
 					<Style TargetType="DataGridCell" BasedOn="{StaticResource {x:Type DataGridCell}}">
 						<Setter Property="VerticalContentAlignment" Value="Center"/>
@@ -61,7 +62,12 @@
 								<Setter Property="Background" Value="Gray"/>
 								<Setter Property="Foreground" Value="Gray"/>
 							</DataTrigger>
-						</Style.Triggers>
+							<Trigger Property="IsSelected" Value="True">
+									<Setter Property="Background" Value="Aqua"/>
+									<Setter Property="Foreground" Value="Aqua"/>
+									<Setter Property="BorderBrush" Value="{DynamicResource {x:Static SystemColors.HighlightBrushKey}}"/>
+								</Trigger>
+							</Style.Triggers>
 					</Style>
 				</DataGrid.CellStyle>
 			</DataGrid>
