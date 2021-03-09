@@ -9,9 +9,9 @@ namespace DungeonRpg.Model
 	public class DungeonGenerator
 	{
         public enum FieldTypes { Wall = 0, Finish = 1, Down = 2, Up = 3, Monster = 4, Way = 5, Start = 6 };
-        public enum Direction { UP, DOWN, LEFT, RIGHT };
+        public enum Direction { UP = 'U', DOWN = 'D' , LEFT = 'L', RIGHT = 'R'};
         private const int _wayConnectionPercent = 10;
-        private bool _enableConnection
+        private bool _enableConnectionByRandom
         {
             get
             {
@@ -52,10 +52,8 @@ namespace DungeonRpg.Model
             string possibleDirs = GetPossibleWayGenerationDirection(levelData, startpos.Item1, startpos.Item2);          
             int wayCellNr = levelData.GetLength(0) * levelData.GetLength(1) * fillPercent / 100;
             int actCellNr = 0;
-            while (actCellNr < wayCellNr)
+            while (actCellNr < wayCellNr && !string.IsNullOrEmpty(possibleDirs))
             {
-                if (!string.IsNullOrEmpty(possibleDirs))
-                {
                     switch (possibleDirs[rnd.Next(0, possibleDirs.Length)])
                     {
                         case 'U':
@@ -74,7 +72,6 @@ namespace DungeonRpg.Model
                     levelData[startpos.Item1, startpos.Item2] = (int)FieldTypes.Way;
                     possibleDirs = GetPossibleWayGenerationDirection(levelData, startpos.Item1, startpos.Item2);
                     actCellNr++;
-                }
             }
             return levelData;
         }
@@ -93,16 +90,21 @@ namespace DungeonRpg.Model
         {
             Random rnd = new Random();
             var point = GetRandomFieldTypePointFromLevel(levelData, FieldTypes.Way, true);
-            levelData[point.Item1, point.Item2] = isStartLevel ? (int)FieldTypes.Start : (int)FieldTypes.Down;
+            if(point.Item1 != -1 && point.Item2!=-1)
+                levelData[point.Item1, point.Item2] = isStartLevel ? (int)FieldTypes.Start : (int)FieldTypes.Down;
 
             point = GetRandomFieldTypePointFromLevel(levelData, FieldTypes.Way, true); ;
-            levelData[point.Item1, point.Item2] = isEndLevel ? (int)FieldTypes.Finish : (int)FieldTypes.Up;
+            if (point.Item1 != -1 && point.Item2 != -1)
+                levelData[point.Item1, point.Item2] = isEndLevel ? (int)FieldTypes.Finish : (int)FieldTypes.Up;
 
             int monsterNumber = levelData.GetLength(0) * levelData.GetLength(1) * monsterGeneratePercent / 100;
             for (int actMonster = 0; actMonster < monsterNumber; actMonster++)
             {
                 point = GetRandomFieldTypePointFromLevel(levelData, FieldTypes.Way, true);
-                
+
+                if (point.Item1 == -1 && point.Item2 == -1)
+                    break;
+
                 levelData[point.Item1, point.Item2] = (int)FieldTypes.Monster;
             }
 
@@ -142,7 +144,7 @@ namespace DungeonRpg.Model
                 {
                     done = true;
                 }
-                else if (!_enableConnection && HasConnectedWay(levelData, coord.Item1, coord.Item2))
+                else if (!_enableConnectionByRandom && HasConnectedWay(levelData, coord.Item1, coord.Item2))
                 {
                     searchedFieldTypeCoords.RemoveAt(coordNr);
                 }
@@ -178,13 +180,13 @@ namespace DungeonRpg.Model
         {
             string result = "";
 
-            if ((row > 1) && (levelData[row - 1, col] != 0) && (_enableConnection || !HasConnectedWay(levelData, row - 1, col)))
+            if ((row > 1) && (levelData[row - 1, col] != 0))
                 result += "U";
-            if ((row < levelData.GetLength(0) - 1) && (levelData[row + 1, col] != 0) && (_enableConnection || !HasConnectedWay(levelData, row + 1, col)))
+            if ((row < levelData.GetLength(0) - 1) && (levelData[row + 1, col] != 0))
                 result += "D";
-            if ((col > 1 && levelData[row, col - 1] != 0) && (_enableConnection || !HasConnectedWay(levelData, row, col - 1)))
+            if ((col > 1 && levelData[row, col - 1] != 0))
                 result += "L";
-            if ((col < levelData.GetLength(1) - 1) && (levelData[row, col + 1] != 0) && (_enableConnection || !HasConnectedWay(levelData, row, col + 1)))
+            if ((col < levelData.GetLength(1) - 1) && (levelData[row, col + 1] != 0))
                 result += "R";
             return result;
         }

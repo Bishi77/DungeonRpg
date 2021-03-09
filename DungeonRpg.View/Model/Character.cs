@@ -77,7 +77,23 @@ namespace DungeonRpg.Model
 
 		internal void Move(DungeonGenerator.Direction direction)
 		{
-			
+			switch (direction)
+			{
+				case DungeonGenerator.Direction.UP:
+					Position = (Position.Item1 - 1, Position.Item2);
+					break;
+				case DungeonGenerator.Direction.DOWN:
+					Position = (Position.Item1 + 1, Position.Item2);
+					break;
+				case DungeonGenerator.Direction.LEFT:
+					Position = (Position.Item1, Position.Item2 - 1);
+					break;
+				case DungeonGenerator.Direction.RIGHT:
+					Position = (Position.Item1, Position.Item2 + 1);
+					break;
+				default:
+					break;
+			}
 		}
 
 		public (int, int) Position

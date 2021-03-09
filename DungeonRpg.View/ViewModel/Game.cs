@@ -65,7 +65,8 @@ namespace DungeonRpg.ViewModel
 			set
 			{
 				_possibleDirections = value;
-				OnPropertyChanged(nameof(PossibleDirections));
+				OnPropertyChanged(nameof(CanEnable));
+				OnPropertyChanged(nameof(Map));
 			}
 		}
 

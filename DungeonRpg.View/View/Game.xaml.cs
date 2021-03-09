@@ -41,22 +41,26 @@ namespace DungeonRpg.View
 
 		private void Up_Click(object sender, RoutedEventArgs e)
 		{
-
+			var viewModel = (ViewModel.Game)DataContext;
+			viewModel.MoveCharacter('U');
 		}
 
 		private void Down_Click(object sender, RoutedEventArgs e)
 		{
-
+			var viewModel = (ViewModel.Game)DataContext;
+			viewModel.MoveCharacter('D');
 		}
 
 		private void Left_Click(object sender, RoutedEventArgs e)
 		{
-
+			var viewModel = (ViewModel.Game)DataContext;
+			viewModel.MoveCharacter('L');
 		}
 
 		private void Right_Click(object sender, RoutedEventArgs e)
 		{
-
+			var viewModel = (ViewModel.Game)DataContext;
+			viewModel.MoveCharacter('R');
 		}
 	}
 }
