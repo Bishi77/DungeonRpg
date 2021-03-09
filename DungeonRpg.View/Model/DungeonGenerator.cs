@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DungeonRpg.View.Model
+namespace DungeonRpg.Model
 {
 	public class DungeonGenerator
 	{

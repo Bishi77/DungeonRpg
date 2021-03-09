@@ -1,5 +1,5 @@
 ﻿using DungeonRpg.Model.Interface;
-using DungeonRpg.View.Model;
+using DungeonRpg.Model;
 using System;
 using System.Collections.Generic;
 using System.Linq;

@@ -1,5 +1,4 @@
 ﻿using DungeonRpg.Model;
-using DungeonRpg.View.Model;
 using DungeonRpg.ViewModel.Helpers;
 using System.ComponentModel;
 using System.Data;

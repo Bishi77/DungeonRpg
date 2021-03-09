@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
-using static DungeonRpg.View.Model.DungeonGenerator;
+using static DungeonRpg.Model.DungeonGenerator;
 
-namespace DungeonRpg.View.Model
+namespace DungeonRpg.Model
 {
 	public class Dungeon
 	{

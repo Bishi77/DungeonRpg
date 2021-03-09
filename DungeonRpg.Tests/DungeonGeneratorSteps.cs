@@ -1,4 +1,4 @@
-﻿using DungeonRpg.View.Model;
+﻿using DungeonRpg.Model;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 using TechTalk.SpecFlow;
