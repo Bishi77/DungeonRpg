@@ -31,6 +31,12 @@ namespace DungeonRpg.View.Model
 			return new float[rows, columns];			
 		}
 
+        /// <summary>
+        /// Pálya út generálása
+        /// </summary>
+        /// <param name="levelData">pálya adata</param>
+        /// <param name="fillPercent">út feltöltés százaléka</param>
+        /// <returns></returns>
         public float[,] AddWaysToDungeonLevel(float[,] levelData, int fillPercent = -1)
         {
             Random rnd = new Random();
@@ -43,17 +49,11 @@ namespace DungeonRpg.View.Model
             }
 
             (int, int) startpos = GetRandomFieldTypePointFromLevel(levelData, FieldTypes.Wall, true);
-            string possibleDirs = GetPossibleDirections(levelData, startpos.Item1, startpos.Item2);          
-            int cells = levelData.GetLength(0) * levelData.GetLength(1) * fillPercent / 100;
-            int cellNr = 0;
-            while (cellNr < cells)
+            string possibleDirs = GetPossibleWayGenerationDirection(levelData, startpos.Item1, startpos.Item2);          
+            int wayCellNr = levelData.GetLength(0) * levelData.GetLength(1) * fillPercent / 100;
+            int actCellNr = 0;
+            while (actCellNr < wayCellNr)
             {
-                if (possibleDirs == "")
-                {
-                    startpos = GetRandomFieldTypePointFromLevel(levelData, FieldTypes.Way, false);
-                    possibleDirs = GetPossibleDirections(levelData, startpos.Item1, startpos.Item2);
-                }
-
                 if (!string.IsNullOrEmpty(possibleDirs))
                 {
                     switch (possibleDirs[rnd.Next(0, possibleDirs.Length)])
@@ -72,8 +72,8 @@ namespace DungeonRpg.View.Model
                             break;
                     }
                     levelData[startpos.Item1, startpos.Item2] = (int)FieldTypes.Way;
-                    possibleDirs = GetPossibleDirections(levelData, startpos.Item1, startpos.Item2);
-                    cellNr++;
+                    possibleDirs = GetPossibleWayGenerationDirection(levelData, startpos.Item1, startpos.Item2);
+                    actCellNr++;
                 }
             }
             return levelData;
@@ -167,34 +167,56 @@ namespace DungeonRpg.View.Model
         }
 
         /// <summary>
-        /// Lehetséges irányok kigyűjtése egy pozícióból
+        /// Lehetséges mozgási irányok kigyűjtése egy pozícióból
         /// A térkép széle, azaz a pálya első vagy utolsó sora, oszlopa nem járható.
         /// </summary>
-        /// <param name="levelData"></param>
-        /// <param name="row"></param>
-        /// <param name="col"></param>
+        /// <param name="levelData">pálya adata</param>
+        /// <param name="row">vizsgált helyzet sora</param>
+        /// <param name="col">vizsgált helyzet oszlopa</param>
         /// <returns></returns>
-        public string GetPossibleDirections(float[,] levelData, int row, int col)
+        public string GetPossibleMoveDirections(float[,] levelData, int row, int col)
         {
             string result = "";
 
-            if (row > 1 && levelData[row - 1, col] == 0 && (_enableConnection || !HasConnectedWay(levelData, row - 1, col)))
+            if ((row > 1) && (levelData[row - 1, col] != 0) && (_enableConnection || !HasConnectedWay(levelData, row - 1, col)))
                 result += "U";
-            if (row < levelData.GetLength(0) - 2 && levelData[row + 1, col] == 0 && (_enableConnection || !HasConnectedWay(levelData, row + 1, col)))
+            if ((row < levelData.GetLength(0) - 1) && (levelData[row + 1, col] != 0) && (_enableConnection || !HasConnectedWay(levelData, row + 1, col)))
                 result += "D";
-            if (col > 1 && levelData[row, col - 1] == 0 && (_enableConnection || !HasConnectedWay(levelData, row, col - 1)))
+            if ((col > 1 && levelData[row, col - 1] != 0) && (_enableConnection || !HasConnectedWay(levelData, row, col - 1)))
                 result += "L";
-            if (col < levelData.GetLength(1) - 2 && levelData[row, col + 1] == 0 && (_enableConnection || !HasConnectedWay(levelData, row, col + 1)))
+            if ((col < levelData.GetLength(1) - 1) && (levelData[row, col + 1] != 0) && (_enableConnection || !HasConnectedWay(levelData, row, col + 1)))
                 result += "R";
             return result;
         }
 
         /// <summary>
-        /// Ami mellé rakjuk az 1 kapcsolat
+        /// Út generáláshoz pont fordítva kell keresni mint a mozgási irányokhoz
+        /// Ha nincs út, akkor generálhatunk oda.
+        /// A térkép szélén nem mehet út.
         /// </summary>
-        /// <param name="levelData"></param>
-        /// <param name="row"></param>
-        /// <param name="col"></param>
+        /// <param name="levelData">pálya adata</param>
+        /// <param name="row">aktuális pozício sora</param>
+        /// <param name="col">aktuális pozício oszlopa</param>
+        /// <returns>Lehetséges irányok 1. betűjének felsorolása angolul</returns>
+        public string GetPossibleWayGenerationDirection(float[,] levelData, int row, int col)
+		{
+            string wallDirections = "";
+            string wayDirections = GetPossibleMoveDirections(levelData, row, col);
+            wallDirections += row > 1 && !wayDirections.Contains("U") ? "U" : "";
+            wallDirections += row < levelData.GetLength(0) - 1 && !wayDirections.Contains("D") ? "D" : "";
+            wallDirections += col > 1 && !wayDirections.Contains("L") ? "L" : "";
+            wallDirections += col < levelData.GetLength(1) -1 && !wayDirections.Contains("R") ? "R" : "";
+
+            return wallDirections;
+        }
+
+        /// <summary>
+        /// Útra bekötött e a pozíció.
+        /// Ha van legalább 2 szomszédos út mezője, akkor annak tekintjük
+        /// </summary>
+        /// <param name="levelData">pályaadat</param>
+        /// <param name="row">aktuális pozício sora</param>
+        /// <param name="col">aktuális pozício  oszlopa</param>
         /// <returns></returns>
         private bool HasConnectedWay(float[,] levelData, int row, int col)
         {

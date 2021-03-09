@@ -99,7 +99,7 @@ namespace DungeonRpg.ViewModel
 
 		private void SetPossibleDirection()
 		{
-			PossibleDirections = _generator.GetPossibleDirections(Dungeon.LevelData, Character.Position.Item1, Character.Position.Item2);
+			PossibleDirections = _generator.GetPossibleMoveDirections(Dungeon.LevelData, Character.Position.Item1, Character.Position.Item2);
 		}
 
 		#region change notify 
