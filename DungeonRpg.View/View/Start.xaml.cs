@@ -27,10 +27,17 @@ namespace DungeonRpg.View
 
 		private void OpenMainWindow_Click(object sender, RoutedEventArgs e)
 		{
-			Window main = new Game(new ViewModel.Game());
-			App.Current.MainWindow = main;
-			this.Close();
-			main.Show();
+			try
+			{
+				Window main = new Game(new ViewModel.Game());
+				App.Current.MainWindow = main;
+				this.Close();
+				main.Show();
+			}
+			catch(Exception ex)
+			{
+				MessageBox.Show(ex.Message, "Error", MessageBoxButton.OK);
+			}
 		}
 	}
 }
