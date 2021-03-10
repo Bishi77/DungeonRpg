@@ -23,7 +23,6 @@ namespace DungeonRpg.View
 			InitializeComponent();
 		}
 
-
 		private void c_dataGrid_AutoGeneratingColumn(object sender, DataGridAutoGeneratingColumnEventArgs e)
 		{
 			DataGridTextColumn column = e.Column as DataGridTextColumn;

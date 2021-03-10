@@ -6,9 +6,11 @@
         xmlns:local="clr-namespace:DungeonRpg.View"
 		xmlns:vm="clr-namespace:DungeonRpg.ViewModel"
         mc:Ignorable="d"
-        Title="Dungeon RPG" Height="450" Width="800"
+        Title="Dungeon RPG" 
 		HorizontalAlignment="Center"
-		VerticalAlignment="Center">
+		VerticalAlignment="Center"
+		SizeToContent="WidthAndHeight" MinHeight="400" MinWidth="700"
+		WindowStartupLocation="CenterScreen" >
 	<Window.DataContext>
 		<vm:Game/>
 	</Window.DataContext>
@@ -16,6 +18,7 @@
 		<Grid.ColumnDefinitions>
 			<ColumnDefinition Width="20"/>
 			<ColumnDefinition Width="2*"/>
+			<ColumnDefinition Width="10"/>
 			<ColumnDefinition Width="1*"/>
 			<ColumnDefinition Width="20"/>
 		</Grid.ColumnDefinitions>
@@ -82,7 +85,7 @@
 			</DataGrid>
 		</DockPanel>
 		
-		<DockPanel Grid.Column="2" Grid.Row="1">
+		<DockPanel Grid.Column="3" Grid.Row="1">
 			<Grid>
 				<Grid.ColumnDefinitions>
 					<ColumnDefinition Width="10"/>
@@ -138,11 +141,12 @@
 			</Grid>
 		</DockPanel>
 
-		<DockPanel Grid.Column="2" Grid.Row="2">
+		<DockPanel Grid.Column="3" Grid.Row="2">
 			<StackPanel>
 				<Grid>
 					<Grid.ColumnDefinitions>
 						<ColumnDefinition Width="10"/>
+						<ColumnDefinition Width="auto"/>
 						<ColumnDefinition Width="auto"/>
 						<ColumnDefinition Width="auto"/>
 						<ColumnDefinition Width="auto"/>
@@ -157,6 +161,7 @@
 						<RowDefinition Height="*"/>
 						<RowDefinition Height="10"/>
 					</Grid.RowDefinitions>
+					
 					<Button Grid.Column="2" Grid.Row="1" x:Name="MoveUp" 
 							Height="25" Width="25" 
 							Content="^" Click="Up_Click"
@@ -173,11 +178,22 @@
 							Height="25" Width="25" 
 							Content="&gt;" Click="Right_Click"
 							IsEnabled="{Binding Path=CanEnable.R}"/>
+
+					<StackPanel Grid.Column="4" Grid.ColumnSpan="2"
+								Grid.Row="1" Grid.RowSpan="3" 
+								Orientation="Vertical" >
+						<Button Name="btnInventory"
+								MinWidth="50" Height="25" Margin="10"
+								Content="Leltár"/>
+						<Button Name="btnUse" 
+								MinWidth="50" Height="25" Margin="10"
+								Content="Használ"/>
+					</StackPanel>
 				</Grid>
 			</StackPanel>
 		</DockPanel>
 
-		<DockPanel Grid.Column="2" Grid.Row="3">
+		<DockPanel Grid.Column="3" Grid.Row="3">
 			<TextBlock>
 				Itt egy leírás az éppen aktuális eseményről
 			</TextBlock>
