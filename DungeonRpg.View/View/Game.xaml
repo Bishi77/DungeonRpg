@@ -117,23 +117,21 @@
 				<Label Grid.Column="1" Grid.Row="7" Content="Karizma: "/>
 
 				<Grid Grid.Column="3" Grid.Row="2">
-					<ProgressBar 
-							 Maximum="50" Minimum="0" Value="20"
+					<ProgressBar Name="pbHp"
+							 Maximum="50" Minimum="0"  Value="{Binding Character.HP}" 
 							 Foreground="ForestGreen" Background="White"
 							 BorderThickness="2" BorderBrush="White"/>
-					<TextBlock HorizontalAlignment="Center" VerticalAlignment="Center">
-					HP 20 / 50
-					</TextBlock>
+					<TextBlock HorizontalAlignment="Center" VerticalAlignment="Center"
+							   Text="{Binding ElementName=pbHp, Path=Value, StringFormat={}{0:0}%}"/>
 				</Grid>
 
 				<Grid Grid.Column="3" Grid.Row="3">
-					<ProgressBar  
-							 Maximum="30" Minimum="0" Value="25" 
+					<ProgressBar Name="pbMana"
+							 Maximum="30" Minimum="0" Value="{Binding Character.MP}" 
 							 Foreground="Blue" Background="White"
 							 BorderThickness="2" BorderBrush="White"/>
-					<TextBlock HorizontalAlignment="Center" VerticalAlignment="Center">
-					MP 25 / 30
-					</TextBlock>
+					<TextBlock HorizontalAlignment="Center" VerticalAlignment="Center"
+							   Text="{Binding ElementName=pbMana, Path=Value, StringFormat={}{0:0}%}"/>
 				</Grid>
 
 				<Label Grid.Column="3" Grid.Row="4" Content="Rövidkard D6+2"/>
