@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.31019.35
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DungeonRpg", "DungeonRpg.View\DungeonRpg.csproj", "{994BAFE0-F4EB-45C9-A827-9B8C73834536}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DungeonRpg", "DungeonRpg\DungeonRpg.csproj", "{994BAFE0-F4EB-45C9-A827-9B8C73834536}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DungeonRpg.Tests", "DungeonRpg.Tests\DungeonRpg.Tests.csproj", "{1B60873B-879C-4C58-B232-0CB32E9840D0}"
 EndProject

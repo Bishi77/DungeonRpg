@@ -223,7 +223,7 @@
     <None Include="DungeonGenerator.feature" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\DungeonRpg.View\DungeonRpg.csproj">
+    <ProjectReference Include="..\DungeonRpg\DungeonRpg.csproj">
       <Project>{994bafe0-f4eb-45c9-a827-9b8c73834536}</Project>
       <Name>DungeonRpg</Name>
     </ProjectReference>
