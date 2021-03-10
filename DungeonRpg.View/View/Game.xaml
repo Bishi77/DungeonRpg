@@ -14,16 +14,25 @@
 	</Window.DataContext>
 	<Grid>
 		<Grid.ColumnDefinitions>
+			<ColumnDefinition Width="20"/>
 			<ColumnDefinition Width="2*"/>
 			<ColumnDefinition Width="1*"/>
+			<ColumnDefinition Width="20"/>
 		</Grid.ColumnDefinitions>
 		<Grid.RowDefinitions>
-			<RowDefinition Height="1*"/>
+			<RowDefinition Height="20"/>
 			<RowDefinition Height="auto"/>
-			<RowDefinition Height="1*"/>
+			<RowDefinition Height="auto"/>
+			<RowDefinition Height="auto"/>
+			<RowDefinition Height="*"/>
+			<RowDefinition Height="20"/>
 		</Grid.RowDefinitions>
 
-		<DockPanel Name="MapPanel" Grid.RowSpan="3">
+		<DockPanel Name="MapPanel" 
+				   Grid.Column="1"
+				   Grid.Row="1" Grid.RowSpan="3"
+				   HorizontalAlignment="Center"
+				   VerticalAlignment="Center">
 			<DataGrid
 				x:Name="DynamicGrid"
 				ItemsSource="{Binding Map}"
@@ -72,45 +81,108 @@
 				</DataGrid.CellStyle>
 			</DataGrid>
 		</DockPanel>
-		<DockPanel Grid.Column="1">
+		
+		<DockPanel Grid.Column="2" Grid.Row="1">
+			<Grid>
+				<Grid.ColumnDefinitions>
+					<ColumnDefinition Width="10"/>
+					<ColumnDefinition Width="1*"/>
+					<ColumnDefinition Width="20"/>
+					<ColumnDefinition Width="1*"/>
+					<ColumnDefinition Width="10"/>
+				</Grid.ColumnDefinitions>
+				<Grid.RowDefinitions>
+					<RowDefinition Height="10" />
+					<RowDefinition Height="auto" />
+					<RowDefinition Height="auto" />
+					<RowDefinition Height="auto" />
+					<RowDefinition Height="auto" />
+					<RowDefinition Height="auto" />
+					<RowDefinition Height="auto" />
+					<RowDefinition Height="auto" />
+					<RowDefinition Height="auto" />
+					<RowDefinition Height="auto" />
+					<RowDefinition Height="auto" />
+					<RowDefinition Height="auto" />
+					<RowDefinition Height="10" />
+				</Grid.RowDefinitions>
+				<Label Grid.Column="1" Grid.ColumnSpan="3" HorizontalAlignment="Center"
+					   Grid.Row="1" 
+					   Content="Karakter neve"/>
+				<Label Grid.Column="1" Grid.Row="2" Content="Erő: "/>
+				<Label Grid.Column="1" Grid.Row="3" Content="Ügyesség: "/>
+				<Label Grid.Column="1" Grid.Row="4" Content="Egészség: "/>
+				<Label Grid.Column="1" Grid.Row="5" Content="Intelligencia: "/>
+				<Label Grid.Column="1" Grid.Row="6" Content="Bölcsesség: "/>
+				<Label Grid.Column="1" Grid.Row="7" Content="Karizma: "/>
 
+				<Grid Grid.Column="3" Grid.Row="2">
+					<ProgressBar 
+							 Maximum="50" Minimum="0" Value="20"
+							 Foreground="ForestGreen" Background="White"
+							 BorderThickness="2" BorderBrush="White"/>
+					<TextBlock HorizontalAlignment="Center" VerticalAlignment="Center">
+					HP 20 / 50
+					</TextBlock>
+				</Grid>
+
+				<Grid Grid.Column="3" Grid.Row="3">
+					<ProgressBar  
+							 Maximum="30" Minimum="0" Value="25" 
+							 Foreground="Blue" Background="White"
+							 BorderThickness="2" BorderBrush="White"/>
+					<TextBlock HorizontalAlignment="Center" VerticalAlignment="Center">
+					MP 25 / 30
+					</TextBlock>
+				</Grid>
+
+				<Label Grid.Column="3" Grid.Row="4" Content="Rövidkard D6+2"/>
+			</Grid>
 		</DockPanel>
 
-		<DockPanel Grid.Column="1" Grid.Row="1">
+		<DockPanel Grid.Column="2" Grid.Row="2">
 			<StackPanel>
 				<Grid>
 					<Grid.ColumnDefinitions>
-						<ColumnDefinition Width="1*"/>
-						<ColumnDefinition Width="1*"/>
-						<ColumnDefinition Width="1*"/>
+						<ColumnDefinition Width="10"/>
+						<ColumnDefinition Width="auto"/>
+						<ColumnDefinition Width="auto"/>
+						<ColumnDefinition Width="auto"/>
+						<ColumnDefinition Width="*"/>
+						<ColumnDefinition Width="10"/>
 					</Grid.ColumnDefinitions>
 					<Grid.RowDefinitions>
-						<RowDefinition Height="1*"/>
-						<RowDefinition Height="1*"/>
-						<RowDefinition Height="1*"/>
+						<RowDefinition Height="10"/>
+						<RowDefinition Height="auto"/>
+						<RowDefinition Height="auto"/>
+						<RowDefinition Height="auto"/>
+						<RowDefinition Height="*"/>
+						<RowDefinition Height="10"/>
 					</Grid.RowDefinitions>
-					<Button Grid.Column="1" x:Name="MoveUp" 
-							Height="50" Width="50" 
+					<Button Grid.Column="2" Grid.Row="1" x:Name="MoveUp" 
+							Height="25" Width="25" 
 							Content="^" Click="Up_Click"
 							IsEnabled="{Binding Path=CanEnable.U}"/>
-					<Button Grid.Column="1" Grid.Row="2" x:Name="MoveDown" 
-							Height="50" Width="50" 
+					<Button Grid.Column="2" Grid.Row="3" x:Name="MoveDown" 
+							Height="25" Width="25" 
 							Content="v" Click="Down_Click"
 							IsEnabled="{Binding Path=CanEnable.D}"/>
-					<Button Grid.Column="0" Grid.Row="1" x:Name="MoveLeft" 
-							Height="50" Width="50" 
+					<Button Grid.Column="1" Grid.Row="2" x:Name="MoveLeft" 
+							Height="25" Width="25" 
 							Content="&lt;" Click="Left_Click"
 							IsEnabled="{Binding Path=CanEnable.L}"/>
-					<Button Grid.Column="2" Grid.Row="1" x:Name="MoveRight" 
-							Height="50" Width="50" 
+					<Button Grid.Column="3" Grid.Row="2" x:Name="MoveRight" 
+							Height="25" Width="25" 
 							Content="&gt;" Click="Right_Click"
 							IsEnabled="{Binding Path=CanEnable.R}"/>
 				</Grid>
 			</StackPanel>
 		</DockPanel>
 
-		<DockPanel Grid.Column="1" Grid.Row="2">
-
+		<DockPanel Grid.Column="2" Grid.Row="3">
+			<TextBlock>
+				Itt egy leírás az éppen aktuális eseményről
+			</TextBlock>
 		</DockPanel>
 	</Grid>
 </Window>
