@@ -215,9 +215,11 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="DungeonGeneratorSteps.cs" />
+    <Compile Include="InventorySteps.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="Inventory.feature" />
     <None Include="packages.config" />
     <None Include="specflow.json" />
     <None Include="DungeonGenerator.feature" />

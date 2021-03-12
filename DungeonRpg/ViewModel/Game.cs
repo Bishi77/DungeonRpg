@@ -82,6 +82,7 @@ namespace DungeonRpg.ViewModel
 
 		#endregion properties
 
+		#region View Commands
 		public void MoveCharacter(char direction)
 		{
 			if (PossibleDirections.Contains(direction.ToString()))
@@ -96,6 +97,7 @@ namespace DungeonRpg.ViewModel
 		{
 			return PossibleDirections.Contains(direction.ToString());
 		}
+		#endregion View Commands
 
 		private void SetPossibleDirection()
 		{

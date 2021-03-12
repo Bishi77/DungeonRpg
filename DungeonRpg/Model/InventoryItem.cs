@@ -1,29 +1,24 @@
 ﻿using DungeonRpg.Model.Interface;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace DungeonRpg.Model
 {
 	public class InventoryItem : IInventoryItem
 	{
-		public List<object> GetDescription()
-		{
-			throw new NotImplementedException();
-		}
+		private string _name;
 
-		public string GetName()
-		{
-			throw new NotImplementedException();
-		}
+		private string _description;
+
+		public string Name { get => _name; set => _name = value; }
+		public string Description { get => _description; set => _description = value; }
 
 		// TODO
 		private Action _exec;
 
 		// TODO
 		public Action Exec { get => _exec; set => _exec = value; }
+		
+
 		// TODO
 		public bool CanExec(Func<Action, bool> canExec)
 		{

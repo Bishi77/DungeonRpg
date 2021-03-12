@@ -135,5 +135,15 @@ namespace DungeonRpg.View
 			}
 			return null;
 		}
+
+		private void btnInventory_Click(object sender, RoutedEventArgs e)
+		{
+			ViewModel.Inventory vm = new ViewModel.Inventory();
+			Inventory myOwnedDialog = new Inventory(vm);
+			myOwnedDialog.Owner = this;
+			myOwnedDialog.Width = this.Width * 0.9;
+			myOwnedDialog.Height = this.Height * 0.9;
+			myOwnedDialog.ShowDialog();
+		}
 	}
 }
