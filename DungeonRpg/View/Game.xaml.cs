@@ -17,12 +17,6 @@ namespace DungeonRpg.View
 			InitializeComponent();
 		}
 
-		public Game(ViewModel.Game vm)
-		{
-			this.DataContext = vm;
-			InitializeComponent();
-		}
-
 		private void c_dataGrid_AutoGeneratingColumn(object sender, DataGridAutoGeneratingColumnEventArgs e)
 		{
 			DataGridTextColumn column = e.Column as DataGridTextColumn;
@@ -138,8 +132,7 @@ namespace DungeonRpg.View
 
 		private void btnInventory_Click(object sender, RoutedEventArgs e)
 		{
-			ViewModel.Inventory vm = new ViewModel.Inventory();
-			Inventory myOwnedDialog = new Inventory(vm);
+			Inventory myOwnedDialog = new Inventory();
 			myOwnedDialog.Owner = this;
 			myOwnedDialog.Width = this.Width * 0.9;
 			myOwnedDialog.Height = this.Height * 0.9;

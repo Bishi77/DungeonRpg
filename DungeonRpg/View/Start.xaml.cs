@@ -29,7 +29,7 @@ namespace DungeonRpg.View
 		{
 			try
 			{
-				Window main = new Game(new ViewModel.Game());
+				Window main = new Game();
 				App.Current.MainWindow = main;
 				this.Close();
 				main.Show();

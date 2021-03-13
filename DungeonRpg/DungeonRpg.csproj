@@ -99,6 +99,7 @@
     <Compile Include="Model\Inventory.cs" />
     <Compile Include="Model\Interface\IInventoryItem.cs" />
     <Compile Include="ViewModel\Game.cs" />
+    <Compile Include="VML\ViewModelLocator.cs" />
     <Page Include="View\Inventory.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>

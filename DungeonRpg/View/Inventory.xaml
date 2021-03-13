@@ -5,15 +5,14 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:DungeonRpg.View"
 		xmlns:vm="clr-namespace:DungeonRpg.ViewModel"
+		xmlns:vml = "clr-namespace:DungeonRpg.VML"
+		vml:ViewModelLocator.AutoHookedUpViewModel = "True"
         mc:Ignorable="d"
         Title="Leltar"
 		HorizontalAlignment="Center"
 		VerticalAlignment="Center"
 		MinHeight="300" MinWidth="600"
 		WindowStartupLocation="CenterScreen" >
-	<Window.DataContext>
-		<vm:Inventory/>
-	</Window.DataContext>
 	<Grid>
 		<Grid.ColumnDefinitions>
 			<ColumnDefinition Width="20"/>

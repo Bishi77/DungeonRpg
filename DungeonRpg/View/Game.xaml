@@ -5,15 +5,14 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:DungeonRpg.View"
 		xmlns:vm="clr-namespace:DungeonRpg.ViewModel"
+		xmlns:vml = "clr-namespace:DungeonRpg.VML"
+		vml:ViewModelLocator.AutoHookedUpViewModel = "True"
         mc:Ignorable="d"
         Title="Dungeon RPG" 
 		HorizontalAlignment="Center"
 		VerticalAlignment="Center"
 		SizeToContent="WidthAndHeight" MinHeight="400" MinWidth="700"
 		WindowStartupLocation="CenterScreen" >
-	<Window.DataContext>
-		<vm:Game/>
-	</Window.DataContext>
 	<Grid>
 		<Grid.ColumnDefinitions>
 			<ColumnDefinition Width="20"/>
