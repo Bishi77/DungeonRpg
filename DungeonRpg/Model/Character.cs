@@ -17,13 +17,30 @@ namespace DungeonRpg.Model
 		private int _strength;
 		private int _dexterity;
 		private int _intelligence;
+		private int _constitution;
+		private int _wisdom;
+		private int _charisma;
 
 		private int _level;
 		private int _hp;
-		private int _maxHp;
 		private int _mp;
-		private int _maxMp;
 		private (int, int) _position = (-1, -1);
+
+		public Character()
+		{
+			Random rnd = new Random();
+			Dice diceD6 = new Dice(6);
+			Level = 1;
+
+			Strength = diceD6.ResetSum().RollDices(3).SumRolls;
+			Dexterity = diceD6.ResetSum().RollDices(3).SumRolls; ;
+			Intelligence = diceD6.ResetSum().RollDices(3).SumRolls;
+			Constitution = diceD6.ResetSum().RollDices(3).SumRolls;
+			Wisdom = diceD6.ResetSum().RollDices(3).SumRolls;
+
+			MP = MaxMp;
+			HP = MaxHp;
+		}
 
 		#region properties
 
@@ -51,6 +68,19 @@ namespace DungeonRpg.Model
 			set { _mp = value; }
 		}
 
+		public int MaxHp
+		{
+			get 
+			{ 
+				return Level * (8 + (Constitution - 10)/2); 
+			}
+		}
+
+		public int MaxMp
+		{
+			get { return Level * (6 + (Intelligence - 10) / 2); }
+		}
+
 		public int Strength 
 		{
 			get { return _strength; }
@@ -68,6 +98,26 @@ namespace DungeonRpg.Model
 			get { return _intelligence; }
 			set { _intelligence = value; } 
 		}
+
+		public int Constitution
+		{
+			get { return _constitution;	}
+			set{ _constitution = value;}
+		}
+
+		public int Wisdom
+		{
+			get { return _wisdom; }
+			set{ _wisdom = value; }
+		}
+
+		public int Charisma
+		{
+			get { return _charisma; }
+			set { _charisma = value; }
+		}
+
+		#endregion properties
 
 		public IInventory Inventory
 		{
@@ -104,24 +154,5 @@ namespace DungeonRpg.Model
 				_position = value;
 			}
 		}
-
-		public int MaxHp
-		{
-			get { return _maxHp; }
-			set
-			{
-				_maxHp = value;
-			}
-		}
-
-		public int MaxMp
-		{
-			get { return _maxMp; }
-			set
-			{
-				_maxMp = value;
-			}
-		}
-		#endregion properties
 	}
 }

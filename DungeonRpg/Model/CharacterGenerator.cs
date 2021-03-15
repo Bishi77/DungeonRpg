@@ -11,7 +11,8 @@ namespace DungeonRpg.Model
 	{
 		public static Character Generate(bool isPlayerCharacter = false)
 		{
-			return new Character(); 
+			var player = new Character();
+			return player;
 		}
 	}
 }
