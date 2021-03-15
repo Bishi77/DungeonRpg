@@ -124,13 +124,22 @@ this.ScenarioInitialize(scenarioInfo);
 testRunner.Given("egy DungeonGenerator példány", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Adott ");
 #line hidden
 #line 8
-testRunner.When("létrehozzuk a pályát 10 rows és 8 columns", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Ha ");
+testRunner.When("létrehozzuk a Dungeon példányt 3 rows és 3 columns méretben", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Ha ");
 #line hidden
 #line 9
-testRunner.When("létrehozunk egy Dungeon példányt a pályával", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Majd ");
+testRunner.Then("a Dungeon.Leveldata mérete 3 és 3 lesz.", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Akkor ");
 #line hidden
 #line 10
-testRunner.Then("a Dungeon.Leveldata mérete 10 és 8 lesz.", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Akkor ");
+testRunner.When("hozzáadunk egy utat az 1 1 pozícióba", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Ha ");
+#line hidden
+#line 11
+testRunner.Then("nem lehet fal az 1 1 pozíción", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Akkor ");
+#line hidden
+#line 12
+testRunner.When("hozzáadunk megint egy utat az 1 1 pozícióba", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Ha ");
+#line hidden
+#line 13
+testRunner.Then("az 1 1 pozícióban csak 1 út lehet, és más nem", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Akkor ");
 #line hidden
             }
             this.ScenarioCleanup();

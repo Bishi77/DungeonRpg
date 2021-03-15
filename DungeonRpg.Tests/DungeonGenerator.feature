@@ -5,6 +5,9 @@
 
 Forgatókönyv: Pálya generálás
 Adott egy DungeonGenerator példány
-Ha létrehozzuk a pályát 10 rows és 8 columns
-Majd létrehozunk egy Dungeon példányt a pályával
-Akkor a Dungeon.Leveldata mérete 10 és 8 lesz.
+Ha létrehozzuk a Dungeon példányt 3 rows és 3 columns méretben
+Akkor a Dungeon.Leveldata mérete 3 és 3 lesz.
+Ha hozzáadunk egy utat az 1 1 pozícióba
+Akkor nem lehet fal az 1 1 pozíción
+Ha hozzáadunk megint egy utat az 1 1 pozícióba
+Akkor az 1 1 pozícióban csak 1 út lehet, és más nem

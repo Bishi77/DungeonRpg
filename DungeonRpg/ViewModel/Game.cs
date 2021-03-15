@@ -1,6 +1,7 @@
 ﻿using DungeonRpg.Model;
 using DungeonRpg.ViewModel.Helpers;
 using System;
+using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Windows.Input;
@@ -9,7 +10,7 @@ namespace DungeonRpg.ViewModel
 {
 	public class Game : INotifyPropertyChanged, ICanEnableField
 	{
-		private Dungeon _dungeon = new Dungeon(new float[0,0]);
+		private Dungeon _dungeon = new Dungeon(new List<DungeonElement>[0,0]);
 		private Character _character = new Character();
 		private DataView _map = new DataView();
 		private DungeonGenerator _generator = new DungeonGenerator();
@@ -21,15 +22,13 @@ namespace DungeonRpg.ViewModel
 		public Game()
 		{
 			_generator = new DungeonGenerator();
-			Dungeon = new Dungeon(
-				_generator.AddPlacePOIsToDungeonLevel(
-					_generator.AddWaysToDungeonLevel(
-						_generator.GenerateDungeonLevel(10, 10)
-					, 40),
-				true, true, 10)
-			);
+			Dungeon = _generator.AddPlacePOIsToDungeonLevel(
+						_generator.AddWaysToDungeonLevel(
+							_generator.GenerateDungeonLevel(10, 10)
+						, 40),
+					  true, true, 10);
 			Character = CharacterGenerator.Generate(true);
-			Character.Position = Dungeon.GetValuePosition((int)DungeonGenerator.FieldTypes.Start);
+			Character.Position = Dungeon.GetFirstDungeonElementPosition(DungeonElementType.StartPoint);
 			SetPossibleDirection();
 
 			MoveCommand = new CommandImplementation(MoveCharacter);
@@ -70,8 +69,9 @@ namespace DungeonRpg.ViewModel
 		}
 
 		public DataView Map 
-		{ 
-			get => ConversionFunctions.GetBindable2DArray<float>(Dungeon.LevelData); 
+		{
+			get => ConversionFunctions.GetBindable2DArray<List<DungeonElement>>(Dungeon.LevelData); 
+			//get => throw new NotImplementedException();
 			set => _map = value; 
 		}
 
@@ -127,7 +127,7 @@ namespace DungeonRpg.ViewModel
 
 		private void SetPossibleDirection()
 		{
-			PossibleDirections = _generator.GetPossibleMoveDirections(Dungeon.LevelData, Character.Position.Item1, Character.Position.Item2);
+			PossibleDirections = _generator.GetPossibleMoveDirections(Dungeon, Character.Position.Item1, Character.Position.Item2);
 		}
 
 		#region change notify 

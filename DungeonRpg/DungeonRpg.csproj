@@ -83,6 +83,7 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="Model\CoordinateValue.cs" />
+    <Compile Include="Model\DungeonElement.cs" />
     <Compile Include="ViewModel\Inventory.cs" />
     <Compile Include="View\Inventory.xaml.cs">
       <DependentUpon>Inventory.xaml</DependentUpon>
