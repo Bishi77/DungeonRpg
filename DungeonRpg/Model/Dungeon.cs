@@ -81,6 +81,29 @@ namespace DungeonRpg.Model
 			LevelData[rowPosition, columnPosition].Add(element);
 		}
 
+		/// <summary>
+		/// Lehetséges mozgási irányok kigyűjtése egy pozícióból
+		/// A térkép széle, azaz a pálya első vagy utolsó sora, oszlopa nem járható.
+		/// </summary>
+		/// <param name="dungeon">pálya adata</param>
+		/// <param name="row">vizsgált helyzet sora</param>
+		/// <param name="col">vizsgált helyzet oszlopa</param>
+		/// <returns>Lehetséges mozgási irányok angol kezdőbetűinek felsorolása</returns>
+		public string GetPossibleMoveDirections(int row, int col)
+		{
+			string result = "";
+
+			if ((row > 1) && !LevelPositionHasDungeonElementType(row - 1, col, DungeonElementType.Wall))
+				result += "U";
+			if ((row < LevelData.GetLength(0) - 1) && !LevelPositionHasDungeonElementType(row + 1, col, DungeonElementType.Wall))
+				result += "D";
+			if ((col > 1 && !LevelPositionHasDungeonElementType(row, col - 1, DungeonElementType.Wall)))
+				result += "L";
+			if ((col < LevelData.GetLength(1) - 1) && !LevelPositionHasDungeonElementType(row, col + 1, DungeonElementType.Wall))
+				result += "R";
+			return result;
+		}
+
 		#endregion public methods
 
 		//private string GetFieldView(float f)

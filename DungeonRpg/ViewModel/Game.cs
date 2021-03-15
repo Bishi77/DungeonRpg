@@ -13,7 +13,6 @@ namespace DungeonRpg.ViewModel
 		private Dungeon _dungeon = new Dungeon(new List<DungeonElement>[0,0]);
 		private Character _character = new Character();
 		private DataView _map = new DataView();
-		private DungeonGenerator _generator = new DungeonGenerator();
 		private string _possibleDirections = "";
 		private readonly CanEnableFieldHelper _helper;
 
@@ -23,7 +22,7 @@ namespace DungeonRpg.ViewModel
 
 		public Game()
 		{
-			_generator = new DungeonGenerator();
+			DungeonGenerator _generator = new DungeonGenerator();
 			Dungeon = _generator.AddPlacePOIsToDungeonLevel(
 						_generator.AddWaysToDungeonLevel(
 							_generator.GenerateDungeonLevel(10, 10)
@@ -124,7 +123,7 @@ namespace DungeonRpg.ViewModel
 
 		private void SetPossibleDirection()
 		{
-			PossibleDirections = _generator.GetPossibleMoveDirections(Dungeon, Character.Position.Item1, Character.Position.Item2);
+			PossibleDirections = Dungeon.GetPossibleMoveDirections(Character.Position.Item1, Character.Position.Item2);
 		}
 
 		#endregion private methods

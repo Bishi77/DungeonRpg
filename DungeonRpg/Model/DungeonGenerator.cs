@@ -171,29 +171,6 @@ namespace DungeonRpg.Model
         }
 
         /// <summary>
-        /// Lehetséges mozgási irányok kigyűjtése egy pozícióból
-        /// A térkép széle, azaz a pálya első vagy utolsó sora, oszlopa nem járható.
-        /// </summary>
-        /// <param name="dungeon">pálya adata</param>
-        /// <param name="row">vizsgált helyzet sora</param>
-        /// <param name="col">vizsgált helyzet oszlopa</param>
-        /// <returns>Lehetséges mozgási irányok angol kezdőbetűinek felsorolása</returns>
-        public string GetPossibleMoveDirections(Dungeon dungeon, int row, int col)
-        {
-            string result = "";
-
-            if ((row > 1) && !dungeon.LevelPositionHasDungeonElementType(row - 1, col, DungeonElementType.Wall))
-                result += "U";
-            if ((row < dungeon.LevelData.GetLength(0) - 1) && !dungeon.LevelPositionHasDungeonElementType(row + 1, col, DungeonElementType.Wall))
-                result += "D";
-            if ((col > 1 && !dungeon.LevelPositionHasDungeonElementType(row, col -1, DungeonElementType.Wall)))
-                result += "L";
-            if ((col < dungeon.LevelData.GetLength(1) - 1) && !dungeon.LevelPositionHasDungeonElementType(row, col + 1, DungeonElementType.Wall))
-                result += "R";
-            return result;
-        }
-
-        /// <summary>
         /// Út generáláshoz pont fordítva kell keresni mint a mozgási irányokhoz
         /// Ha nincs út, akkor generálhatunk oda.
         /// A térkép szélén nem mehet út.
@@ -205,7 +182,7 @@ namespace DungeonRpg.Model
         public string GetPossibleWayGenerationDirection(Dungeon dungeon, int row, int col)
 		{
             string wallDirections = "";
-            string wayDirections = GetPossibleMoveDirections(dungeon, row, col);
+            string wayDirections = dungeon.GetPossibleMoveDirections(row, col);
             wallDirections += row > 1 && !wayDirections.Contains("U") ? "U" : "";
             wallDirections += row < dungeon.LevelData.GetLength(0) - 1 && !wayDirections.Contains("D") ? "D" : "";
             wallDirections += col > 1 && !wayDirections.Contains("L") ? "L" : "";
