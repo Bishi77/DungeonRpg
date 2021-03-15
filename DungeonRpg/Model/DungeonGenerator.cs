@@ -8,8 +8,8 @@ namespace DungeonRpg.Model
 {
 	public class DungeonGenerator
 	{
-        public enum FieldTypes { Wall = 0, Finish = 1, Down = 2, Up = 3, Monster = 4, Way = 5, Start = 6 };
         public enum Direction { UP = 'U', DOWN = 'D' , LEFT = 'L', RIGHT = 'R'};
+
         private const int _wayConnectionPercent = 10;
         private bool _enableConnectionByRandom
         {
@@ -36,7 +36,7 @@ namespace DungeonRpg.Model
         /// </summary>
         /// <param name="dungeon">pálya adata</param>
         /// <param name="fillPercent">út feltöltés százaléka</param>
-        /// <returns></returns>
+        /// <returns>pálya teljes adata</returns>
         public Dungeon AddWaysToDungeonLevel(Dungeon dungeon, int fillPercent = -1)
         {
             Random rnd = new Random();
@@ -86,7 +86,7 @@ namespace DungeonRpg.Model
         /// <param name="dungeon">Térkép adata</param>
         /// <param name="isStartLevel">Kezdőszint-e. Ehhez kellő elemeket generáljon-e. (Kezdő pont)</param>
         /// <param name="isEndLevel">Vég szint-e. Ehhez kellő elemeket generáljon-e. (Vég pont)</param>
-        /// <returns></returns>
+        /// <returns>pálya teljes adata</returns>
         public Dungeon AddPlacePOIsToDungeonLevel(Dungeon dungeon, bool isStartLevel, bool isEndLevel, int monsterGeneratePercent)
         {
             Random rnd = new Random();
@@ -168,18 +168,6 @@ namespace DungeonRpg.Model
                 }
             }
             return coord;
-
-            /*régi kódban benne volt itt, nem néztem miért, talán alternatív megoldás miatt? akkor meg tesztelendő melyik a jobb
-            int xPos, yPos;
-            xPos = yPos = -1;
-            while (xPos == -1 || (Math.Truncate(levelData[yPos, xPos]) != (int)fieldtype) && (!enableConnection && HasConnectedWay(levelData, yPos, xPos)))
-            {
-                xPos = rnd.Next(2, levelData.GetUpperBound(1)-1);
-                yPos = rnd.Next(2, levelData.GetUpperBound(0)-1);
-            }
-
-            return (yPos, xPos);   
-             */
         }
 
         /// <summary>
@@ -189,7 +177,7 @@ namespace DungeonRpg.Model
         /// <param name="dungeon">pálya adata</param>
         /// <param name="row">vizsgált helyzet sora</param>
         /// <param name="col">vizsgált helyzet oszlopa</param>
-        /// <returns></returns>
+        /// <returns>Lehetséges mozgási irányok angol kezdőbetűinek felsorolása</returns>
         public string GetPossibleMoveDirections(Dungeon dungeon, int row, int col)
         {
             string result = "";
@@ -213,7 +201,7 @@ namespace DungeonRpg.Model
         /// <param name="dungeon">pálya adata</param>
         /// <param name="row">aktuális pozício sora</param>
         /// <param name="col">aktuális pozício oszlopa</param>
-        /// <returns>Lehetséges irányok 1. betűjének felsorolása angolul</returns>
+        /// <returns>Lehetséges mozgási irányok angol kezdőbetűinek felsorolása</returns>
         public string GetPossibleWayGenerationDirection(Dungeon dungeon, int row, int col)
 		{
             string wallDirections = "";
@@ -233,7 +221,7 @@ namespace DungeonRpg.Model
         /// <param name="dungeon">pályaadat</param>
         /// <param name="row">aktuális pozício sora</param>
         /// <param name="col">aktuális pozício  oszlopa</param>
-        /// <returns></returns>
+        /// <returns>Ha a pozíciónak van 2 szomszédos út mezúje, akkor igaz</returns>
         private bool HasConnectedWay(Dungeon dungeon, int row, int col)
         {
             int connections = 0;

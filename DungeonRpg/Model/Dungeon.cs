@@ -27,6 +27,13 @@ namespace DungeonRpg.Model
 			get { return _levelData; }
 		}
 
+		#region public methods
+
+		/// <summary>
+		/// Keresett elemtípus első előfordulásána pozíciója a pályán
+		/// </summary>
+		/// <param name="searchedElement">Keresett elemtípus</param>
+		/// <returns>Első talált előfordulási pozíció</returns>
 		public (int, int) GetFirstDungeonElementPosition(DungeonElementType searchedElement)
 		{
 			for (int r = 0; r < LevelData.GetLength(0); r++)
@@ -38,6 +45,13 @@ namespace DungeonRpg.Model
 			throw new Exception($"Keresett érték ({searchedElement}) nem található a tömbben!");
 		}
 
+		/// <summary>
+		/// Adott pályapozíción van-e adott típusú eleme
+		/// </summary>
+		/// <param name="rowPosition">sor pozíció</param>
+		/// <param name="columnPosition">oszlop pozció</param>
+		/// <param name="elementType">keresett elemtípus</param>
+		/// <returns></returns>
 		public bool LevelPositionHasDungeonElementType(int rowPosition, int columnPosition, DungeonElementType elementType)
 		{
 			if (rowPosition < 0 || columnPosition < 0 || rowPosition >= LevelData.GetLength(0) || columnPosition >= LevelData.GetLength(1))
@@ -45,6 +59,14 @@ namespace DungeonRpg.Model
 			return LevelData[rowPosition, columnPosition].Exists(x => x.ElementType == elementType);
 		}
 
+		/// <summary>
+		/// Adott pálya pozcióra egy elemet helyezünk
+		/// 1 pozíció csak vagy út vagy fal lehet
+		/// </summary>
+		/// <param name="rowPosition">sor azonosító</param>
+		/// <param name="columnPosition">oszlop azonosító</param>
+		/// <param name="element">hozzáadott új elem</param>
+		/// <param name="justOneTypeEnabledInAPosition">csak maximum 1 lehet-e az adott elemtípusból?</param>
 		public void AddDungeonElementByPosition(int rowPosition, int columnPosition, DungeonElement element, bool justOneTypeEnabledInAPosition)
 		{
 			if (justOneTypeEnabledInAPosition && LevelPositionHasDungeonElementType(rowPosition, columnPosition, element.ElementType))
@@ -58,6 +80,8 @@ namespace DungeonRpg.Model
 
 			LevelData[rowPosition, columnPosition].Add(element);
 		}
+
+		#endregion public methods
 
 		//private string GetFieldView(float f)
 		//{

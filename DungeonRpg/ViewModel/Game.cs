@@ -19,6 +19,8 @@ namespace DungeonRpg.ViewModel
 
 		public ICommand MoveCommand { get; set; }
 
+		#region constructor
+
 		public Game()
 		{
 			_generator = new DungeonGenerator();
@@ -36,15 +38,7 @@ namespace DungeonRpg.ViewModel
 			OnPropertyChanged(nameof(CanEnable));
 		}
 
-		private void MoveCharacter(object obj)
-		{
-			if (PossibleDirections.Contains(obj.ToString()))
-			{
-				Character.Move((DungeonGenerator.Direction)obj.ToString()[0]);
-				SetPossibleDirection();
-				OnPropertyChanged(nameof(Map));
-			}
-		}
+		#endregion constructor
 
 		#region properties
 
@@ -71,7 +65,6 @@ namespace DungeonRpg.ViewModel
 		public DataView Map 
 		{
 			get => ConversionFunctions.GetBindable2DArray<List<DungeonElement>>(Dungeon.LevelData); 
-			//get => throw new NotImplementedException();
 			set => _map = value; 
 		}
 
@@ -99,6 +92,7 @@ namespace DungeonRpg.ViewModel
 		#endregion properties
 
 		#region View Commands
+
 		public void MoveCharacter(char direction)
 		{
 			if (PossibleDirections.Contains(direction.ToString()))
@@ -113,22 +107,27 @@ namespace DungeonRpg.ViewModel
 		{
 			return PossibleDirections.Contains(direction.ToString());
 		}
+
 		#endregion View Commands
 
-		private void OnMove(string direction)
-		{
-			MoveCharacter(direction[0]);
-		}
+		#region private methods
 
-		private bool CanMove(string direction)
+		private void MoveCharacter(object obj)
 		{
-			return PossibleDirections.Contains(direction);
+			if (PossibleDirections.Contains(obj.ToString()))
+			{
+				Character.Move((DungeonGenerator.Direction)obj.ToString()[0]);
+				SetPossibleDirection();
+				OnPropertyChanged(nameof(Map));
+			}
 		}
 
 		private void SetPossibleDirection()
 		{
 			PossibleDirections = _generator.GetPossibleMoveDirections(Dungeon, Character.Position.Item1, Character.Position.Item2);
 		}
+
+		#endregion private methods
 
 		#region change notify 
 		public event PropertyChangedEventHandler PropertyChanged;
