@@ -1,7 +1,9 @@
 ﻿using DungeonRpg.Model;
 using DungeonRpg.ViewModel.Helpers;
+using System;
 using System.ComponentModel;
 using System.Data;
+using System.Windows.Input;
 
 namespace DungeonRpg.ViewModel
 {
@@ -13,6 +15,8 @@ namespace DungeonRpg.ViewModel
 		private DungeonGenerator _generator = new DungeonGenerator();
 		private string _possibleDirections = "";
 		private readonly CanEnableFieldHelper _helper;
+
+		public ICommand MoveCommand { get; set; }
 
 		public Game()
 		{
@@ -27,8 +31,20 @@ namespace DungeonRpg.ViewModel
 			Character = CharacterGenerator.Generate(true);
 			Character.Position = Dungeon.GetValuePosition((int)DungeonGenerator.FieldTypes.Start);
 			SetPossibleDirection();
+
+			MoveCommand = new CommandImplementation(MoveCharacter);
 			_helper = new CanEnableFieldHelper(this);
 			OnPropertyChanged(nameof(CanEnable));
+		}
+
+		private void MoveCharacter(object obj)
+		{
+			if (PossibleDirections.Contains(obj.ToString()))
+			{
+				Character.Move((DungeonGenerator.Direction)obj.ToString()[0]);
+				SetPossibleDirection();
+				OnPropertyChanged(nameof(Map));
+			}
 		}
 
 		#region properties
@@ -98,6 +114,16 @@ namespace DungeonRpg.ViewModel
 			return PossibleDirections.Contains(direction.ToString());
 		}
 		#endregion View Commands
+
+		private void OnMove(string direction)
+		{
+			MoveCharacter(direction[0]);
+		}
+
+		private bool CanMove(string direction)
+		{
+			return PossibleDirections.Contains(direction);
+		}
 
 		private void SetPossibleDirection()
 		{

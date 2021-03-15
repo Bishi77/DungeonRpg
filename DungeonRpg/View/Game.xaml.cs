@@ -24,34 +24,6 @@ namespace DungeonRpg.View
 			binding.Path = new PropertyPath(binding.Path.Path + ".Value");
 		}
 
-		private void Up_Click(object sender, RoutedEventArgs e)
-		{
-			var viewModel = (ViewModel.Game)DataContext;
-			viewModel.MoveCharacter('U');
-			SelectCellByIndex(DynamicGrid, viewModel.Character.Position.Item1, viewModel.Character.Position.Item2);
-		}
-
-		private void Down_Click(object sender, RoutedEventArgs e)
-		{
-			var viewModel = (ViewModel.Game)DataContext;
-			viewModel.MoveCharacter('D');
-			SelectCellByIndex(DynamicGrid, viewModel.Character.Position.Item1, viewModel.Character.Position.Item2);
-		}
-
-		private void Left_Click(object sender, RoutedEventArgs e)
-		{
-			var viewModel = (ViewModel.Game)DataContext;
-			viewModel.MoveCharacter('L');
-			SelectCellByIndex(DynamicGrid, viewModel.Character.Position.Item1, viewModel.Character.Position.Item2);
-		}
-
-		private void Right_Click(object sender, RoutedEventArgs e)
-		{
-			var viewModel = (ViewModel.Game)DataContext;
-			viewModel.MoveCharacter('R');
-			SelectCellByIndex(DynamicGrid, viewModel.Character.Position.Item1, viewModel.Character.Position.Item2);
-		}
-
 		public static void SelectCellByIndex(DataGrid dataGrid, int rowIndex, int columnIndex)
 		{
 			if (!dataGrid.SelectionUnit.Equals(DataGridSelectionUnit.Cell))
