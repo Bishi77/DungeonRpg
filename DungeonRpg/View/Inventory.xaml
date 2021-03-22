@@ -35,7 +35,7 @@
 
 		<StackPanel Name="InventoryItems"
 					Grid.Column="1" Grid.Row="2">
-			<ListView  Name="itemList" ItemsSource="{Binding Items}"
+			<ListView  Name="itemList" ItemsSource="{Binding Character.Inventory.ItemList}"
 					   SelectionMode="Single" 
 					   ScrollViewer.HorizontalScrollBarVisibility="Disabled" 
 					   HorizontalContentAlignment="Stretch" >

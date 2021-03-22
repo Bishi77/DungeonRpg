@@ -19,10 +19,10 @@ namespace DungeonRpg.View
 	/// </summary>
 	public partial class Inventory : Window
 	{
-		public Inventory()
-		{
-			InitializeComponent();
-		}
+		//public Inventory()
+		//{
+		//	InitializeComponent();
+		//}
 
 		public Inventory(ViewModel.Inventory vm)
 		{

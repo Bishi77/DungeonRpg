@@ -82,10 +82,10 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="Model\CoordinateValue.cs" />
     <Compile Include="Model\Dice.cs" />
     <Compile Include="Model\DungeonElement.cs" />
     <Compile Include="ViewModel\Inventory.cs" />
+    <Compile Include="Model\InventoryItemGenerator.cs" />
     <Compile Include="View\Inventory.xaml.cs">
       <DependentUpon>Inventory.xaml</DependentUpon>
     </Compile>

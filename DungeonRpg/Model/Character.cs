@@ -10,7 +10,8 @@ namespace DungeonRpg.Model
 {
 	public class Character
 	{
-
+		#region private members
+		
 		private IInventory _inventory;
 
 		private string _name;
@@ -26,21 +27,28 @@ namespace DungeonRpg.Model
 		private int _mp;
 		private (int, int) _position = (-1, -1);
 
+		#endregion private members
+
+		#region constructor
+		
 		public Character()
 		{
-			Random rnd = new Random();
-			Dice diceD6 = new Dice(6);
+			Dice dice = new Dice(6);
 			Level = 1;
 
-			Strength = diceD6.ResetSum().RollDices(3).SumRolls;
-			Dexterity = diceD6.ResetSum().RollDices(3).SumRolls; ;
-			Intelligence = diceD6.ResetSum().RollDices(3).SumRolls;
-			Constitution = diceD6.ResetSum().RollDices(3).SumRolls;
-			Wisdom = diceD6.ResetSum().RollDices(3).SumRolls;
-
+			Strength = dice.ResetSum().RollDices(3).SumRolls;
+			Dexterity = dice.ResetSum().RollDices(3).SumRolls; ;
+			Intelligence = dice.ResetSum().RollDices(3).SumRolls;
+			Constitution = dice.ResetSum().RollDices(3).SumRolls;
+			Wisdom = dice.ResetSum().RollDices(3).SumRolls;
+			Charisma = dice.ResetSum().RollDices(3).SumRolls;
 			MP = MaxMp;
 			HP = MaxHp;
+
+			_inventory = new Inventory();
 		}
+
+		#endregion constructor
 
 		#region properties
 
@@ -117,15 +125,26 @@ namespace DungeonRpg.Model
 			set { _charisma = value; }
 		}
 
-		#endregion properties
-
 		public IInventory Inventory
 		{
 			get { return _inventory; }
 			set { _inventory = value; }
 		}
 
-		internal void Move(DungeonGenerator.Direction direction)
+		public (int, int) Position
+		{
+			get { return _position; }
+			set
+			{
+				_position = value;
+			}
+		}
+
+		#endregion properties
+
+		#region public methods
+
+		public void Move(DungeonGenerator.Direction direction)
 		{
 			switch (direction)
 			{
@@ -146,13 +165,6 @@ namespace DungeonRpg.Model
 			}
 		}
 
-		public (int, int) Position
-		{
-			get { return _position; }
-			set
-			{
-				_position = value;
-			}
-		}
+		#endregion public methods
 	}
 }

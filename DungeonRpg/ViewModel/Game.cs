@@ -30,6 +30,7 @@ namespace DungeonRpg.ViewModel
 					  true, true, 10);
 			Character = CharacterGenerator.Generate(true);
 			Character.Position = Dungeon.GetFirstDungeonElementPosition(DungeonElementType.StartPoint);
+			Character.Inventory = InventoryItemGenerator.GenerateRandomItems(10);
 			SetPossibleDirection();
 
 			MoveCommand = new CommandImplementation(MoveCharacter);
@@ -126,6 +127,10 @@ namespace DungeonRpg.ViewModel
 			PossibleDirections = Dungeon.GetPossibleMoveDirections(Character.Position.Item1, Character.Position.Item2);
 		}
 
+		private void OpenInventory(object inventory)
+		{
+
+		}
 		#endregion private methods
 
 		#region change notify 

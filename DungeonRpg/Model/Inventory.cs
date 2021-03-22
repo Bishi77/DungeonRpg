@@ -12,15 +12,14 @@ namespace DungeonRpg.Model
 			this._itemList = itemList;
 		}
 
+		public Inventory()
+		{
+		}
+
 		public List<IInventoryItem> ItemList
 		{
 			get { return _itemList; }
 			private set { _itemList = value; }
-		}
-
-		public IList<IInventoryItem> GetInventoryItem()
-		{
-			throw new System.NotImplementedException();
 		}
 
 		public void AddItem(IInventoryItem item)
