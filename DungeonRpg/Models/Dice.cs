@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DungeonRpg.Model
+namespace DungeonRpg.Models
 {
 	public class Dice
 	{

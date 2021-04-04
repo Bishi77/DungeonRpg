@@ -1,14 +1,13 @@
-﻿using DungeonRpg.Model.Interface;
-using System;
+﻿using System;
 
-namespace DungeonRpg.Model
+namespace DungeonRpg.Models
 {
 	public enum Category
 	{
 		MeleeWeapon = 1, RangedWeapon = 2, HealingPotion = 3, Shield = 4, Armour = 5
 	}
 
-	public class InventoryItem : IInventoryItem
+	public class InventoryItem
 	{
 		private readonly Category _category;
 		private string _name;

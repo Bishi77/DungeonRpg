@@ -1,6 +1,6 @@
 ﻿using System.Data;
 
-namespace DungeonRpg.ViewModel.Helpers
+namespace DungeonRpg.ViewModels.Helpers
 {
 	public static class ConversionFunctions
 	{

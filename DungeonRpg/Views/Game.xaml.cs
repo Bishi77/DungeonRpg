@@ -5,12 +5,9 @@ using System.Windows.Controls.Primitives;
 using System.Windows.Data;
 using System.Windows.Media;
 
-namespace DungeonRpg.View
+namespace DungeonRpg.Views
 {
-	/// <summary>
-	/// Interaction logic for MainWindow.xaml
-	/// </summary>
-	public partial class Game : Window
+	public partial class Game
 	{
 		public Game()
 		{
@@ -102,14 +99,14 @@ namespace DungeonRpg.View
 			return null;
 		}
 
-		private void btnInventory_Click(object sender, RoutedEventArgs e)
-		{
-			ViewModel.Inventory vm = new ViewModel.Inventory();
-			Inventory myOwnedDialog = new Inventory(vm);
-			myOwnedDialog.Owner = this;
-			myOwnedDialog.Width = this.Width * 0.9;
-			myOwnedDialog.Height = this.Height * 0.9;
-			myOwnedDialog.ShowDialog();
-		}
+		//private void btnInventory_Click(object sender, RoutedEventArgs e)
+		//{
+		//	ViewModel.Inventory vm = new ViewModel.Inventory();
+		//	Inventory myOwnedDialog = new Inventory(vm);
+		//	myOwnedDialog.Owner = this;
+		//	myOwnedDialog.Width = this.Width * 0.9;
+		//	myOwnedDialog.Height = this.Height * 0.9;
+		//	myOwnedDialog.ShowDialog();
+		//}
 	}
 }

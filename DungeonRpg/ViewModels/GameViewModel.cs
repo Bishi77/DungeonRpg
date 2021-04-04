@@ -1,14 +1,13 @@
-﻿using DungeonRpg.Model;
-using DungeonRpg.ViewModel.Helpers;
-using System;
+﻿using DungeonRpg.Models;
+using DungeonRpg.ViewModels.Helpers;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Windows.Input;
 
-namespace DungeonRpg.ViewModel
+namespace DungeonRpg.ViewModels
 {
-	public class Game : INotifyPropertyChanged, ICanEnableField
+	public class GameViewModel : BindableBaseViewModel, INotifyPropertyChanged, ICanEnableField, IPageViewModel
 	{
 		private Dungeon _dungeon = new Dungeon(new List<DungeonElement>[0,0]);
 		private Character _character = new Character();
@@ -17,22 +16,12 @@ namespace DungeonRpg.ViewModel
 		private readonly CanEnableFieldHelper _helper;
 
 		public ICommand MoveCommand { get; set; }
+		public ICommand GoToInventoryCommand { get; set; }
 
 		#region constructor
 
-		public Game()
+		public GameViewModel()
 		{
-			DungeonGenerator _generator = new DungeonGenerator();
-			Dungeon = _generator.AddPlacePOIsToDungeonLevel(
-						_generator.AddWaysToDungeonLevel(
-							_generator.GenerateDungeonLevel(10, 10)
-						, 40),
-					  true, true, 10);
-			Character = CharacterGenerator.Generate(true);
-			Character.Position = Dungeon.GetFirstDungeonElementPosition(DungeonElementType.StartPoint);
-			Character.Inventory = InventoryItemGenerator.GenerateRandomItems(10);
-			SetPossibleDirection();
-
 			MoveCommand = new CommandImplementation(MoveCharacter);
 			_helper = new CanEnableFieldHelper(this);
 			OnPropertyChanged(nameof(CanEnable));
@@ -93,6 +82,20 @@ namespace DungeonRpg.ViewModel
 
 		#region View Commands
 
+		public void StartGame()
+		{
+			DungeonGenerator _generator = new DungeonGenerator();
+			Dungeon = _generator.AddPlacePOIsToDungeonLevel(
+						_generator.AddWaysToDungeonLevel(
+							_generator.GenerateDungeonLevel(10, 10)
+						, 40),
+					  true, true, 10);
+			Character = CharacterGenerator.Generate(true);
+			Character.Position = Dungeon.GetFirstDungeonElementPosition(DungeonElementType.StartPoint);
+			Character.Inventory.ItemList = InventoryItemGenerator.GenerateRandomItems(10);
+			SetPossibleDirection();
+		}
+
 		public void MoveCharacter(char direction)
 		{
 			if (PossibleDirections.Contains(direction.ToString()))
@@ -107,7 +110,6 @@ namespace DungeonRpg.ViewModel
 		{
 			return PossibleDirections.Contains(direction.ToString());
 		}
-
 		#endregion View Commands
 
 		#region private methods
@@ -127,20 +129,6 @@ namespace DungeonRpg.ViewModel
 			PossibleDirections = Dungeon.GetPossibleMoveDirections(Character.Position.Item1, Character.Position.Item2);
 		}
 
-		private void OpenInventory(object inventory)
-		{
-
-		}
 		#endregion private methods
-
-		#region change notify 
-		public event PropertyChangedEventHandler PropertyChanged;
-
-		private void OnPropertyChanged(string propertyName)
-		{
-			PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
-		}
-		#endregion change notify 
-
 	}
 }

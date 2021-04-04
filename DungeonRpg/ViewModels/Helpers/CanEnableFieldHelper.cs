@@ -1,13 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Dynamic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Dynamic;
 
-namespace DungeonRpg.ViewModel.Helpers
+namespace DungeonRpg.ViewModels.Helpers
 {
-    public interface ICanEnableField
+	public interface ICanEnableField
     {
         bool CanEnableField(string key);
     }

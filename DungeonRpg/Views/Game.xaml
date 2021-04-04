@@ -1,18 +1,12 @@
-﻿<Window x:Class="DungeonRpg.View.Game"
-        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:DungeonRpg.View"
-		xmlns:vm="clr-namespace:DungeonRpg.ViewModel"
-		xmlns:vml = "clr-namespace:DungeonRpg.VML"
-		vml:ViewModelLocator.AutoHookedUpViewModel = "True"
-        mc:Ignorable="d"
-        Title="Dungeon RPG" 
+﻿<UserControl x:Class="DungeonRpg.Views.Game"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d"
 		HorizontalAlignment="Center"
-		VerticalAlignment="Center"
-		SizeToContent="WidthAndHeight" MinHeight="400" MinWidth="700"
-		WindowStartupLocation="CenterScreen" >
+		VerticalAlignment="Center">
+
 	<Grid>
 		<Grid.ColumnDefinitions>
 			<ColumnDefinition Width="20"/>
@@ -202,7 +196,10 @@
 								Orientation="Vertical" >
 						<Button Name="btnInventory"
 								MinWidth="50" Height="25" Margin="10"
-								Content="Leltár" Click="btnInventory_Click"/>
+								Command = "{Binding GoToInventoryCommand}" 
+								CommandParameter = "Inventory" 
+								Content="Leltár" 
+								/>
 						<Button Name="btnUse" 
 								MinWidth="50" Height="25" Margin="10"
 								Content="Használ"/>
@@ -217,4 +214,4 @@
 			</TextBlock>
 		</DockPanel>
 	</Grid>
-</Window>
+</UserControl>

@@ -1,24 +1,21 @@
-﻿<Window x:Class="DungeonRpg.View.Inventory"
+﻿<UserControl x:Class="DungeonRpg.Views.Inventory"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:DungeonRpg.View"
-		xmlns:vm="clr-namespace:DungeonRpg.ViewModel"
+        xmlns:local="clr-namespace:DungeonRpg.Views"
+		xmlns:vm="clr-namespace:DungeonRpg.ViewModels"
 		xmlns:vml = "clr-namespace:DungeonRpg.VML"
-		vml:ViewModelLocator.AutoHookedUpViewModel = "True"
         mc:Ignorable="d"
-        Title="Leltar"
 		HorizontalAlignment="Center"
 		VerticalAlignment="Center"
-		MinHeight="300" MinWidth="600"
-		WindowStartupLocation="CenterScreen" >
+		MinHeight="300" MinWidth="600">
 	<Grid>
 		<Grid.ColumnDefinitions>
 			<ColumnDefinition Width="20"/>
 			<ColumnDefinition Width="1*"/>
 			<ColumnDefinition Width="20"/>
-			<ColumnDefinition Width="*"/>
+			<ColumnDefinition Width="1*"/>
 			<ColumnDefinition Width="20"/>
 		</Grid.ColumnDefinitions>
 		<Grid.RowDefinitions>
@@ -52,9 +49,15 @@
 			</ListView>
 		</StackPanel>
 
+		<Button Grid.Column="3" Grid.Row="0" Grid.ColumnSpan="2" Grid.RowSpan="2"
+				Width="40" Height="40"
+				HorizontalAlignment="Right" VerticalAlignment="Top"
+				Content="X" 
+				Command="{Binding GoToGameCommand}"
+				CommandParameter = "Game" />
 		<TextBlock Grid.Column="3" Grid.Row="2"
 			Text="{Binding ElementName=itemList, Path=SelectedItem.Name}" />
 		<TextBlock Grid.Column="3" Grid.Row="3"
 			Text="{Binding ElementName=itemList, Path=SelectedItem.Description}" />
 	</Grid>
-</Window>
+</UserControl>

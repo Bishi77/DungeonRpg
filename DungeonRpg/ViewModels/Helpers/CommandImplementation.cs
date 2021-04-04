@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Windows.Input;
 
-namespace DungeonRpg.ViewModel.Helpers
+namespace DungeonRpg.ViewModels.Helpers
 {
 	public class CommandImplementation : ICommand
 	{

@@ -1,13 +1,12 @@
-﻿using DungeonRpg.Model;
+﻿using DungeonRpg.Models;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using TechTalk.SpecFlow;
 
 namespace DungeonRpg.Tests
 {
-    [Binding]
+	[Binding]
     public class DungeonGeneratorSteps
     {
         private DungeonGenerator dgt;

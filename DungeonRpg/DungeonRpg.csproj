@@ -82,35 +82,44 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="Model\Dice.cs" />
-    <Compile Include="Model\DungeonElement.cs" />
-    <Compile Include="ViewModel\Inventory.cs" />
-    <Compile Include="Model\InventoryItemGenerator.cs" />
-    <Compile Include="View\Inventory.xaml.cs">
+    <Compile Include="Models\Dice.cs" />
+    <Compile Include="Models\DungeonElement.cs" />
+    <Compile Include="ViewModels\BindableBaseViewModel.cs" />
+    <Compile Include="ViewModels\Helpers\RelayCommand.cs" />
+    <Compile Include="ViewModels\InventoryViewModel.cs" />
+    <Compile Include="Models\InventoryItemGenerator.cs" />
+    <Compile Include="ViewModels\MainWindowViewModel.cs" />
+    <Compile Include="ViewModels\IPageViewModel.cs" />
+    <Compile Include="Views\Inventory.xaml.cs">
       <DependentUpon>Inventory.xaml</DependentUpon>
     </Compile>
-    <Compile Include="ViewModel\Helpers\CanEnableFieldHelper.cs" />
-    <Compile Include="ViewModel\Helpers\ConversionFunctions.cs" />
-    <Compile Include="ViewModel\Helpers\Ref.cs" />
-    <Compile Include="Model\CharacterGenerator.cs" />
-    <Compile Include="Model\Dungeon.cs" />
-    <Compile Include="Model\DungeonGenerator.cs" />
-    <Compile Include="Model\InventoryItem.cs" />
-    <Compile Include="Model\Character.cs" />
-    <Compile Include="Model\Interface\IInventory.cs" />
-    <Compile Include="Model\Inventory.cs" />
-    <Compile Include="Model\Interface\IInventoryItem.cs" />
-    <Compile Include="ViewModel\Game.cs" />
+    <Compile Include="ViewModels\Helpers\CanEnableFieldHelper.cs" />
+    <Compile Include="ViewModels\Helpers\ConversionFunctions.cs" />
+    <Compile Include="ViewModels\Helpers\Ref.cs" />
+    <Compile Include="Models\CharacterGenerator.cs" />
+    <Compile Include="Models\Dungeon.cs" />
+    <Compile Include="Models\DungeonGenerator.cs" />
+    <Compile Include="Models\InventoryItem.cs" />
+    <Compile Include="Models\Character.cs" />
+    <Compile Include="Models\Inventory.cs" />
+    <Compile Include="ViewModels\GameViewModel.cs" />
+    <Compile Include="Views\MainWindow.xaml.cs">
+      <DependentUpon>MainWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="VML\ViewModelLocator.cs" />
-    <Page Include="View\Inventory.xaml">
+    <Page Include="Views\Inventory.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="View\Start.xaml">
+    <Page Include="Views\MainWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="View\Game.xaml">
+    <Page Include="Views\Start.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Game.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
@@ -118,11 +127,11 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="ViewModel\Helpers\CommandImplementation.cs" />
-    <Compile Include="View\Start.xaml.cs">
+    <Compile Include="ViewModels\Helpers\CommandImplementation.cs" />
+    <Compile Include="Views\Start.xaml.cs">
       <DependentUpon>Start.xaml</DependentUpon>
     </Compile>
-    <Compile Include="View\Game.xaml.cs">
+    <Compile Include="Views\Game.xaml.cs">
       <DependentUpon>Game.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
@@ -165,6 +174,10 @@
       <ProductName>.NET Framework 3.5 SP1</ProductName>
       <Install>false</Install>
     </BootstrapperPackage>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Models\Interfaces\" />
+    <Folder Include="Services\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

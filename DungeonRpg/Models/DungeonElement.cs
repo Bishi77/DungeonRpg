@@ -1,4 +1,4 @@
-﻿namespace DungeonRpg.Model
+﻿namespace DungeonRpg.Models
 {
 	/// <summary>
 	/// Pálya elem típusa, típus függő speciális működés lehet szükséges

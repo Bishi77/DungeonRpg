@@ -1,14 +1,13 @@
-﻿using DungeonRpg.Model.Interface;
-using System;
+﻿using System;
 using System.Collections.Generic;
 
-namespace DungeonRpg.Model
+namespace DungeonRpg.Models
 {
 	public class InventoryItemGenerator
 	{
-		public static Inventory GenerateRandomItems(int itemNumber)
+		public static List<InventoryItem> GenerateRandomItems(int itemNumber)
 		{
-			Inventory inventory = new Inventory();
+			List<InventoryItem> itemList = new List<InventoryItem>();
 			Random rnd = new Random();
 
 			for (int i = 0; i < itemNumber; i++)
@@ -18,10 +17,10 @@ namespace DungeonRpg.Model
 				item.Name = GenerateName(item.Category);
 				item.Description = GenerateDescription(item);
 
-				inventory.AddItem(item);
+				itemList.Add(item);
 			}
 
-			return inventory;
+			return itemList;
 		}
 
 		#region Generate name members

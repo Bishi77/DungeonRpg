@@ -1,18 +1,10 @@
-﻿using DungeonRpg.Model.Interface;
-using DungeonRpg.Model;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace DungeonRpg.Model
+﻿namespace DungeonRpg.Models
 {
 	public class Character
 	{
 		#region private members
 		
-		private IInventory _inventory;
+		private Inventory _inventory;
 
 		private string _name;
 		private int _strength;
@@ -125,7 +117,7 @@ namespace DungeonRpg.Model
 			set { _charisma = value; }
 		}
 
-		public IInventory Inventory
+		public Inventory Inventory
 		{
 			get { return _inventory; }
 			set { _inventory = value; }

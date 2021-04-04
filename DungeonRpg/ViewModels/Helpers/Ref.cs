@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace DungeonRpg.ViewModel.Helpers
+namespace DungeonRpg.ViewModels.Helpers
 {
 	public class Ref<T>
     {

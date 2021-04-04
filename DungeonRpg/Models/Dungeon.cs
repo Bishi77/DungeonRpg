@@ -1,9 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using static DungeonRpg.Model.DungeonGenerator;
 
-namespace DungeonRpg.Model
+namespace DungeonRpg.Models
 {
 	public class Dungeon
 	{
