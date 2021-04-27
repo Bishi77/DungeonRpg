@@ -7,7 +7,6 @@
 	
 	//régi mezők, megfeleltetni az újjal
 	//public enum FieldTypes { Wall = 0, Finish = 1, Down = 2, Up = 3, Monster = 4, Way = 5, Start = 6 };
-
 	public class DungeonElement
 	{
 		/// <summary>
@@ -18,15 +17,14 @@
 		/// Adott elem azonosító a típuson belül
 		/// </summary>
 		private readonly int _elementID = -1;
-		
+
+		public DungeonElementType ElementType => _elementType;
+		public int ElementID => _elementID;
+
 		public DungeonElement(DungeonElementType elementType, int elementID)
 		{
 			_elementType = elementType;
 			this._elementID = elementID;
 		}
-
-		public DungeonElementType ElementType => _elementType;
-
-		public int ElementID => _elementID;
 	}
 }

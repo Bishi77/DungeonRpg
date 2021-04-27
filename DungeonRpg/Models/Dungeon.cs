@@ -7,7 +7,12 @@ namespace DungeonRpg.Models
 	public class Dungeon
 	{
 		private List<DungeonElement>[,] _levelData = new List<DungeonElement>[0, 0];
+		public List<DungeonElement>[,] LevelData
+		{
+			get { return _levelData; }
+		}
 
+		#region ctor
 		public Dungeon(List<DungeonElement>[,] levelData)
 		{
 			_levelData = levelData;
@@ -20,14 +25,9 @@ namespace DungeonRpg.Models
 				}
 			}
 		}
+		#endregion ctor
 
-		public List<DungeonElement>[,] LevelData
-		{
-			get { return _levelData; }
-		}
-
-		#region public methods
-
+		#region methods
 		/// <summary>
 		/// Keresett elemtípus első előfordulásána pozíciója a pályán
 		/// </summary>
@@ -102,17 +102,6 @@ namespace DungeonRpg.Models
 				result += "R";
 			return result;
 		}
-
-		#endregion public methods
-
-		//private string GetFieldView(float f)
-		//{
-		//	int type = (int)Math.Truncate(f);
-		//	FieldTypes ft = (FieldTypes)type;
-		//	return ft == FieldTypes.Way ? " " : ft.ToString()[0].ToString();
-		//}
-
-
-
+		#endregion methods
 	}
 }

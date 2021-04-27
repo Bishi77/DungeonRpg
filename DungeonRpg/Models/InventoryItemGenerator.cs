@@ -23,8 +23,8 @@ namespace DungeonRpg.Models
 			return itemList;
 		}
 
+		#region methods
 		#region Generate name members
-
 		public static string GenerateName(Category category)
 		{
 			string name;
@@ -127,11 +127,9 @@ namespace DungeonRpg.Models
 
 			return names;
 		}
-
 		#endregion Generate name members
 
 		#region Generate description
-
 		public static string GenerateDescription(InventoryItem item)
 		{
 			string desc;
@@ -160,7 +158,7 @@ namespace DungeonRpg.Models
 
 			return desc;
 		}
-
 		#endregion Generate description		
+		#endregion methods
 	}
 }

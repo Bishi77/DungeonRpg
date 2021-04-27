@@ -20,13 +20,14 @@ namespace DungeonRpg.Models
             }
         }
 
-        /// <summary>
-        /// Pálya generálása.
-        /// </summary>
-        /// <param name="rows">pálya mérete, sorok</param>
-        /// <param name="columns">pálya mérete, oszlopok</param>
-        /// <returns>generált pálya</returns>
-        public Dungeon GenerateDungeonLevel(int rows, int columns)
+		#region methods
+		/// <summary>
+		/// Pálya generálása.
+		/// </summary>
+		/// <param name="rows">pálya mérete, sorok</param>
+		/// <param name="columns">pálya mérete, oszlopok</param>
+		/// <returns>generált pálya</returns>
+		public Dungeon GenerateDungeonLevel(int rows, int columns)
 		{
 			return new Dungeon(new List<DungeonElement>[rows, columns]);			
 		}
@@ -212,6 +213,6 @@ namespace DungeonRpg.Models
                 connections++;
             return connections > 1;
         }
-
+        #endregion methods
     }
 }
