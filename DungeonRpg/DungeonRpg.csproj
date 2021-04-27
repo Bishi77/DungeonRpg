@@ -27,7 +27,7 @@
     <UpdatePeriodically>false</UpdatePeriodically>
     <UpdateRequired>false</UpdateRequired>
     <MapFileExtensions>true</MapFileExtensions>
-    <ApplicationRevision>3</ApplicationRevision>
+    <ApplicationRevision>6</ApplicationRevision>
     <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
     <UseApplicationTrust>false</UseApplicationTrust>
     <PublishWizardCompleted>true</PublishWizardCompleted>
@@ -86,19 +86,15 @@
     <Compile Include="Models\Dice.cs" />
     <Compile Include="Models\DungeonElement.cs" />
     <Compile Include="ViewModels\BindableBaseViewModel.cs" />
-    <Compile Include="ViewModels\Helpers\ConvertTextToImage.cs" />
     <Compile Include="ViewModels\Helpers\RelayCommand.cs" />
     <Compile Include="ViewModels\InventoryViewModel.cs" />
     <Compile Include="Models\InventoryItemGenerator.cs" />
     <Compile Include="ViewModels\MainWindowViewModel.cs" />
-    <Compile Include="ViewModels\IPageViewModel.cs" />
     <Compile Include="ViewModels\MapItem.cs" />
     <Compile Include="Views\Inventory.xaml.cs">
       <DependentUpon>Inventory.xaml</DependentUpon>
     </Compile>
     <Compile Include="ViewModels\Helpers\CanEnableFieldHelper.cs" />
-    <Compile Include="ViewModels\Helpers\ConversionFunctions.cs" />
-    <Compile Include="ViewModels\Helpers\Ref.cs" />
     <Compile Include="Models\CharacterGenerator.cs" />
     <Compile Include="Models\Dungeon.cs" />
     <Compile Include="Models\DungeonGenerator.cs" />
@@ -179,8 +175,7 @@
     </BootstrapperPackage>
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Models\Interfaces\" />
-    <Folder Include="Resources\MapItems\" />
+    <Folder Include="Resources\" />
     <Folder Include="Services\" />
   </ItemGroup>
   <ItemGroup>

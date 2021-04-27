@@ -4,8 +4,7 @@ namespace DungeonRpg.Models
 {
 	public class Inventory
 	{
-		private List<InventoryItem> _itemList = new List<InventoryItem>();
-		
+		private List<InventoryItem> _itemList = new List<InventoryItem>();		
 		public List<InventoryItem> ItemList
 		{
 			get { return _itemList; }

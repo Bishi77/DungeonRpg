@@ -25,7 +25,7 @@ namespace DungeonRpg.Views
 			}
 			catch(Exception ex)
 			{
-				MessageBox.Show(ex.Message, "Error", MessageBoxButton.OK);
+				MessageBox.Show(ex.Message +"\n" + ex.StackTrace, "Error", MessageBoxButton.OK);
 			}
 		}
 	}

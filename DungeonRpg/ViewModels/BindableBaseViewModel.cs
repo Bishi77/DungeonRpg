@@ -7,6 +7,7 @@ namespace DungeonRpg.ViewModels
 {
 	public class BindableBaseViewModel : INotifyPropertyChanged
     {
+        #region INotifyPropertyChanged
         public event PropertyChangedEventHandler PropertyChanged = delegate { };
 
         protected virtual void SetProperty<T>(ref T member, T val,
@@ -22,9 +23,9 @@ namespace DungeonRpg.ViewModels
         {
             PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
         }
+        #endregion INotifyPropertyChanged
 
         #region Debugging Aides
-
         /// <summary>
         /// Warns the developer if this object does not have
         /// a public property with the specified name. This
@@ -54,7 +55,6 @@ namespace DungeonRpg.ViewModels
         /// override this property's getter to return true.
         /// </summary>
         protected virtual bool ThrowOnInvalidPropertyName { get; private set; }
-
-        #endregion // Debugging Aides
+        #endregion Debugging Aides
     }
 }

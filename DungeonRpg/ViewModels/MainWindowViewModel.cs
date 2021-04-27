@@ -7,16 +7,11 @@ namespace DungeonRpg.ViewModels
 {
 	public class MainWindowViewModel : BindableBaseViewModel
 	{
-		#region Fields
-
-		private ICommand _changePageCommand;
-		private BindableBaseViewModel _currentPageViewModel;
-		private List<BindableBaseViewModel> _pageViewModels = new List<BindableBaseViewModel>();
-
-		#endregion
-
+		#region commands
 		public ICommand InventoryCommand { get; set; }
 		public ICommand MainCommand { get; set; }
+
+		private ICommand _changePageCommand;
 		public ICommand ChangePageCommand
 		{
 			get
@@ -31,23 +26,10 @@ namespace DungeonRpg.ViewModels
 				return _changePageCommand;
 			}
 		}
+		#endregion commands
 
-		public MainWindowViewModel()
-		{
-			var gamevm = new GameViewModel();
-			var inventory = new InventoryViewModel(gamevm.Character.Inventory);
-
-			gamevm.StartGame();
-			gamevm.GoToInventoryCommand = new CommandImplementation(OnNav);
-			inventory.GoToGameCommand = new CommandImplementation(OnNav);
-			PageViewModels.Add(gamevm);
-			PageViewModels.Add(inventory);
-			CurrentPageViewModel = gamevm;
-		}
-
-		public MainWindowViewModel(BindableBaseViewModel game)
-		{}
-
+		#region properties
+		private List<BindableBaseViewModel> _pageViewModels = new List<BindableBaseViewModel>();
 		public List<BindableBaseViewModel> PageViewModels
 		{
 			get
@@ -59,6 +41,7 @@ namespace DungeonRpg.ViewModels
 			}
 		}
 
+		private BindableBaseViewModel _currentPageViewModel = new BindableBaseViewModel();
 		public BindableBaseViewModel CurrentPageViewModel
 		{
 			get
@@ -71,7 +54,24 @@ namespace DungeonRpg.ViewModels
 				OnPropertyChanged("CurrentPageViewModel");
 			}
 		}
+		#endregion properties
 
+		#region ctor
+		public MainWindowViewModel()
+		{
+			var gamevm = new GameViewModel();
+			var inventory = new InventoryViewModel(gamevm.Character.Inventory);
+
+			gamevm.StartGame();
+			gamevm.GoToInventoryCommand = new CommandImplementation(OnNav);
+			inventory.GoToGameCommand = new CommandImplementation(OnNav);
+			PageViewModels.Add(gamevm);
+			PageViewModels.Add(inventory);
+			CurrentPageViewModel = gamevm;
+		}
+		#endregion ctor
+
+		#region methods
 		private void ChangeViewModel(BindableBaseViewModel viewModel)
 		{
 			if (!PageViewModels.Contains(viewModel))
@@ -100,5 +100,6 @@ namespace DungeonRpg.ViewModels
 					break;
 			}
 		}
+		#endregion methods
 	}
 }

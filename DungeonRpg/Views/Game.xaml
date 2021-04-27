@@ -11,7 +11,6 @@
 			 MaxHeight="600" MaxWidth="800">
 	<UserControl.Resources>
 		<vm:GameViewModel x:Key="ViewModel" />
-		<helpers:ConvertTextToImage x:Key="convert"/>
 	</UserControl.Resources>
 
 	<Grid>

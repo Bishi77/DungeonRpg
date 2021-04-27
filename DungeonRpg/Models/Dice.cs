@@ -8,16 +8,19 @@ namespace DungeonRpg.Models
 {
 	public class Dice
 	{
-		int DiceSide;
-		Random _rnd = new Random();
+		private int DiceSide;
+		private Random _rnd = new Random();
 
 		public int SumRolls = 0;
-		
+
+		#region ctor
 		public Dice(int sides)
 		{
 			DiceSide = sides;
 		}
+		#endregion ctor
 
+		#region methods
 		public Dice SetSides(int sides)
 		{
 			DiceSide = sides;
@@ -44,5 +47,6 @@ namespace DungeonRpg.Models
 		{
 			return _rnd.Next(DiceSide) + 1;
 		}
+		#endregion methods
 	}
 }

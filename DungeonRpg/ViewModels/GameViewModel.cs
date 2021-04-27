@@ -14,7 +14,7 @@ using static System.Net.Mime.MediaTypeNames;
 
 namespace DungeonRpg.ViewModels
 {
-	public class GameViewModel : BindableBaseViewModel, INotifyPropertyChanged, ICanEnableField, IPageViewModel
+	public class GameViewModel : BindableBaseViewModel, INotifyPropertyChanged, ICanEnableField
 	{
 		#region fields
 		private Dungeon _dungeon = new Dungeon(new List<DungeonElement>[0, 0]);

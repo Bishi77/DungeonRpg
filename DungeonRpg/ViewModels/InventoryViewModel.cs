@@ -5,20 +5,11 @@ using System.Windows.Input;
 
 namespace DungeonRpg.ViewModels
 {
-	public class InventoryViewModel : BindableBaseViewModel, INotifyPropertyChanged, IPageViewModel
+	public class InventoryViewModel : BindableBaseViewModel, INotifyPropertyChanged
 	{
 		private Inventory _inventory = new Inventory(null);
 
 		public ICommand GoToGameCommand { get; set; }
-
-		public InventoryViewModel()
-		{
-		}
-
-		public InventoryViewModel(Inventory inventory)
-		{
-			_inventory = inventory;
-		}
 
 		public List<InventoryItem> Items
 		{
@@ -29,5 +20,16 @@ namespace DungeonRpg.ViewModels
 				OnPropertyChanged(nameof(Items));
 			}
 		}
+
+		#region ctor
+		public InventoryViewModel()
+		{
+		}
+
+		public InventoryViewModel(Inventory inventory)
+		{
+			_inventory = inventory;
+		}
+		#endregion ctor
 	}
 }
