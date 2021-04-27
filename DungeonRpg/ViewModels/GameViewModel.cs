@@ -97,7 +97,7 @@ namespace DungeonRpg.ViewModels
 			DungeonGenerator _generator = new DungeonGenerator();
 			Dungeon = _generator.AddPlacePOIsToDungeonLevel(
 						_generator.AddWaysToDungeonLevel(
-							_generator.GenerateDungeonLevel(10, 10)
+							_generator.GenerateDungeonLevel(50, 50)
 						, 40),
 					  true, true, 10);
 			Character = CharacterGenerator.Generate(true);

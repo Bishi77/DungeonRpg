@@ -7,7 +7,8 @@
 			 xmlns:helpers="clr-namespace:DungeonRpg.ViewModels.Helpers"
 			 mc:Ignorable="d"
 		HorizontalAlignment="Center"
-		VerticalAlignment="Center">
+		VerticalAlignment="Center"
+			 MaxHeight="600" MaxWidth="800">
 	<UserControl.Resources>
 		<vm:GameViewModel x:Key="ViewModel" />
 		<helpers:ConvertTextToImage x:Key="convert"/>
@@ -30,27 +31,30 @@
 			<RowDefinition Height="20"/>
 		</Grid.RowDefinitions>
 
-		<ItemsControl Grid.Column="1" Grid.Row="1" Grid.RowSpan="3" ItemsSource="{Binding MapItems}">
-			<ItemsControl.ItemsPanel>
-				<ItemsPanelTemplate>
-					<UniformGrid 
-						Background="Transparent" 
-						Rows="{Binding Rows}" 
-						Columns="{Binding Columns}" Margin="0" Width="200" Height="200">
-					</UniformGrid>
-				</ItemsPanelTemplate>
-			</ItemsControl.ItemsPanel>
-			<ItemsControl.ItemTemplate>
-				<DataTemplate>
-					<Image  Source="{Binding Image}" Height="30" Width="{Binding Path=Height, RelativeSource={RelativeSource Self}}" Margin="0" />
-				</DataTemplate>
-			</ItemsControl.ItemTemplate>
-		</ItemsControl>
-
-
-
-
-
+		<ScrollViewer Grid.Column="1" Grid.Row="1" Grid.RowSpan="3" 
+						  VerticalAlignment="Bottom" HorizontalAlignment="Left"
+					  VerticalScrollBarVisibility="Visible"
+					  HorizontalScrollBarVisibility="Visible"
+					  CanContentScroll="True"
+					  MaxHeight="500" MaxWidth="500">
+			<ItemsControl 
+						  ItemsSource="{Binding MapItems}">
+				<ItemsControl.ItemsPanel>
+					<ItemsPanelTemplate>
+						<UniformGrid 
+							Background="Transparent" 
+							Rows="{Binding Rows}" 
+							Columns="{Binding Columns}" Margin="0">
+						</UniformGrid>
+					</ItemsPanelTemplate>
+				</ItemsControl.ItemsPanel>
+				<ItemsControl.ItemTemplate>
+					<DataTemplate>
+						<Image  Source="{Binding Image}" Margin="0" MaxHeight="30" MaxWidth="30" />
+					</DataTemplate>
+				</ItemsControl.ItemTemplate>
+			</ItemsControl>
+		</ScrollViewer>
 		<!--<DataGrid x:Name="MapTable" 
 				  Grid.Row="1" Grid.Column="1" Grid.RowSpan="3" 
 				  ItemsSource="{Binding Map}" 
