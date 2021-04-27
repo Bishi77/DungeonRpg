@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Reflection;
 
 namespace UniversalDesign
 {
@@ -18,7 +19,8 @@ namespace UniversalDesign
 		public string GetTilePathWithFileName(TileCategory category, TileSubCategory subCategory, List<string> detailPattern)
 		{
 			string result = "";
-			string path = $"..\\..\\..\\UniversalDesign\\Resources\\Tiles\\rltiles\\{category.Value}\\{subCategory.Value}\\";
+			string path = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
+			path += $"\\Resources\\Tiles\\rltiles\\{category.Value}\\{subCategory.Value}\\";
 			path = Path.Combine(Environment.CurrentDirectory, path);
 			if (Directory.Exists(path))
 			{
