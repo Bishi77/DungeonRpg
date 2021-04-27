@@ -58,6 +58,7 @@
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Data" />
+    <Reference Include="System.Drawing" />
     <Reference Include="System.Threading.Tasks.Extensions, Version=4.1.1.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
       <HintPath>..\packages\System.Threading.Tasks.Extensions.4.4.0\lib\netstandard2.0\System.Threading.Tasks.Extensions.dll</HintPath>
     </Reference>
@@ -85,11 +86,13 @@
     <Compile Include="Models\Dice.cs" />
     <Compile Include="Models\DungeonElement.cs" />
     <Compile Include="ViewModels\BindableBaseViewModel.cs" />
+    <Compile Include="ViewModels\Helpers\ConvertTextToImage.cs" />
     <Compile Include="ViewModels\Helpers\RelayCommand.cs" />
     <Compile Include="ViewModels\InventoryViewModel.cs" />
     <Compile Include="Models\InventoryItemGenerator.cs" />
     <Compile Include="ViewModels\MainWindowViewModel.cs" />
     <Compile Include="ViewModels\IPageViewModel.cs" />
+    <Compile Include="ViewModels\MapItem.cs" />
     <Compile Include="Views\Inventory.xaml.cs">
       <DependentUpon>Inventory.xaml</DependentUpon>
     </Compile>
@@ -177,7 +180,14 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Models\Interfaces\" />
+    <Folder Include="Resources\MapItems\" />
     <Folder Include="Services\" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\UniversalDesign\UniversalDesign.csproj">
+      <Project>{f4b62255-76a8-4d5b-b30b-e5ef32a10f8b}</Project>
+      <Name>UniversalDesign</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

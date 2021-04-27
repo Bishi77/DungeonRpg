@@ -3,9 +3,15 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-             mc:Ignorable="d"
+			 xmlns:vm="clr-namespace:DungeonRpg.ViewModels" 
+			 xmlns:helpers="clr-namespace:DungeonRpg.ViewModels.Helpers"
+			 mc:Ignorable="d"
 		HorizontalAlignment="Center"
 		VerticalAlignment="Center">
+	<UserControl.Resources>
+		<vm:GameViewModel x:Key="ViewModel" />
+		<helpers:ConvertTextToImage x:Key="convert"/>
+	</UserControl.Resources>
 
 	<Grid>
 		<Grid.ColumnDefinitions>
@@ -24,61 +30,89 @@
 			<RowDefinition Height="20"/>
 		</Grid.RowDefinitions>
 
-		<DockPanel Name="MapPanel" 
+		<ItemsControl Grid.Column="1" Grid.Row="1" Grid.RowSpan="3" ItemsSource="{Binding MapItems}">
+			<ItemsControl.ItemsPanel>
+				<ItemsPanelTemplate>
+					<UniformGrid 
+						Background="Transparent" 
+						Rows="{Binding Rows}" 
+						Columns="{Binding Columns}" Margin="0" Width="200" Height="200">
+					</UniformGrid>
+				</ItemsPanelTemplate>
+			</ItemsControl.ItemsPanel>
+			<ItemsControl.ItemTemplate>
+				<DataTemplate>
+					<Image  Source="{Binding Image}" Height="30" Width="{Binding Path=Height, RelativeSource={RelativeSource Self}}" Margin="0" />
+				</DataTemplate>
+			</ItemsControl.ItemTemplate>
+		</ItemsControl>
+
+
+
+
+
+		<!--<DataGrid x:Name="MapTable" 
+				  Grid.Row="1" Grid.Column="1" Grid.RowSpan="3" 
+				  ItemsSource="{Binding Map}" 
+				  HeadersVisibility="None" IsHitTestVisible="False">
+			<ItemsControl.ItemTemplate>
+				<DataTemplate>
+					-->
+		<!--<Button Content="{Binding}" Margin="0,0,5,5" />-->
+		<!--
+					<Image Source="{Binding Converter={StaticResource convert}}" Margin="0,0,5,5" />
+					-->
+		<!--<Rectangle Fill="Azure" Margin="0,0,5,5" />-->
+		<!--
+				</DataTemplate>
+			</ItemsControl.ItemTemplate>
+		</DataGrid>-->
+
+
+		<!--<Grid Grid.Row="2" Grid.Column="1">
+			<Grid.ColumnDefinitions>
+				<ColumnDefinition Width="*"/>
+				<ColumnDefinition Width="auto"/>
+				<ColumnDefinition Width="auto"/>
+				<ColumnDefinition Width="auto"/>
+				<ColumnDefinition Width="*"/>
+			</Grid.ColumnDefinitions>
+			<Grid.RowDefinitions>
+				<RowDefinition Height="*" />
+				<RowDefinition Height="auto"/>
+				<RowDefinition Height="auto"/>
+				<RowDefinition Height="auto"/>
+				<RowDefinition Height="*" />
+			</Grid.RowDefinitions>
+			<Rectangle Grid.Row="1" Grid.Column="1" Width="20" Height="20" Fill="AliceBlue" />
+			<Rectangle Grid.Row="2" Grid.Column="1" Width="20" Height="20" Fill="Aquamarine"/>
+			<Rectangle Grid.Row="1" Grid.Column="2" Width="20" Height="20" Fill="Aquamarine"/>
+		</Grid>-->
+
+		<!--<DockPanel Name="MapPanel" 
 				   Grid.Column="1"
 				   Grid.Row="1" Grid.RowSpan="3"
 				   HorizontalAlignment="Center"
 				   VerticalAlignment="Center">
 			<DataGrid
 				Name="DynamicGrid"
-				ItemsSource="{Binding Map}"
+				ItemsSource="{Binding MapItems}"
 				HorizontalAlignment="Left" 
 				Margin="12,21,0,0"   
 				VerticalAlignment="Bottom" 
-				RowHeight="30" ColumnWidth="30"
 				HeadersVisibility="None"
 				RowHeaderWidth="0"
 				ColumnHeaderHeight="0"
 				AutoGenerateColumns="True"
 				AutoGeneratingColumn="c_dataGrid_AutoGeneratingColumn"
 				IsReadOnly="True"
-				SelectionUnit="Cell"
 				IsHitTestVisible="False">
-				<DataGrid.CellStyle>
-					<Style TargetType="DataGridCell" BasedOn="{StaticResource {x:Type DataGridCell}}">
-						<Setter Property="VerticalContentAlignment" Value="Center"/>
-						<Style.Triggers>
-							<DataTrigger Binding="{Binding Path=Content.Text, Mode=OneWay, RelativeSource={RelativeSource Self}}" Value="4">
-								<Setter Property="Background" Value="Tomato"/>
-								<Setter Property="Foreground" Value="Tomato"/>
-							</DataTrigger>
-							<DataTrigger Binding="{Binding Path=Content.Text, Mode=OneWay, RelativeSource={RelativeSource Self}}" Value="5">
-								<Setter Property="Background" Value="White"/>
-								<Setter Property="Foreground" Value="White"/>
-							</DataTrigger>
-							<DataTrigger Binding="{Binding Path=Content.Text, Mode=OneWay, RelativeSource={RelativeSource Self}}" Value="1">
-								<Setter Property="Background" Value="Gold"/>
-								<Setter Property="Foreground" Value="Gold"/>
-							</DataTrigger>
-							<DataTrigger Binding="{Binding Path=Content.Text, Mode=OneWay, RelativeSource={RelativeSource Self}}" Value="6">
-								<Setter Property="Background" Value="Green"/>
-								<Setter Property="Foreground" Value="Green"/>
-							</DataTrigger>
-							<DataTrigger Binding="{Binding Path=Content.Text, Mode=OneWay, RelativeSource={RelativeSource Self}}" Value="0">
-								<Setter Property="Background" Value="Gray"/>
-								<Setter Property="Foreground" Value="Gray"/>
-							</DataTrigger>
-							<Trigger Property="IsSelected" Value="True">
-									<Setter Property="Background" Value="Aqua"/>
-									<Setter Property="Foreground" Value="Aqua"/>
-									<Setter Property="BorderBrush" Value="{DynamicResource {x:Static SystemColors.HighlightBrushKey}}"/>
-								</Trigger>
-							</Style.Triggers>
-					</Style>
-				</DataGrid.CellStyle>
+				<Style TargetType="{x:Type DataGridCell}">
+					<Setter Property="IsHitTestVisible" Value="False"/>
+				</Style>
 			</DataGrid>
-		</DockPanel>
-		
+		</DockPanel>-->
+
 		<DockPanel Grid.Column="3" Grid.Row="1">
 			<Grid>
 				<Grid.ColumnDefinitions>
@@ -165,7 +199,7 @@
 						<RowDefinition Height="*"/>
 						<RowDefinition Height="10"/>
 					</Grid.RowDefinitions>
-					
+
 					<Button Grid.Column="2" Grid.Row="1" x:Name="MoveUp" 
 							Height="25" Width="25" 
 							Content="^" 

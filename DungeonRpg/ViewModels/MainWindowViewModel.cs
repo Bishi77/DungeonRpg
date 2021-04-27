@@ -89,7 +89,6 @@ namespace DungeonRpg.ViewModels
 
 		private void OnNav(object obj)
 		{
-
 			switch (obj.ToString())
 			{
 				case "Game":
