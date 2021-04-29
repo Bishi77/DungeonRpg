@@ -8,26 +8,61 @@ namespace DungeonRpg.Models
 {
 	public class DungeonGenerator
 	{
-        public enum Direction { UP = 'U', DOWN = 'D' , LEFT = 'L', RIGHT = 'R'};
+        /// <summary>
+        /// Generálást vezérlő paraméterek
+        /// </summary>
+        private readonly int _wayConnectionCreatePercent = 10;
+        private readonly int _minWayPercentInDungeon = 40;
+        private readonly int _maxWayPercentInDungeon = 80;
+        private readonly int _width;
+        private readonly int _height;
 
-        private const int _wayConnectionPercent = 10;
+        public enum Direction { UP = 'U', DOWN = 'D' , LEFT = 'L', RIGHT = 'R'};
+        
         private bool _enableConnectionByRandom
         {
             get
             {
                 Random rnd = new Random();
-                return rnd.Next(0, 100) < _wayConnectionPercent;
+                return rnd.Next(0, 100) < _wayConnectionCreatePercent;
             }
         }
 
-		#region methods
+		#region ctor
+		/// <summary>
+		/// Térkép generáló konstruktor
+		/// </summary>
+		/// <param name="width">Oszlopok száma</param>
+		/// <param name="height">Sorok száma</param>
+		/// <param name="wayConnectionCreatePercent">út valószínűsége</param>
+		/// <param name="wayPercentInDungeon">út gyakorisága</param>
+		public DungeonGenerator(int width, int height, int wayConnectionCreatePercent, int minWayPercentInDungeon, int maxWayPercentInDungeon)
+		{
+            _width = width;
+            _height = height;
+			_wayConnectionCreatePercent = wayConnectionCreatePercent;
+			_minWayPercentInDungeon = minWayPercentInDungeon;
+			_maxWayPercentInDungeon = maxWayPercentInDungeon;
+		}
+        #endregion ctor
+
+        #region methods
+        public Dungeon GenerateDungeon()
+        {
+            Dungeon generated = GenerateDungeonLevel(_height, _width);
+            AddWaysToDungeonLevel(generated, 40);
+            AddPlacePOIsToDungeonLevel(generated, true, true, 20);
+
+            return generated;
+        }
+
 		/// <summary>
 		/// Pálya generálása.
 		/// </summary>
 		/// <param name="rows">pálya mérete, sorok</param>
 		/// <param name="columns">pálya mérete, oszlopok</param>
 		/// <returns>generált pálya</returns>
-		public Dungeon GenerateDungeonLevel(int rows, int columns)
+		private Dungeon GenerateDungeonLevel(int rows, int columns)
 		{
 			return new Dungeon(new List<DungeonElement>[rows, columns]);			
 		}
@@ -38,15 +73,14 @@ namespace DungeonRpg.Models
         /// <param name="dungeon">pálya adata</param>
         /// <param name="fillPercent">út feltöltés százaléka</param>
         /// <returns>pálya teljes adata</returns>
-        public Dungeon AddWaysToDungeonLevel(Dungeon dungeon, int fillPercent = -1)
+        private Dungeon AddWaysToDungeonLevel(Dungeon dungeon, int fillPercent = -1)
         {
             Random rnd = new Random();
 
             //ha nincs fix érték megadva, generálunk egy általános gyakoriságot
             if (fillPercent==-1)
 			{
-                int minFillPercent = 20, maxFillPercent = 50;
-                fillPercent = rnd.Next(minFillPercent, maxFillPercent);
+                fillPercent = rnd.Next(_minWayPercentInDungeon, _maxWayPercentInDungeon);
             }
 
             (int, int) startpos = GetRandomFieldTypePointFromLevel(dungeon, DungeonElementType.Wall, true);
@@ -88,7 +122,7 @@ namespace DungeonRpg.Models
         /// <param name="isStartLevel">Kezdőszint-e. Ehhez kellő elemeket generáljon-e. (Kezdő pont)</param>
         /// <param name="isEndLevel">Vég szint-e. Ehhez kellő elemeket generáljon-e. (Vég pont)</param>
         /// <returns>pálya teljes adata</returns>
-        public Dungeon AddPlacePOIsToDungeonLevel(Dungeon dungeon, bool isStartLevel, bool isEndLevel, int monsterGeneratePercent)
+        private Dungeon AddPlacePOIsToDungeonLevel(Dungeon dungeon, bool isStartLevel, bool isEndLevel, int monsterGeneratePercent)
         {
             Random rnd = new Random();
             var point = GetRandomFieldTypePointFromLevel(dungeon, DungeonElementType.Way, true);
@@ -180,7 +214,7 @@ namespace DungeonRpg.Models
         /// <param name="row">aktuális pozício sora</param>
         /// <param name="col">aktuális pozício oszlopa</param>
         /// <returns>Lehetséges mozgási irányok angol kezdőbetűinek felsorolása</returns>
-        public string GetPossibleWayGenerationDirection(Dungeon dungeon, int row, int col)
+        private string GetPossibleWayGenerationDirection(Dungeon dungeon, int row, int col)
 		{
             string wallDirections = "";
             string wayDirections = dungeon.GetPossibleMoveDirections(row, col);
