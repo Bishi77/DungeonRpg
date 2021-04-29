@@ -6,6 +6,7 @@ using System.ComponentModel;
 using System.Drawing;
 using System.Drawing.Imaging;
 using System.IO;
+using System.Linq;
 using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media.Imaging;
@@ -87,25 +88,30 @@ namespace DungeonRpg.ViewModels
 			DungeonGenerator _generator = new DungeonGenerator();
 			Dungeon = _generator.AddPlacePOIsToDungeonLevel(
 						_generator.AddWaysToDungeonLevel(
-							_generator.GenerateDungeonLevel(50, 50)
+							_generator.GenerateDungeonLevel(10, 10)
 						, 40),
 					  true, true, 10);
 			Character = CharacterGenerator.Generate(true);
 			Character.Position = Dungeon.GetFirstDungeonElementPosition(DungeonElementType.StartPoint);
+			Dungeon.LevelData[Character.Position.Item1, Character.Position.Item2].Add(new DungeonElement(DungeonElementType.Player, -1));
 			Character.Inventory.ItemList = InventoryItemGenerator.GenerateRandomItems(10);
 			DrawMap();
 			SetPossibleDirection();
 		}
 
-		public void MoveCharacter(char direction)
-		{
-			if (PossibleDirections.Contains(direction.ToString()))
-			{
-				Character.Move((DungeonGenerator.Direction)direction);
-				SetPossibleDirection();
-				OnPropertyChanged(nameof(MapItems));
-			}
-		}
+		//public void MoveCharacter(char direction)
+		//{
+		//	if (PossibleDirections.Contains(direction.ToString()))
+		//	{
+		//		(int, int) oldPosition = Character.Position;
+		//		Character.Move((DungeonGenerator.Direction)direction);
+		//		Dungeon.LevelData[oldPosition.Item1, oldPosition.Item2].RemoveAll(x => x.ElementType == DungeonElementType.Player);
+		//		Dungeon.LevelData[Character.Position.Item1, Character.Position.Item2].Add(new DungeonElement(DungeonElementType.Player, -1));
+		//		RefreshMapItems(new List<(int, int)> { oldPosition, Character.Position });
+		//		SetPossibleDirection();
+		//		OnPropertyChanged(nameof(MapItems));
+		//	}
+		//}
 
 		public bool EnablePossibleDirection(char direction)
 		{
@@ -118,7 +124,11 @@ namespace DungeonRpg.ViewModels
 		{
 			if (PossibleDirections.Contains(obj.ToString()))
 			{
+				(int, int) oldPosition = Character.Position;
 				Character.Move((DungeonGenerator.Direction)obj.ToString()[0]);
+				Dungeon.LevelData[oldPosition.Item1, oldPosition.Item2].RemoveAll(x => x.ElementType == DungeonElementType.Player);
+				Dungeon.LevelData[Character.Position.Item1, Character.Position.Item2].Add(new DungeonElement(DungeonElementType.Player, -1));
+				RefreshMapItems(new List<(int, int)> { oldPosition, Character.Position });
 				SetPossibleDirection();
 				OnPropertyChanged(nameof(MapItems));
 			}
@@ -142,11 +152,28 @@ namespace DungeonRpg.ViewModels
 			MapItem.Columns = Dungeon.LevelData.GetLength(1);
 		}
 
+		private void RefreshMapItems(List<(int, int)> pozitionList)
+		{
+			foreach (var poz in pozitionList)
+			{
+				var newMapitem = GetMapItemByPosition(poz.Item1, poz.Item2);
+				var oldMapItem = MapItems.FirstOrDefault(s => s.Row == poz.Item1 && s.Column == poz.Item2);
+				if (oldMapItem == null)
+				{
+					oldMapItem = new MapItem();
+					oldMapItem.Row = poz.Item1;
+					oldMapItem.Column = poz.Item2;
+				}
+
+				oldMapItem.Image = newMapitem.Image;
+			}
+		}
+
 		private MapItem GetMapItemByPosition(int row, int col)
 		{
 			MapItem mapItem = new MapItem();
-			mapItem.Column = row;
-			mapItem.Row = col;
+			mapItem.Row= row;
+			mapItem.Column = col;
 			mapItem.Image = MergeImages(GetMapPositionTilesPathsWithFileName(Dungeon.LevelData[row, col]));
 
 			return mapItem;
