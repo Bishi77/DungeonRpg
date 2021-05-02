@@ -1,5 +1,6 @@
 ﻿using DungeonRpg.Models;
 using DungeonRpg.ViewModels.Helpers;
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
@@ -7,11 +8,10 @@ using System.Drawing;
 using System.Drawing.Imaging;
 using System.IO;
 using System.Linq;
-using System.Windows.Controls;
+using System.Reflection;
 using System.Windows.Input;
 using System.Windows.Media.Imaging;
 using UniversalDesign;
-using static System.Net.Mime.MediaTypeNames;
 
 namespace DungeonRpg.ViewModels
 {
@@ -185,62 +185,70 @@ namespace DungeonRpg.ViewModels
 
 		private string GetMapPositionTilePathWithFileName(DungeonElement element)
 		{
-			TileHandler handler = new TileHandler();
 			TileCategory tileCategory = TileCategory.Error;
 			TileSubCategory tileSubCategory = TileSubCategory.Error;
-			List<string> types = new List<string>();
+			string pngName = "";
 
 			switch (element.ElementType)
 			{
 				case DungeonElementType.Wall:
 					tileCategory = TileCategory.Dungeon;
 					tileSubCategory = TileDungeonSubCategory.Wall;
+					pngName = "catacombs0.png";
 					break;
 				case DungeonElementType.StartPoint:
 					tileCategory = TileCategory.Dungeon;
 					tileSubCategory = TileDungeonSubCategory.Gateways;
+					pngName = "bazaar_portal.png";
 					break;
 				case DungeonElementType.EndPoint:
 					tileCategory = TileCategory.Dungeon;
 					tileSubCategory = TileDungeonSubCategory.Gateways;
+					pngName = "exit_dungeon.png";
 					break;
 				case DungeonElementType.Item:
 					tileCategory = TileCategory.Item;
 					tileSubCategory = TileItemSubCategory.Armour;
+					pngName = "ring_mail1.png";
 					break;
 				case DungeonElementType.Player:
 					tileCategory = TileCategory.Monster;
 					tileSubCategory = TileMonsterSubCategory.Humanoids;
+					pngName = "dwarf.png";
 					break;
 				case DungeonElementType.Monster:
 					tileCategory = TileCategory.Monster;
-					tileSubCategory = TileMonsterSubCategory.Animals;
+					tileSubCategory = TileMonsterSubCategory.Demons;
+					pngName = "crimson_imp.png";
 					break;
 				case DungeonElementType.UpStairs:
 					tileCategory = TileCategory.Dungeon;
 					tileSubCategory = TileDungeonSubCategory.Gateways;
+					pngName = "stone_stairs_up.png";
 					break;
 				case DungeonElementType.DownStairs:
 					tileCategory = TileCategory.Dungeon;
 					tileSubCategory = TileDungeonSubCategory.Gateways;
+					pngName = "stone_stairs_down.png";
 					break;
 				case DungeonElementType.Way:
 					tileCategory = TileCategory.Dungeon;
 					tileSubCategory = TileDungeonSubCategory.Floor;
-					types.Add("pedestal");
-					types.Add("full");
+					pngName = "sand1.png";
 					break;
 				default:
 					break;
 			}
 
-			return handler.GetTilePathWithFileName(tileCategory, tileSubCategory, types);
+			return $"UniversalDesign.Resources.Tiles.rltiles.{tileCategory.Value}.{tileSubCategory.Value}.{pngName}";
 		}
 
 		private BitmapImage MergeImages(List<string> imagesPathWithFileNames)
 		{
 			BitmapImage result = new BitmapImage();
-
+			Assembly ass = AppDomain.CurrentDomain.GetAssemblies().
+								SingleOrDefault(assembly => assembly.GetName().Name == "UniversalDesign");
+				
 			if (imagesPathWithFileNames.Count == 0)
 				return result;
 
@@ -250,7 +258,7 @@ namespace DungeonRpg.ViewModels
 			{
 				foreach (var image in imagesPathWithFileNames)
 				{
-					g.DrawImage(System.Drawing.Image.FromFile(image), 0, 0);
+					g.DrawImage(System.Drawing.Image.FromStream(ass.GetManifestResourceStream(image)), 0, 0);
 				}
 			}
 			using (var ms = new MemoryStream())
