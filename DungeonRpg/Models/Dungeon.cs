@@ -5,6 +5,8 @@ namespace DungeonRpg.Models
 {
 	public class Dungeon
 	{
+		public enum Direction { UP = 'U', DOWN = 'D', LEFT = 'L', RIGHT = 'R' };
+
 		private List<DungeonElement>[,] _levelData = new List<DungeonElement>[0, 0];
 		public List<DungeonElement>[,] LevelData
 		{
@@ -28,7 +30,7 @@ namespace DungeonRpg.Models
 
 		#region methods
 		/// <summary>
-		/// Keresett elemtípus első előfordulásána pozíciója a pályán
+		/// Keresett elemtípus első előfordulásának a pozíciója a pályán
 		/// </summary>
 		/// <param name="searchedElement">Keresett elemtípus</param>
 		/// <returns>Első talált előfordulási pozíció</returns>
@@ -95,7 +97,7 @@ namespace DungeonRpg.Models
 				result += "U";
 			if ((row < LevelData.GetLength(0) - 1) && !LevelPositionHasDungeonElementType(row + 1, col, DungeonElementType.Wall))
 				result += "D";
-			if ((col > 1 && !LevelPositionHasDungeonElementType(row, col - 1, DungeonElementType.Wall)))
+			if ((col > 0 && !LevelPositionHasDungeonElementType(row, col - 1, DungeonElementType.Wall)))
 				result += "L";
 			if ((col < LevelData.GetLength(1) - 1) && !LevelPositionHasDungeonElementType(row, col + 1, DungeonElementType.Wall))
 				result += "R";

@@ -12,12 +12,10 @@ namespace DungeonRpg.Models
         /// Generálást vezérlő paraméterek
         /// </summary>
         private readonly int _wayConnectionCreatePercent = 10;
-        private readonly int _minWayPercentInDungeon = 40;
+        private readonly int _minWayPercentInDungeon = 80;
         private readonly int _maxWayPercentInDungeon = 80;
         private readonly int _width;
         private readonly int _height;
-
-        public enum Direction { UP = 'U', DOWN = 'D' , LEFT = 'L', RIGHT = 'R'};
         
         private bool _enableConnectionByRandom
         {
@@ -50,7 +48,7 @@ namespace DungeonRpg.Models
         public Dungeon GenerateDungeon()
         {
             Dungeon generated = GenerateDungeonLevel(_height, _width);
-            AddWaysToDungeonLevel(generated, 40);
+            AddWaysToDungeonLevel(generated);
             AddPlacePOIsToDungeonLevel(generated, true, true, 20);
 
             return generated;

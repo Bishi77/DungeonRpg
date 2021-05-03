@@ -95,25 +95,6 @@ namespace DungeonRpg.ViewModels
 			DrawMap();
 			SetPossibleDirection();
 		}
-
-		//public void MoveCharacter(char direction)
-		//{
-		//	if (PossibleDirections.Contains(direction.ToString()))
-		//	{
-		//		(int, int) oldPosition = Character.Position;
-		//		Character.Move((DungeonGenerator.Direction)direction);
-		//		Dungeon.LevelData[oldPosition.Item1, oldPosition.Item2].RemoveAll(x => x.ElementType == DungeonElementType.Player);
-		//		Dungeon.LevelData[Character.Position.Item1, Character.Position.Item2].Add(new DungeonElement(DungeonElementType.Player, -1));
-		//		RefreshMapItems(new List<(int, int)> { oldPosition, Character.Position });
-		//		SetPossibleDirection();
-		//		OnPropertyChanged(nameof(MapItems));
-		//	}
-		//}
-
-		public bool EnablePossibleDirection(char direction)
-		{
-			return PossibleDirections.Contains(direction.ToString());
-		}
 		#endregion View Commands
 
 		#region methods
@@ -122,7 +103,7 @@ namespace DungeonRpg.ViewModels
 			if (PossibleDirections.Contains(obj.ToString()))
 			{
 				(int, int) oldPosition = Character.Position;
-				Character.Move((DungeonGenerator.Direction)obj.ToString()[0]);
+				Character.Move((Dungeon.Direction)obj.ToString()[0]);
 				Dungeon.LevelData[oldPosition.Item1, oldPosition.Item2].RemoveAll(x => x.ElementType == DungeonElementType.Player);
 				Dungeon.LevelData[Character.Position.Item1, Character.Position.Item2].Add(new DungeonElement(DungeonElementType.Player, -1));
 				RefreshMapItems(new List<(int, int)> { oldPosition, Character.Position });

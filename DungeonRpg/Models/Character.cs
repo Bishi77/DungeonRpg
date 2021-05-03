@@ -124,20 +124,20 @@
 		#endregion ctor
 
 		#region public methods
-		public void Move(DungeonGenerator.Direction direction)
+		public void Move(Dungeon.Direction direction)
 		{
 			switch (direction)
 			{
-				case DungeonGenerator.Direction.UP:
+				case Dungeon.Direction.UP:
 					Position = (Position.Item1 - 1, Position.Item2);
 					break;
-				case DungeonGenerator.Direction.DOWN:
+				case Dungeon.Direction.DOWN:
 					Position = (Position.Item1 + 1, Position.Item2);
 					break;
-				case DungeonGenerator.Direction.LEFT:
+				case Dungeon.Direction.LEFT:
 					Position = (Position.Item1, Position.Item2 - 1);
 					break;
-				case DungeonGenerator.Direction.RIGHT:
+				case Dungeon.Direction.RIGHT:
 					Position = (Position.Item1, Position.Item2 + 1);
 					break;
 				default:
