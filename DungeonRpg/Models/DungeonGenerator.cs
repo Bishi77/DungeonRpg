@@ -125,7 +125,6 @@ namespace DungeonRpg.Models
         /// <returns>pálya teljes adata</returns>
         private Dungeon AddPlacePOIsToDungeonLevel(Dungeon dungeon, bool isStartLevel, bool isEndLevel)
         {
-            Random rnd = new Random();
             var point = GetRandomFieldTypePointFromLevel(dungeon, DungeonElementType.Way, true);
             if(point.Item1 != -1 && point.Item2!=-1)
 			{
@@ -133,7 +132,7 @@ namespace DungeonRpg.Models
                 dungeon.AddDungeonElementByPosition(point.Item1, point.Item2, newElement, true);
 			}
 
-            point = GetRandomFieldTypePointFromLevel(dungeon, DungeonElementType.Way, true); ;
+            point = GetRandomFieldTypePointFromLevel(dungeon, DungeonElementType.Way, true);
             if (point.Item1 != -1 && point.Item2 != -1)
             {
                 var newElement = new DungeonElement(isEndLevel ? DungeonElementType.EndPoint : DungeonElementType.UpStairs, -1);
