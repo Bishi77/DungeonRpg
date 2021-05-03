@@ -85,7 +85,7 @@ namespace DungeonRpg.ViewModels
 		#region View Commands
 		public void StartGame()
 		{
-			DungeonGenerator _generator = new DungeonGenerator(10, 10, 30, 30, 50);
+			DungeonGenerator _generator = new DungeonGenerator(10, 10, 5, 50, 60, 30);
 			Dungeon = _generator.GenerateDungeon();
 
 			Character = CharacterGenerator.Generate(true);

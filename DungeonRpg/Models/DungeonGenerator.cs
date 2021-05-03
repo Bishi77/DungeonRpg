@@ -11,9 +11,10 @@ namespace DungeonRpg.Models
         /// <summary>
         /// Generálást vezérlő paraméterek
         /// </summary>
-        private readonly int _wayConnectionCreatePercent = 10;
-        private readonly int _minWayPercentInDungeon = 80;
-        private readonly int _maxWayPercentInDungeon = 80;
+        private readonly int _wayConnectionCreatePercent;
+        private readonly int _minWayPercentInDungeon;
+        private readonly int _maxWayPercentInDungeon;
+        private readonly int _monsterGeneratePercent;
         private readonly int _width;
         private readonly int _height;
         
@@ -26,21 +27,24 @@ namespace DungeonRpg.Models
             }
         }
 
-		#region ctor
-		/// <summary>
-		/// Térkép generáló konstruktor
-		/// </summary>
-		/// <param name="width">Oszlopok száma</param>
-		/// <param name="height">Sorok száma</param>
-		/// <param name="wayConnectionCreatePercent">út valószínűsége</param>
-		/// <param name="wayPercentInDungeon">út gyakorisága</param>
-		public DungeonGenerator(int width, int height, int wayConnectionCreatePercent, int minWayPercentInDungeon, int maxWayPercentInDungeon)
+        #region ctor
+        /// <summary>
+        /// Térkép generáló konstruktor
+        /// </summary>
+        /// <param name="width">Oszlopok száma</param>
+        /// <param name="height">Sorok száma</param>
+        /// <param name="wayConnectionCreatePercent">út készítés valószínűsége</param>
+        /// <param name="minWayPercentInDungeon">út lehetségének minimuma</param>
+        /// <param name="maxWayPercentInDungeon">út lehetségének maximuma</param>
+        /// <param name="monsterGeneratePercent">szörnyek gyakorisága</param>
+        public DungeonGenerator(int width, int height, int wayConnectionCreatePercent, int minWayPercentInDungeon, int maxWayPercentInDungeon, int monsterGeneratePercent)
 		{
             _width = width;
             _height = height;
 			_wayConnectionCreatePercent = wayConnectionCreatePercent;
 			_minWayPercentInDungeon = minWayPercentInDungeon;
 			_maxWayPercentInDungeon = maxWayPercentInDungeon;
+			_monsterGeneratePercent = monsterGeneratePercent;
 		}
         #endregion ctor
 
@@ -49,7 +53,7 @@ namespace DungeonRpg.Models
         {
             Dungeon generated = GenerateDungeonLevel(_height, _width);
             AddWaysToDungeonLevel(generated);
-            AddPlacePOIsToDungeonLevel(generated, true, true, 20);
+            AddPlacePOIsToDungeonLevel(generated, true, true);
 
             return generated;
         }
@@ -69,17 +73,11 @@ namespace DungeonRpg.Models
         /// Pálya út generálása
         /// </summary>
         /// <param name="dungeon">pálya adata</param>
-        /// <param name="fillPercent">út feltöltés százaléka</param>
         /// <returns>pálya teljes adata</returns>
-        private Dungeon AddWaysToDungeonLevel(Dungeon dungeon, int fillPercent = -1)
+        private Dungeon AddWaysToDungeonLevel(Dungeon dungeon)
         {
             Random rnd = new Random();
-
-            //ha nincs fix érték megadva, generálunk egy általános gyakoriságot
-            if (fillPercent==-1)
-			{
-                fillPercent = rnd.Next(_minWayPercentInDungeon, _maxWayPercentInDungeon);
-            }
+            var fillPercent = rnd.Next(_minWayPercentInDungeon, _maxWayPercentInDungeon);
 
             (int, int) startpos = GetRandomFieldTypePointFromLevel(dungeon, DungeonElementType.Wall, true);
             string possibleDirs = GetPossibleWayGenerationDirection(dungeon, startpos.Item1, startpos.Item2);          
@@ -87,25 +85,30 @@ namespace DungeonRpg.Models
             int actCellNr = 0;
             while (actCellNr < wayCellNr && !string.IsNullOrEmpty(possibleDirs))
             {
-                    switch (possibleDirs[rnd.Next(0, possibleDirs.Length)])
-                    {
-                        case 'U':
-                            startpos.Item1--;
-                            break;
-                        case 'D':
-                            startpos.Item1++;
-                            break;
-                        case 'L':
-                            startpos.Item2--;
-                            break;
-                        case 'R':
-                            startpos.Item2++;
-                            break;
-                    }
+                switch (possibleDirs[rnd.Next(0, possibleDirs.Length)])
+                {
+                    case 'U':
+                        startpos.Item1--;
+                        break;
+                    case 'D':
+                        startpos.Item1++;
+                        break;
+                    case 'L':
+                        startpos.Item2--;
+                        break;
+                    case 'R':
+                        startpos.Item2++;
+                        break;
+                }
 
                 dungeon.AddDungeonElementByPosition(startpos.Item1, startpos.Item2, new DungeonElement(DungeonElementType.Way, 1), true);
+                possibleDirs = GetPossibleWayGenerationDirection(dungeon, startpos.Item1, startpos.Item2);
+                if (string.IsNullOrEmpty(possibleDirs))
+                {
+                    startpos = GetRandomFieldTypePointFromLevel(dungeon, DungeonElementType.Wall, true);
                     possibleDirs = GetPossibleWayGenerationDirection(dungeon, startpos.Item1, startpos.Item2);
-                    actCellNr++;
+                }
+                actCellNr++;
             }
             return dungeon;
         }
@@ -120,7 +123,7 @@ namespace DungeonRpg.Models
         /// <param name="isStartLevel">Kezdőszint-e. Ehhez kellő elemeket generáljon-e. (Kezdő pont)</param>
         /// <param name="isEndLevel">Vég szint-e. Ehhez kellő elemeket generáljon-e. (Vég pont)</param>
         /// <returns>pálya teljes adata</returns>
-        private Dungeon AddPlacePOIsToDungeonLevel(Dungeon dungeon, bool isStartLevel, bool isEndLevel, int monsterGeneratePercent)
+        private Dungeon AddPlacePOIsToDungeonLevel(Dungeon dungeon, bool isStartLevel, bool isEndLevel)
         {
             Random rnd = new Random();
             var point = GetRandomFieldTypePointFromLevel(dungeon, DungeonElementType.Way, true);
@@ -137,7 +140,7 @@ namespace DungeonRpg.Models
                 dungeon.AddDungeonElementByPosition(point.Item1, point.Item2, newElement, true);
             }
 
-            int monsterNumber = dungeon.LevelData.GetLength(0) * dungeon.LevelData.GetLength(1) * monsterGeneratePercent / 100;
+            int monsterNumber = dungeon.LevelData.GetLength(0) * dungeon.LevelData.GetLength(1) * _monsterGeneratePercent / 100;
             for (int actMonster = 0; actMonster < monsterNumber; actMonster++)
             {
                 point = GetRandomFieldTypePointFromLevel(dungeon, DungeonElementType.Way, true);
@@ -216,9 +219,9 @@ namespace DungeonRpg.Models
 		{
             string wallDirections = "";
             string wayDirections = dungeon.GetPossibleMoveDirections(row, col);
-            wallDirections += row > 1 && !wayDirections.Contains("U") ? "U" : "";
+            wallDirections += row > 0 && !wayDirections.Contains("U") ? "U" : "";
             wallDirections += row < dungeon.LevelData.GetLength(0) - 1 && !wayDirections.Contains("D") ? "D" : "";
-            wallDirections += col > 1 && !wayDirections.Contains("L") ? "L" : "";
+            wallDirections += col > 0 && !wayDirections.Contains("L") ? "L" : "";
             wallDirections += col < dungeon.LevelData.GetLength(1) -1 && !wayDirections.Contains("R") ? "R" : "";
 
             return wallDirections;
