@@ -15,7 +15,7 @@ namespace DungeonRpg.Tests
         [Given(@"egy DungeonGenerator példány")]
         public void AmennyibenEgyDungeonGeneratorPeldany()
         {
-            dgt = new DungeonGenerator(10, 10, 20, 40, 50);
+            dgt = new DungeonGenerator(10, 10, 20, 40, 50, 30);
         }
 
         [When(@"létrehozzuk a Dungeon példányt (.*) rows és (.*) columns méretben")]
