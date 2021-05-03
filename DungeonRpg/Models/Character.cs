@@ -124,8 +124,9 @@
 		#endregion ctor
 
 		#region public methods
-		public void Move(Dungeon.Direction direction)
+		public void Move(Dungeon.Direction direction, System.Collections.Generic.List<DungeonElement>[,] levelData)
 		{
+			var oldPosition = Position;
 			switch (direction)
 			{
 				case Dungeon.Direction.UP:
@@ -143,6 +144,9 @@
 				default:
 					break;
 			}
+			
+			levelData[oldPosition.Item1, oldPosition.Item2].RemoveAll(x => x.ElementType == DungeonElementType.Player);
+			levelData[Position.Item1, Position.Item2].Add(new DungeonElement(DungeonElementType.Player, -1));
 		}
 		#endregion public methods
 	}

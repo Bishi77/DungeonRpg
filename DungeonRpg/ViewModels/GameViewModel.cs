@@ -88,10 +88,7 @@ namespace DungeonRpg.ViewModels
 			DungeonGenerator _generator = new DungeonGenerator(10, 10, 5, 50, 60, 30);
 			Dungeon = _generator.GenerateDungeon();
 
-			Character = CharacterGenerator.Generate(true);
-			Character.Position = Dungeon.GetFirstDungeonElementPosition(DungeonElementType.StartPoint);
-			Dungeon.LevelData[Character.Position.Item1, Character.Position.Item2].Add(new DungeonElement(DungeonElementType.Player, -1));
-			Character.Inventory.ItemList = InventoryItemGenerator.GenerateRandomItems(10);
+			Character = CharacterGenerator.Generate(Dungeon.LevelData, Dungeon.GetFirstDungeonElementPosition(DungeonElementType.StartPoint));
 			DrawMap();
 			SetPossibleDirection();
 		}
@@ -103,9 +100,7 @@ namespace DungeonRpg.ViewModels
 			if (PossibleDirections.Contains(obj.ToString()))
 			{
 				(int, int) oldPosition = Character.Position;
-				Character.Move((Dungeon.Direction)obj.ToString()[0]);
-				Dungeon.LevelData[oldPosition.Item1, oldPosition.Item2].RemoveAll(x => x.ElementType == DungeonElementType.Player);
-				Dungeon.LevelData[Character.Position.Item1, Character.Position.Item2].Add(new DungeonElement(DungeonElementType.Player, -1));
+				Character.Move((Dungeon.Direction)obj.ToString()[0], Dungeon.LevelData);
 				RefreshMapItems(new List<(int, int)> { oldPosition, Character.Position });
 				SetPossibleDirection();
 				OnPropertyChanged(nameof(MapItems));

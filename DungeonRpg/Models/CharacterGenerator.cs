@@ -9,10 +9,13 @@ namespace DungeonRpg.Models
 {
 	public static class CharacterGenerator
 	{
-		public static Character Generate(bool isPlayerCharacter = false)
+		public static Character Generate(List<DungeonElement>[,] levelData, (int, int) p)
 		{
-			var player = new Character();
-			return player;
+			var character = new Character();
+			character.Position = p;
+			levelData[p.Item1, p.Item2].Add(new DungeonElement(DungeonElementType.Player, -1));
+			character.Inventory.ItemList = InventoryItemGenerator.GenerateRandomItems(10);
+			return character;
 		}
 	}
 }

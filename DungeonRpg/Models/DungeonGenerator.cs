@@ -153,11 +153,13 @@ namespace DungeonRpg.Models
             return dungeon;
         }
 
+        /// <summary>
+        /// Itt az aktuális szörny cizelláltabb generálása lesz majd
+        /// </summary>
+        /// <returns></returns>
 		private DungeonElement GenerateMonster()
 		{
-            DungeonElement newElement = new DungeonElement(DungeonElementType.Monster, -1);
-
-            return newElement;
+            return new DungeonElement(DungeonElementType.Monster, -1);
 		}
 
 		/// <summary>
