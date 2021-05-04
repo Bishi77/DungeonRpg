@@ -6,8 +6,8 @@
 			 xmlns:vm="clr-namespace:DungeonRpg.ViewModels" 
 			 xmlns:helpers="clr-namespace:DungeonRpg.ViewModels.Helpers"
 			 mc:Ignorable="d"
-		HorizontalAlignment="Center"
-		VerticalAlignment="Center"
+		HorizontalAlignment="Stretch"
+		VerticalAlignment="Stretch"
 			 >
 	<UserControl.Resources>
 		<vm:GameViewModel x:Key="ViewModel" />
@@ -18,32 +18,30 @@
 			<ColumnDefinition Width="20"/>
 			<ColumnDefinition Width="*"/>
 			<ColumnDefinition Width="10"/>
-			<ColumnDefinition Width="*"/>
+			<ColumnDefinition Width="auto"/>
 			<ColumnDefinition Width="20"/>
 		</Grid.ColumnDefinitions>
 		<Grid.RowDefinitions>
 			<RowDefinition Height="20"/>
-			<RowDefinition Height="auto"/>
-			<RowDefinition Height="auto"/>
-			<RowDefinition Height="auto"/>
+			<RowDefinition Height="*"/>
+			<RowDefinition Height="*"/>
+			<RowDefinition Height="*"/>
 			<RowDefinition Height="*"/>
 			<RowDefinition Height="20"/>
 		</Grid.RowDefinitions>
 
-		<ScrollViewer Grid.Column="1" Grid.Row="1" Grid.RowSpan="3" 
-						  VerticalAlignment="Bottom" HorizontalAlignment="Left"
+		<ScrollViewer Grid.Column="1" Grid.Row="1" Grid.RowSpan="4" 
+					  VerticalAlignment="Center" HorizontalAlignment="Center"
 					  VerticalScrollBarVisibility="Visible"
 					  HorizontalScrollBarVisibility="Visible"
-					  CanContentScroll="True"
-					  MaxHeight="500" MaxWidth="500">
-			<ItemsControl 
-						  ItemsSource="{Binding MapItems}">
+					  CanContentScroll="True">
+			<ItemsControl ItemsSource="{Binding MapItems}">
 				<ItemsControl.ItemsPanel>
 					<ItemsPanelTemplate>
 						<UniformGrid 
 							Background="Transparent" 
-							Rows="{Binding Rows}" 
-							Columns="{Binding Columns}" Margin="0">
+							Rows="{Binding Rows}" Columns="{Binding Columns}" 
+							Margin="0">
 						</UniformGrid>
 					</ItemsPanelTemplate>
 				</ItemsControl.ItemsPanel>
