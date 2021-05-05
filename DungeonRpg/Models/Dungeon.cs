@@ -93,7 +93,7 @@ namespace DungeonRpg.Models
 		{
 			string result = "";
 
-			if ((row > 1) && !LevelPositionHasDungeonElementType(row - 1, col, DungeonElementType.Wall))
+			if ((row > 0) && !LevelPositionHasDungeonElementType(row - 1, col, DungeonElementType.Wall))
 				result += "U";
 			if ((row < LevelData.GetLength(0) - 1) && !LevelPositionHasDungeonElementType(row + 1, col, DungeonElementType.Wall))
 				result += "D";
