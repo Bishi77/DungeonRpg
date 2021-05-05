@@ -137,8 +137,7 @@ namespace DungeonRpg.ViewModels
 					oldMapItem.Row = poz.Item1;
 					oldMapItem.Column = poz.Item2;
 				}
-
-				oldMapItem.Image = newMapitem.Image;
+				oldMapItem.ImagesSumValue = newMapitem.ImagesSumValue;
 			}
 		}
 
@@ -147,7 +146,9 @@ namespace DungeonRpg.ViewModels
 			MapItem mapItem = new MapItem();
 			mapItem.Row= row;
 			mapItem.Column = col;
-			mapItem.Image = MergeImages(GetMapPositionTilesPathsWithFileName(Dungeon.LevelData[row, col]));
+			mapItem.ImagesSumValue = Dungeon.GetPositionSumValue(row, col);
+			if(!MapItem.MapItemCache.ContainsKey(mapItem.ImagesSumValue))
+				mapItem.Image = MergeImages(GetMapPositionTilesPathsWithFileName(Dungeon.LevelData[row, col]));
 
 			return mapItem;
 		}

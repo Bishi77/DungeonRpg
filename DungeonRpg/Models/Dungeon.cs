@@ -103,6 +103,13 @@ namespace DungeonRpg.Models
 				result += "R";
 			return result;
 		}
+
+		public int GetPositionSumValue(int row, int col)
+		{
+			int result = 0;
+			LevelData[row, col].ForEach(x => result += (int)x.ElementType);
+			return result;
+		}
 		#endregion methods
 	}
 }

@@ -3,7 +3,7 @@
 	/// <summary>
 	/// Pálya elem típusa, típus függő speciális működés lehet szükséges
 	/// </summary>
-	public enum DungeonElementType { Wall = 0, StartPoint = 1, EndPoint = 2, Item = 3, Player = 4, Monster = 5, UpStairs = 6, DownStairs = 7, Way = 8 }
+	public enum DungeonElementType { Wall = 0, StartPoint = 1, EndPoint = 2, Item = 1000, Player = 4, Monster = 2000, UpStairs = 8, DownStairs = 16, Way = 32 }
 	
 	public class DungeonElement
 	{
