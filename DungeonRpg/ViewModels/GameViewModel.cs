@@ -88,6 +88,7 @@ namespace DungeonRpg.ViewModels
 			DungeonGenerator _generator = new DungeonGenerator(20, 20, 5, 70, 70, 5);
 			Dungeon = _generator.GenerateDungeon();
 			Character = CharacterGenerator.Generate(Dungeon.GetFirstDungeonElementPosition(DungeonElementType.StartPoint));
+			Character.SetVisitedArea(Dungeon);
 			Dungeon.LevelData[Character.Position.Item1, Character.Position.Item2].Add(new DungeonElement(DungeonElementType.Player, -1));
 			DrawMap();
 			SetPossibleDirection();
@@ -100,8 +101,8 @@ namespace DungeonRpg.ViewModels
 			if (PossibleDirections.Contains(obj.ToString()))
 			{
 				(int, int) oldPosition = Character.Position;
-				Character.Move((Dungeon.Direction)obj.ToString()[0], Dungeon.LevelData);
-				RefreshMapItems(new List<(int, int)> { oldPosition, Character.Position });
+				Character.Move((Dungeon.Direction)obj.ToString()[0], Dungeon);
+				RefreshMapItems2(new List<ValueTuple<int, int>> { oldPosition, Character.Position }, Character.VisibilityRange);
 				SetPossibleDirection();
 				OnPropertyChanged(nameof(MapItems));
 			}
@@ -125,12 +126,56 @@ namespace DungeonRpg.ViewModels
 			MapItem.Columns = Dungeon.LevelData.GetLength(1);
 		}
 
-		private void RefreshMapItems(List<(int, int)> pozitionList)
+		private void RefreshMapItems(List<(int, int)> pozitionList, int visibleRange)
 		{
+			var visibles = new List<MapItem>();
+			MapItem newMapitem = null;
+			MapItem oldMapItem = null;
+			//új és régi poz. frisssítés
 			foreach (var poz in pozitionList)
 			{
-				var newMapitem = GetMapItemByPosition(poz.Item1, poz.Item2);
-				var oldMapItem = MapItems.FirstOrDefault(s => s.Row == poz.Item1 && s.Column == poz.Item2);
+				newMapitem = GetMapItemByPosition(poz.Item1, poz.Item2);
+				oldMapItem = MapItems.FirstOrDefault(s => s.Row == poz.Item1 && s.Column == poz.Item2);
+				if (oldMapItem == null)
+				{
+					oldMapItem = new MapItem();
+					oldMapItem.Row = poz.Item1;
+					oldMapItem.Column = poz.Item2;
+				}
+				oldMapItem.ImagesSumValue = newMapitem.ImagesSumValue;
+			}
+
+			//láthatóság
+			for (int r = Math.Max(0, newMapitem.Row - visibleRange); r < Math.Min(newMapitem.Row + visibleRange + 1, Dungeon.LevelData.GetLength(0)); r++)
+			{
+				for (int c = Math.Max(0, newMapitem.Column - visibleRange); c < Math.Min(newMapitem.Column + visibleRange + 1, Dungeon.LevelData.GetLength(1)); c++)
+				{
+					oldMapItem = MapItems.FirstOrDefault(s => s.Row == r && s.Column == c);
+					newMapitem = GetMapItemByPosition(r, c);
+					oldMapItem.ImagesSumValue = newMapitem.ImagesSumValue;
+				}
+			}
+		}
+
+		private void RefreshMapItems2(List<ValueTuple<int, int>> pozitionList, int visibleRange)
+		{
+			MapItem newMapitem = null;
+			MapItem oldMapItem = null;
+			List<ValueTuple<int, int>> visibles = new List<ValueTuple<int, int>>();
+			visibles.AddRange(pozitionList);
+			//új és régi poz. frisssítés-hez hozzáadjuk a láthatóságot, ami az új poz. környezete
+			for (int r = Math.Max(0, pozitionList.Last().Item1 - visibleRange); r <= Math.Min(pozitionList.Last().Item1 + visibleRange, Dungeon.LevelData.GetLength(0) - 1); r++)
+			{
+				for (int c = Math.Max(0, pozitionList.Last().Item2 - visibleRange); c <= Math.Min(pozitionList.Last().Item2 + visibleRange, Dungeon.LevelData.GetLength(1) - 1); c++)
+				{
+					visibles.Add(new ValueTuple<int, int>(r, c));
+				}
+			}
+
+			foreach (var poz in visibles.Distinct())
+			{
+				newMapitem = GetMapItemByPosition(poz.Item1, poz.Item2);
+				oldMapItem = MapItems.FirstOrDefault(s => s.Row == poz.Item1 && s.Column == poz.Item2);
 				if (oldMapItem == null)
 				{
 					oldMapItem = new MapItem();
@@ -144,27 +189,31 @@ namespace DungeonRpg.ViewModels
 		private MapItem GetMapItemByPosition(int row, int col)
 		{
 			MapItem mapItem = new MapItem();
-			mapItem.Row= row;
+			mapItem.Row = row;
 			mapItem.Column = col;
 			mapItem.ImagesSumValue = Dungeon.GetPositionSumValue(row, col);
 			if(!MapItem.MapItemCache.ContainsKey(mapItem.ImagesSumValue))
-				mapItem.Image = MergeImages(GetMapPositionTilesPathsWithFileName(Dungeon.LevelData[row, col]));
+				mapItem.Image = MergeImages(GetMapPositionTilesPathsWithFileName(Dungeon.LevelData[row, col], Dungeon.LevelVisited[row, col]));
 
 			return mapItem;
 		}
 
-		private List<string> GetMapPositionTilesPathsWithFileName(List<DungeonElement> elementsAtPosition)
+		private List<string> GetMapPositionTilesPathsWithFileName(List<DungeonElement> elementsAtPosition, bool visited)
 		{
 			List<string> positionImages = new List<string>();
-			elementsAtPosition.ForEach(x => positionImages.Add(GetMapPositionTilePathWithFileName(x)));
+			elementsAtPosition.ForEach(x => positionImages.Add(GetMapPositionTilePathWithFileName(x, visited)));
 			return positionImages;
 		}
 
-		private string GetMapPositionTilePathWithFileName(DungeonElement element)
+		private string GetMapPositionTilePathWithFileName(DungeonElement element, bool visited)
 		{
 			TileCategory tileCategory = TileCategory.Error;
 			TileSubCategory tileSubCategory = TileSubCategory.Error;
 			string pngName = "";
+
+			if(!visited)
+				return $"UniversalDesign.Resources.Tiles.rltiles.{TileCategory.Dungeon.Value}.unseen.png";
+
 
 			switch (element.ElementType)
 			{

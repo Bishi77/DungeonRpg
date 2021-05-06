@@ -1,6 +1,8 @@
-﻿namespace DungeonRpg.Models
+﻿using System;
+
+namespace DungeonRpg.Models
 {
-	public class Character
+	public class Character 
 	{
 		#region properties
 		private string _name;
@@ -96,12 +98,20 @@
 			}
 		}
 
+		private int _visibilityRange;
+		public int VisibilityRange
+		{
+			get => _visibilityRange;
+			set => _visibilityRange = value;
+		}
+
 		private Inventory _inventory;
 		public Inventory Inventory
 		{
 			get { return _inventory; }
 			set { _inventory = value; }
 		}
+
 		#endregion properties
 
 		#region ctor		
@@ -109,6 +119,7 @@
 		{
 			Dice dice = new Dice(6);
 			Level = 1;
+			VisibilityRange = 1;
 
 			Strength = dice.ResetSum().RollDices(3).SumRolls;
 			Dexterity = dice.ResetSum().RollDices(3).SumRolls; ;
@@ -124,7 +135,7 @@
 		#endregion ctor
 
 		#region public methods
-		public void Move(Dungeon.Direction direction, System.Collections.Generic.List<DungeonElement>[,] levelData)
+		public void Move(Dungeon.Direction direction, Dungeon dungeon)
 		{
 			var oldPosition = Position;
 			switch (direction)
@@ -144,9 +155,23 @@
 				default:
 					break;
 			}
-			
-			levelData[oldPosition.Item1, oldPosition.Item2].RemoveAll(x => x.ElementType == DungeonElementType.Player);
-			levelData[Position.Item1, Position.Item2].Add(new DungeonElement(DungeonElementType.Player, -1));
+
+			SetVisitedArea(dungeon);
+
+			dungeon.LevelData[oldPosition.Item1, oldPosition.Item2].RemoveAll(x => x.ElementType == DungeonElementType.Player);
+			dungeon.LevelData[Position.Item1, Position.Item2].Add(new DungeonElement(DungeonElementType.Player, -1));
+		}
+
+		//a környék láthatóság állítása
+		public void SetVisitedArea(Dungeon dungeon)
+		{
+			for (int r = Math.Max(0, Position.Item1 - VisibilityRange); r < Math.Min(Position.Item1 + VisibilityRange + 1, dungeon.LevelData.GetLength(0)); r++)
+			{
+				for (int c = Math.Max(0, Position.Item2 - VisibilityRange); c < Math.Min(Position.Item2 + VisibilityRange + 1, dungeon.LevelData.GetLength(1)); c++)
+				{
+					dungeon.LevelVisited[r, c] = true;
+				}
+			}
 		}
 		#endregion public methods
 	}

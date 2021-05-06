@@ -7,11 +7,23 @@ namespace DungeonRpg.Models
 	{
 		public enum Direction { UP = 'U', DOWN = 'D', LEFT = 'L', RIGHT = 'R' };
 
+		/// <summary>
+		/// Pálya adatai.
+		/// 2 dimenziós tömb, 1. sorok, 2. oszlopok pozíciója, a pozíciókban DungeonElement listák vannak, jelölve a artalmat
+		/// </summary>
 		private List<DungeonElement>[,] _levelData = new List<DungeonElement>[0, 0];
 		public List<DungeonElement>[,] LevelData
 		{
 			get { return _levelData; }
 		}
+
+		/// <summary>
+		/// Pálya látottsága
+		/// Adott pozíción, ha 1 van akkor ismert, ha 0 akkor nem.
+		/// Nem ismert pozíció esetén a térképen nem látszik a tartalom
+		/// </summary>
+		private bool[,] _levelVisited = new bool[0, 0];
+		public bool[,] LevelVisited { get => _levelVisited; set => _levelVisited = value; }
 
 		#region ctor
 		public Dungeon(List<DungeonElement>[,] levelData)
@@ -25,6 +37,7 @@ namespace DungeonRpg.Models
 						_levelData[row, column] = new List<DungeonElement>{new DungeonElement(DungeonElementType.Wall, -1)};
 				}
 			}
+			_levelVisited = new bool[levelData.GetLength(0), levelData.GetLength(1)];
 		}
 		#endregion ctor
 
@@ -107,6 +120,8 @@ namespace DungeonRpg.Models
 		public int GetPositionSumValue(int row, int col)
 		{
 			int result = 0;
+			if (!LevelVisited[row, col])
+				return -1;
 			LevelData[row, col].ForEach(x => result += (int)x.ElementType);
 			return result;
 		}
