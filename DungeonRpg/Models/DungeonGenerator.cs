@@ -1,9 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace DungeonRpg.Models
 {
@@ -59,6 +55,7 @@ namespace DungeonRpg.Models
             return generated;
         }
 
+		#region empty dungeon generating
 		/// <summary>
 		/// Pálya generálása.
 		/// </summary>
@@ -69,50 +66,126 @@ namespace DungeonRpg.Models
 		{
 			return new Dungeon(new List<DungeonElement>[rows, columns]);			
 		}
+        #endregion empty dungeon generating
 
+        #region way generating
         /// <summary>
-        /// Pálya út generálása
+        /// Útak feltöltése a Dungeonba
         /// </summary>
-        /// <param name="dungeon">pálya adata</param>
-        /// <returns>pálya teljes adata</returns>
+        /// <param name="dungeon"></param>
+        /// <returns></returns>
         private Dungeon AddWaysToDungeonLevel(Dungeon dungeon)
-        {
-            var fillPercent = _rnd.Next(_minWayPercentInDungeon, _maxWayPercentInDungeon);
-
-            ValueTuple<int, int> startpos = GetRandomFieldTypePointFromLevel(dungeon, DungeonElementType.Wall, false);
-            string possibleDirs = GetPossibleWayGenerationDirection(dungeon, startpos.Item1, startpos.Item2);          
+		{
+			string possibleDirs;
+			var fillPercent = _rnd.Next(_minWayPercentInDungeon, _maxWayPercentInDungeon);
             int wayCellNr = dungeon.LevelData.GetLength(0) * dungeon.LevelData.GetLength(1) * fillPercent / 100;
-            int actCellNr = 0;
-            while (actCellNr < wayCellNr && !string.IsNullOrEmpty(possibleDirs))
-            {
-                switch (possibleDirs[_rnd.Next(0, possibleDirs.Length)])
-                {
-                    case 'U':
-                        startpos.Item1--;
-                        break;
-                    case 'D':
-                        startpos.Item1++;
-                        break;
-                    case 'L':
-                        startpos.Item2--;
-                        break;
-                    case 'R':
-                        startpos.Item2++;
-                        break;
-                }
+            ValueTuple<int, int> pos = GetRandomFieldTypePointFromLevel(dungeon, DungeonElementType.Wall, false);			
+			int actCellNr = 0;
 
-                dungeon.AddDungeonElementByPosition(startpos.Item1, startpos.Item2, new DungeonElement(DungeonElementType.Way, 1), true);
-                possibleDirs = GetPossibleWayGenerationDirection(dungeon, startpos.Item1, startpos.Item2);
-                if (string.IsNullOrEmpty(possibleDirs))
-                {
-                    startpos = GetRandomFieldTypePointFromLevel(dungeon, DungeonElementType.Wall, true);
-                    possibleDirs = GetPossibleWayGenerationDirection(dungeon, startpos.Item1, startpos.Item2);
+            //míg kevés az út
+			while (actCellNr < wayCellNr)
+			{
+                //hozzáadjuk az utat
+				dungeon.AddDungeonElementByPosition(pos.Item1, pos.Item2, new DungeonElement(DungeonElementType.Way, 1), true);
+                //szomszédban van út?
+                possibleDirs = GetPossibleWayGenerationDirection(dungeon, pos.Item1, pos.Item2);
+                //ha nincs, akkor keresünk egy falat, úttal szomszédosan
+				if (string.IsNullOrEmpty(possibleDirs))
+				{
+					pos = GetRandomTypePositionWithAdjacentAnotherType(dungeon, DungeonElementType.Wall, DungeonElementType.Way);
+				}
+                else
+				{
+                    switch (possibleDirs[_rnd.Next(0, possibleDirs.Length)])
+                    {
+                        case 'U':
+                            pos.Item1--;
+                            break;
+                        case 'D':
+                            pos.Item1++;
+                            break;
+                        case 'L':
+                            pos.Item2--;
+                            break;
+                        case 'R':
+                            pos.Item2++;
+                            break;
+                    }
                 }
                 actCellNr++;
             }
+
             return dungeon;
+		}
+
+        /// <summary>
+        /// Véletlenszerűen veszünk egy pozíciót, amin adott elem van, és szomszédjában van megadott elemtípus
+        /// </summary>
+        /// <param name="dungeon">elemeket tartalmazó pálya</param>
+        /// <param name="searchedType">keresett típus</param>
+        /// <param name="adjacentType">szomszéd típusa</param>
+        /// <returns></returns>
+		private ValueTuple<int, int> GetRandomTypePositionWithAdjacentAnotherType(Dungeon dungeon, DungeonElementType searchedType, DungeonElementType adjacentType)
+        {
+            List<ValueTuple<int, int>> searchedFieldTypeCoords = GetAllDungeonPositionByDungeonElementType(dungeon, DungeonElementType.Wall);
+            int posNr = 0;
+            while (posNr < searchedFieldTypeCoords.Count)
+            {
+                if (!HasPositionAdjacentType(dungeon, searchedFieldTypeCoords[posNr], DungeonElementType.Way))
+                {
+                    searchedFieldTypeCoords.RemoveAt(posNr);
+                    posNr--;
+                }
+                posNr++;
+            }
+
+            return searchedFieldTypeCoords[_rnd.Next(0, searchedFieldTypeCoords.Count)];
         }
 
+        /// <summary>
+        /// Van a keresett pozícióval szomszédosan keresett elemtípus? 
+        /// </summary>
+        /// <param name="dungeon"></param>
+        /// <param name="position"></param>
+        /// <param name="adjacentType"></param>
+        /// <returns></returns>
+        private bool HasPositionAdjacentType(Dungeon dungeon, ValueTuple<int, int> position, DungeonElementType adjacentType)
+        {
+            if (dungeon.LevelPositionHasDungeonElementType(position.Item1 - 1, position.Item2, adjacentType))
+                return true;
+            if (dungeon.LevelPositionHasDungeonElementType(position.Item1 + 1, position.Item2, adjacentType))
+                return true;
+            if (dungeon.LevelPositionHasDungeonElementType(position.Item1, position.Item2 - 1, adjacentType))
+                return true;
+            if (dungeon.LevelPositionHasDungeonElementType(position.Item1, position.Item2 + 1, adjacentType))
+                return true;
+
+            return false;
+        }
+
+        /// <summary>
+        /// Út generáláshoz pont fordítva kell keresni mint a mozgási irányokhoz
+        /// Ha nincs út, akkor generálhatunk oda.
+        /// A térkép szélén nem mehet út.
+        /// </summary>
+        /// <param name="dungeon">pálya adata</param>
+        /// <param name="row">aktuális pozício sora</param>
+        /// <param name="col">aktuális pozício oszlopa</param>
+        /// <returns>Lehetséges mozgási irányok angol kezdőbetűinek felsorolása</returns>
+        private string GetPossibleWayGenerationDirection(Dungeon dungeon, int row, int col)
+        {
+            string wallDirections = "";
+            string wayDirections = dungeon.GetPossibleMoveDirections(row, col);
+            wallDirections += row > 0 && !wayDirections.Contains("U") ? "U" : "";
+            wallDirections += row < dungeon.LevelData.GetLength(0) - 1 && !wayDirections.Contains("D") ? "D" : "";
+            wallDirections += col > 0 && !wayDirections.Contains("L") ? "L" : "";
+            wallDirections += col < dungeon.LevelData.GetLength(1) - 1 && !wayDirections.Contains("R") ? "R" : "";
+
+            return wallDirections;
+        }
+        #endregion way generating
+
+        #region POI generating
         /// <summary>
         /// Térképen speciális elemek elhelyezése, akár többszintes dungeonhoz is. 
         /// Ha kezdőszint, akkor kezdőpontot generál, 
@@ -153,26 +226,63 @@ namespace DungeonRpg.Models
             return dungeon;
         }
 
+        #region monster generating
         /// <summary>
-        /// Itt az aktuális szörny cizelláltabb generálása lesz majd
+        /// Az aktuális szörny komplett generálása 
         /// </summary>
         /// <returns></returns>
-		private DungeonElement GenerateMonster()
-		{
+        private DungeonElement GenerateMonster()
+        {
             return new DungeonElement(DungeonElementType.Monster, -1);
-		}
+        }
+		#endregion monster generating
+		#endregion POI generating
 
+		#region common helpers
 		/// <summary>
 		/// A keresett mezőtípusú pályaelemek közül választunk egyet véletlenszerűen
 		/// </summary>
 		/// <param name="dungeon">pálya adata</param>
 		/// <param name="searchedFieldType">keresett mezőtípus</param>
-		/// <param name="withoutConnectionVerify"></param>
+		/// <param name="withoutConnectionVerify">kihagyható-e az útcsatlakozás ellenőrzés</param>
 		/// <returns></returns>
 		private ValueTuple<int, int> GetRandomFieldTypePointFromLevel(Dungeon dungeon, DungeonElementType searchedFieldType, bool withoutConnectionVerify)
+		{
+			List<ValueTuple<int, int>> searchedFieldTypeCoords = new List<ValueTuple<int, int>>();
+			ValueTuple<int, int> coord = (-1, -1);
+
+            searchedFieldTypeCoords = GetAllDungeonPositionByDungeonElementType(dungeon, searchedFieldType);
+
+			bool done = false;
+			while (searchedFieldTypeCoords.Count > 0 && !done)
+			{
+				var coordNr = _rnd.Next(0, searchedFieldTypeCoords.Count);
+				coord = (ValueTuple<int, int>)searchedFieldTypeCoords.ToArray()[coordNr];
+				if (withoutConnectionVerify)
+				{
+					done = true;
+				}
+				else if (!_enableConnectionByRandom && HasConnectedWay(dungeon, coord.Item1, coord.Item2))
+				{
+					searchedFieldTypeCoords.RemoveAt(coordNr);
+				}
+				else
+				{
+					done = true;
+				}
+			}
+			return coord;
+		}
+
+        /// <summary>
+        /// Az összes pozíciót vesszük, ami a keresett típust tartalmazza
+        /// </summary>
+        /// <param name="dungeon">pálya, amiben keresünk</param>
+        /// <param name="searchedFieldType">keresett típus</param>
+        /// <returns></returns>
+		private List<ValueTuple<int, int>> GetAllDungeonPositionByDungeonElementType(Dungeon dungeon, DungeonElementType searchedFieldType)
         {
-            List<object> searchedFieldTypeCoords = new List<object>();
-            ValueTuple<int, int> coord = (-1, -1);  
+            List<ValueTuple<int, int>> searchedFieldTypeCoords = new List<ValueTuple<int, int>>();
 
             for (int row = 0; row < dungeon.LevelData.GetLength(0); row++)
             {
@@ -185,46 +295,7 @@ namespace DungeonRpg.Models
                 }
             }
 
-            bool done = false;
-            while (searchedFieldTypeCoords.Count > 0 && !done)
-            {
-                var coordNr = _rnd.Next(0, searchedFieldTypeCoords.Count);
-                coord = (ValueTuple< int, int>)searchedFieldTypeCoords.ToArray()[coordNr];
-                if (withoutConnectionVerify)
-                {
-                    done = true;
-                }
-                else if (!_enableConnectionByRandom && HasConnectedWay(dungeon, coord.Item1, coord.Item2))
-                {
-                    searchedFieldTypeCoords.RemoveAt(coordNr);
-                }
-                else
-                {
-                    done = true;
-                }
-            }
-            return coord;
-        }
-
-        /// <summary>
-        /// Út generáláshoz pont fordítva kell keresni mint a mozgási irányokhoz
-        /// Ha nincs út, akkor generálhatunk oda.
-        /// A térkép szélén nem mehet út.
-        /// </summary>
-        /// <param name="dungeon">pálya adata</param>
-        /// <param name="row">aktuális pozício sora</param>
-        /// <param name="col">aktuális pozício oszlopa</param>
-        /// <returns>Lehetséges mozgási irányok angol kezdőbetűinek felsorolása</returns>
-        private string GetPossibleWayGenerationDirection(Dungeon dungeon, int row, int col)
-		{
-            string wallDirections = "";
-            string wayDirections = dungeon.GetPossibleMoveDirections(row, col);
-            wallDirections += row > 0 && !wayDirections.Contains("U") ? "U" : "";
-            wallDirections += row < dungeon.LevelData.GetLength(0) - 1 && !wayDirections.Contains("D") ? "D" : "";
-            wallDirections += col > 0 && !wayDirections.Contains("L") ? "L" : "";
-            wallDirections += col < dungeon.LevelData.GetLength(1) -1 && !wayDirections.Contains("R") ? "R" : "";
-
-            return wallDirections;
+            return searchedFieldTypeCoords;
         }
 
         /// <summary>
@@ -246,8 +317,9 @@ namespace DungeonRpg.Models
                 connections++;
             if (connections < 2 && col < dungeon.LevelData.GetLength(1) - 1 && !dungeon.LevelPositionHasDungeonElementType(row, col + 1, DungeonElementType.Wall))
                 connections++;
-            return connections > 1;
+            return connections > 0;
         }
+        #endregion common helpers
         #endregion methods
     }
 }

@@ -40,7 +40,6 @@
 					<ItemsPanelTemplate>
 						<UniformGrid 
 							Background="Transparent" 
-							Rows="{Binding Rows}" Columns="{Binding Columns}" 
 							Margin="0">
 						</UniformGrid>
 					</ItemsPanelTemplate>

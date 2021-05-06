@@ -85,7 +85,7 @@ namespace DungeonRpg.ViewModels
 		#region View Commands
 		public void StartGame()
 		{
-			DungeonGenerator _generator = new DungeonGenerator(10, 10, 5, 50, 60, 30);
+			DungeonGenerator _generator = new DungeonGenerator(20, 20, 5, 70, 70, 5);
 			Dungeon = _generator.GenerateDungeon();
 			Character = CharacterGenerator.Generate(Dungeon.GetFirstDungeonElementPosition(DungeonElementType.StartPoint));
 			Dungeon.LevelData[Character.Position.Item1, Character.Position.Item2].Add(new DungeonElement(DungeonElementType.Player, -1));
