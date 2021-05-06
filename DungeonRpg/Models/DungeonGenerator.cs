@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -17,13 +18,13 @@ namespace DungeonRpg.Models
         private readonly int _monsterGeneratePercent;
         private readonly int _width;
         private readonly int _height;
-        
+        private Random _rnd = new Random();
+
         private bool _enableConnectionByRandom
         {
             get
             {
-                Random rnd = new Random();
-                return rnd.Next(0, 100) < _wayConnectionCreatePercent;
+                return _rnd.Next(0, 100) < _wayConnectionCreatePercent;
             }
         }
 
@@ -76,16 +77,15 @@ namespace DungeonRpg.Models
         /// <returns>pálya teljes adata</returns>
         private Dungeon AddWaysToDungeonLevel(Dungeon dungeon)
         {
-            Random rnd = new Random();
-            var fillPercent = rnd.Next(_minWayPercentInDungeon, _maxWayPercentInDungeon);
+            var fillPercent = _rnd.Next(_minWayPercentInDungeon, _maxWayPercentInDungeon);
 
-            (int, int) startpos = GetRandomFieldTypePointFromLevel(dungeon, DungeonElementType.Wall, true);
+            ValueTuple<int, int> startpos = GetRandomFieldTypePointFromLevel(dungeon, DungeonElementType.Wall, false);
             string possibleDirs = GetPossibleWayGenerationDirection(dungeon, startpos.Item1, startpos.Item2);          
             int wayCellNr = dungeon.LevelData.GetLength(0) * dungeon.LevelData.GetLength(1) * fillPercent / 100;
             int actCellNr = 0;
             while (actCellNr < wayCellNr && !string.IsNullOrEmpty(possibleDirs))
             {
-                switch (possibleDirs[rnd.Next(0, possibleDirs.Length)])
+                switch (possibleDirs[_rnd.Next(0, possibleDirs.Length)])
                 {
                     case 'U':
                         startpos.Item1--;
@@ -125,7 +125,7 @@ namespace DungeonRpg.Models
         /// <returns>pálya teljes adata</returns>
         private Dungeon AddPlacePOIsToDungeonLevel(Dungeon dungeon, bool isStartLevel, bool isEndLevel)
         {
-            var point = GetRandomFieldTypePointFromLevel(dungeon, DungeonElementType.Way, true);
+            ValueTuple<int, int> point = GetRandomFieldTypePointFromLevel(dungeon, DungeonElementType.Way, true);
             if(point.Item1 != -1 && point.Item2!=-1)
 			{
                 var newElement = new DungeonElement(isStartLevel ? DungeonElementType.StartPoint : DungeonElementType.DownStairs, -1);
@@ -149,7 +149,7 @@ namespace DungeonRpg.Models
 
                 dungeon.AddDungeonElementByPosition(point.Item1, point.Item2, GenerateMonster(), true);
             }
-
+            
             return dungeon;
         }
 
@@ -169,11 +169,10 @@ namespace DungeonRpg.Models
 		/// <param name="searchedFieldType">keresett mezőtípus</param>
 		/// <param name="withoutConnectionVerify"></param>
 		/// <returns></returns>
-		private (int, int) GetRandomFieldTypePointFromLevel(Dungeon dungeon, DungeonElementType searchedFieldType, bool withoutConnectionVerify)
+		private ValueTuple<int, int> GetRandomFieldTypePointFromLevel(Dungeon dungeon, DungeonElementType searchedFieldType, bool withoutConnectionVerify)
         {
-            Random rnd = new Random();
             List<object> searchedFieldTypeCoords = new List<object>();
-            (int, int) coord = (-1, -1);  
+            ValueTuple<int, int> coord = (-1, -1);  
 
             for (int row = 0; row < dungeon.LevelData.GetLength(0); row++)
             {
@@ -181,7 +180,7 @@ namespace DungeonRpg.Models
                 {
                     if (dungeon.LevelPositionHasDungeonElementType(row, col, searchedFieldType))
                     {
-                        searchedFieldTypeCoords.Add((row,col));
+                        searchedFieldTypeCoords.Add(new ValueTuple<int, int>(row, col));
                     }
                 }
             }
@@ -189,8 +188,8 @@ namespace DungeonRpg.Models
             bool done = false;
             while (searchedFieldTypeCoords.Count > 0 && !done)
             {
-                var coordNr = rnd.Next(0, searchedFieldTypeCoords.Count);
-                coord = ((int, int))searchedFieldTypeCoords.ToArray()[coordNr];
+                var coordNr = _rnd.Next(0, searchedFieldTypeCoords.Count);
+                coord = (ValueTuple< int, int>)searchedFieldTypeCoords.ToArray()[coordNr];
                 if (withoutConnectionVerify)
                 {
                     done = true;

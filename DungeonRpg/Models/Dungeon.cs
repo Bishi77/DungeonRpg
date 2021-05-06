@@ -34,13 +34,13 @@ namespace DungeonRpg.Models
 		/// </summary>
 		/// <param name="searchedElement">Keresett elemtípus</param>
 		/// <returns>Első talált előfordulási pozíció</returns>
-		public (int, int) GetFirstDungeonElementPosition(DungeonElementType searchedElement)
+		public ValueTuple<int, int> GetFirstDungeonElementPosition(DungeonElementType searchedElement)
 		{
 			for (int r = 0; r < LevelData.GetLength(0); r++)
 				for (int c = 0; c < LevelData.GetLength(1); c++)
 				{
 					if (LevelData[r, c].Exists(x => x.ElementType == searchedElement))
-						return (r, c);
+						return new ValueTuple<int, int>(r, c);
 				}
 			throw new Exception($"Keresett érték ({searchedElement}) nem található a tömbben!");
 		}
