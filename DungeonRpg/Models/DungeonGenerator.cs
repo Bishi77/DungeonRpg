@@ -213,14 +213,20 @@ namespace DungeonRpg.Models
             }
 
             int monsterNumber = dungeon.LevelData.GetLength(0) * dungeon.LevelData.GetLength(1) * _monsterGeneratePercent / 100;
-            for (int actMonster = 0; actMonster < monsterNumber; actMonster++)
+            int actMonster = 0;
+            ValueTuple<int, int> startPoint = dungeon.GetFirstDungeonElementPosition(DungeonElementType.StartPoint);
+            while (actMonster < monsterNumber)
             {
                 point = GetRandomFieldTypePointFromLevel(dungeon, DungeonElementType.Way, true);
 
                 if (point.Item1 == -1 && point.Item2 == -1)
                     break;
 
-                dungeon.AddDungeonElementByPosition(point.Item1, point.Item2, GenerateMonster(), true);
+                if(point != startPoint)
+                {
+                    dungeon.AddDungeonElementByPosition(point.Item1, point.Item2, GenerateMonster(), true);
+                    actMonster++;
+                }
             }
             
             return dungeon;
