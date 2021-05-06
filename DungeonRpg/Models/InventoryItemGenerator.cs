@@ -5,15 +5,16 @@ namespace DungeonRpg.Models
 {
 	public class InventoryItemGenerator
 	{
+		private static Random _rnd = new Random();
+
 		public static List<InventoryItem> GenerateRandomItems(int itemNumber)
 		{
 			List<InventoryItem> itemList = new List<InventoryItem>();
-			Random rnd = new Random();
 
 			for (int i = 0; i < itemNumber; i++)
 			{
 				Array types = Enum.GetValues(typeof(Category));
-				InventoryItem item = new InventoryItem((Category)types.GetValue(rnd.Next(types.Length)));
+				InventoryItem item = new InventoryItem((Category)types.GetValue(_rnd.Next(types.Length)));
 				item.Name = GenerateName(item.Category);
 				item.Description = GenerateDescription(item);
 
@@ -55,8 +56,7 @@ namespace DungeonRpg.Models
 
 		private static string GetRandomItem(IList<string> items)
 		{
-			Random rnd = new Random();
-			return items[rnd.Next(items.Count)];
+			return items[_rnd.Next(items.Count)];
 		}
 
 		private static IList<string> GetArmourNames()
