@@ -87,9 +87,8 @@ namespace DungeonRpg.ViewModels
 		{
 			DungeonGenerator _generator = new DungeonGenerator(20, 20, 5, 70, 70, 5);
 			Dungeon = _generator.GenerateDungeon();
-			Character = CharacterGenerator.Generate(Dungeon.GetFirstDungeonElementPosition(DungeonElementType.StartPoint));
+			Character = CharacterGenerator.Generate(Dungeon.GetFirstDungeonElementPosition(DungeonElementType.StartPoint), Dungeon);
 			Dungeon.SetVisitedArea(Character.Position, Character.VisibilityRange);
-			Dungeon.LevelData[Character.Position.Item1, Character.Position.Item2].Add(new DungeonElement(DungeonElementType.Player, -1));
 			DrawMap();
 			SetPossibleDirection();
 		}
@@ -102,7 +101,7 @@ namespace DungeonRpg.ViewModels
 			{
 				(int, int) oldPosition = Character.Position;
 				Character.Move((Dungeon.Direction)obj.ToString()[0], Dungeon);
-				RefreshMapItems2(new List<ValueTuple<int, int>> { oldPosition, Character.Position }, Character.VisibilityRange);
+				RefreshMapItems(new List<ValueTuple<int, int>> { oldPosition, Character.Position }, Character.VisibilityRange);
 				SetPossibleDirection();
 				OnPropertyChanged(nameof(MapItems));
 			}
@@ -126,38 +125,7 @@ namespace DungeonRpg.ViewModels
 			MapItem.Columns = Dungeon.LevelData.GetLength(1);
 		}
 
-		private void RefreshMapItems(List<(int, int)> pozitionList, int visibleRange)
-		{
-			var visibles = new List<MapItem>();
-			MapItem newMapitem = null;
-			MapItem oldMapItem = null;
-			//új és régi poz. frisssítés
-			foreach (var poz in pozitionList)
-			{
-				newMapitem = GetMapItemByPosition(poz.Item1, poz.Item2);
-				oldMapItem = MapItems.FirstOrDefault(s => s.Row == poz.Item1 && s.Column == poz.Item2);
-				if (oldMapItem == null)
-				{
-					oldMapItem = new MapItem();
-					oldMapItem.Row = poz.Item1;
-					oldMapItem.Column = poz.Item2;
-				}
-				oldMapItem.ImagesSumValue = newMapitem.ImagesSumValue;
-			}
-
-			//láthatóság
-			for (int r = Math.Max(0, newMapitem.Row - visibleRange); r < Math.Min(newMapitem.Row + visibleRange + 1, Dungeon.LevelData.GetLength(0)); r++)
-			{
-				for (int c = Math.Max(0, newMapitem.Column - visibleRange); c < Math.Min(newMapitem.Column + visibleRange + 1, Dungeon.LevelData.GetLength(1)); c++)
-				{
-					oldMapItem = MapItems.FirstOrDefault(s => s.Row == r && s.Column == c);
-					newMapitem = GetMapItemByPosition(r, c);
-					oldMapItem.ImagesSumValue = newMapitem.ImagesSumValue;
-				}
-			}
-		}
-
-		private void RefreshMapItems2(List<ValueTuple<int, int>> pozitionList, int visibleRange)
+		private void RefreshMapItems(List<ValueTuple<int, int>> pozitionList, int visibleRange)
 		{
 			MapItem newMapitem = null;
 			MapItem oldMapItem = null;
@@ -213,7 +181,6 @@ namespace DungeonRpg.ViewModels
 
 			if(!visited)
 				return $"UniversalDesign.Resources.Tiles.rltiles.{TileCategory.Dungeon.Value}.unseen.png";
-
 
 			switch (element.ElementType)
 			{
