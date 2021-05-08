@@ -1,11 +1,4 @@
-﻿using DungeonRpg.Models;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace DungeonRpg.Models
+﻿namespace DungeonRpg.Models
 {
 	public static class CharacterGenerator
 	{
@@ -15,7 +8,7 @@ namespace DungeonRpg.Models
 			{
 				Position = startPosition
 			};
-			dungeon.LevelData[character.Position.Item1, character.Position.Item2].Add(new DungeonElement(DungeonElementType.Player, -1));
+			dungeon.AddDungeonElementByPosition(character.Position.Item1, character.Position.Item2, new DungeonElement(DungeonElementType.Player, -1), true);
 			character.Inventory.ItemList = InventoryItemGenerator.GenerateRandomItems(10);
 			return character;
 		}
