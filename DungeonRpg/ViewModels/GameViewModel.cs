@@ -88,7 +88,7 @@ namespace DungeonRpg.ViewModels
 			DungeonGenerator _generator = new DungeonGenerator(20, 20, 5, 70, 70, 5);
 			Dungeon = _generator.GenerateDungeon();
 			Character = CharacterGenerator.Generate(Dungeon.GetFirstDungeonElementPosition(DungeonElementType.StartPoint));
-			Character.SetVisitedArea(Dungeon);
+			Dungeon.SetVisitedArea(Character.Position, Character.VisibilityRange);
 			Dungeon.LevelData[Character.Position.Item1, Character.Position.Item2].Add(new DungeonElement(DungeonElementType.Player, -1));
 			DrawMap();
 			SetPossibleDirection();

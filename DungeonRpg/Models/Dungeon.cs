@@ -125,6 +125,24 @@ namespace DungeonRpg.Models
 			LevelData[row, col].ForEach(x => result += (int)x.ElementType);
 			return result;
 		}
+
+		//a környék láthatóság állítása
+		public void SetVisitedArea((int, int) position, int visibilityRange)
+		{
+			for (int r = Math.Max(0, position.Item1 - visibilityRange); r < Math.Min(position.Item1 + visibilityRange + 1, LevelData.GetLength(0)); r++)
+			{
+				for (int c = Math.Max(0, position.Item2 - visibilityRange); c < Math.Min(position.Item2 + visibilityRange + 1, LevelData.GetLength(1)); c++)
+				{
+					LevelVisited[r, c] = true;
+				}
+			}
+		}
+
+		public void MoveItem((int, int) oldPosition, (int, int) newPosition, DungeonElementType elementType)
+		{
+			LevelData[oldPosition.Item1, oldPosition.Item2].RemoveAll(x => x.ElementType == elementType);
+			LevelData[newPosition.Item1, newPosition.Item2].Add(new DungeonElement(elementType, -1));
+		}
 		#endregion methods
 	}
 }

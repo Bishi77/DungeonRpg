@@ -156,22 +156,8 @@ namespace DungeonRpg.Models
 					break;
 			}
 
-			SetVisitedArea(dungeon);
-
-			dungeon.LevelData[oldPosition.Item1, oldPosition.Item2].RemoveAll(x => x.ElementType == DungeonElementType.Player);
-			dungeon.LevelData[Position.Item1, Position.Item2].Add(new DungeonElement(DungeonElementType.Player, -1));
-		}
-
-		//a környék láthatóság állítása
-		public void SetVisitedArea(Dungeon dungeon)
-		{
-			for (int r = Math.Max(0, Position.Item1 - VisibilityRange); r < Math.Min(Position.Item1 + VisibilityRange + 1, dungeon.LevelData.GetLength(0)); r++)
-			{
-				for (int c = Math.Max(0, Position.Item2 - VisibilityRange); c < Math.Min(Position.Item2 + VisibilityRange + 1, dungeon.LevelData.GetLength(1)); c++)
-				{
-					dungeon.LevelVisited[r, c] = true;
-				}
-			}
+			dungeon.SetVisitedArea(Position, VisibilityRange);
+			dungeon.MoveItem(oldPosition, Position, DungeonElementType.Player);
 		}
 		#endregion public methods
 	}
