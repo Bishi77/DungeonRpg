@@ -1,21 +1,15 @@
 ﻿using DungeonRpg.Models;
+using DungeonRpg.Models.Helpers;
 using DungeonRpg.ViewModels.Helpers;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.ComponentModel;
-using System.Drawing;
-using System.Drawing.Imaging;
-using System.IO;
 using System.Linq;
-using System.Reflection;
 using System.Windows.Input;
-using System.Windows.Media.Imaging;
-using UniversalDesign;
 
 namespace DungeonRpg.ViewModels
 {
-	public class GameViewModel : BindableBaseViewModel, INotifyPropertyChanged, ICanEnableField
+	public class GameViewModel : ModelBase, ICanEnableField
 	{
 		#region fields
 		private Dungeon _dungeon = new Dungeon(new List<DungeonElement>[0, 0]);
@@ -118,7 +112,7 @@ namespace DungeonRpg.ViewModels
 			{
 				for (int col = 0; col < Dungeon.LevelData.GetLength(1); col++)
 				{
-					MapItems.Add(GetMapItemByPosition(row, col));
+					MapItems.Add(Dungeon.GetMapItemByPosition(row, col));
 				}
 			}
 			MapItem.Rows = Dungeon.LevelData.GetLength(0);
@@ -142,7 +136,7 @@ namespace DungeonRpg.ViewModels
 
 			foreach (var poz in visibles.Distinct())
 			{
-				newMapitem = GetMapItemByPosition(poz.Item1, poz.Item2);
+				newMapitem = Dungeon.GetMapItemByPosition(poz.Item1, poz.Item2);
 				oldMapItem = MapItems.FirstOrDefault(s => s.Row == poz.Item1 && s.Column == poz.Item2);
 				if (oldMapItem == null)
 				{
@@ -152,121 +146,6 @@ namespace DungeonRpg.ViewModels
 				}
 				oldMapItem.ImagesSumValue = newMapitem.ImagesSumValue;
 			}
-		}
-
-		private MapItem GetMapItemByPosition(int row, int col)
-		{
-			MapItem mapItem = new MapItem();
-			mapItem.Row = row;
-			mapItem.Column = col;
-			mapItem.ImagesSumValue = Dungeon.GetPositionSumValue(row, col);
-			if(!MapItem.MapItemCache.ContainsKey(mapItem.ImagesSumValue))
-				mapItem.Image = MergeImages(GetMapPositionTilesPathsWithFileName(Dungeon.LevelData[row, col], Dungeon.LevelVisited[row, col]));
-
-			return mapItem;
-		}
-
-		private List<string> GetMapPositionTilesPathsWithFileName(List<DungeonElement> elementsAtPosition, bool visited)
-		{
-			List<string> positionImages = new List<string>();
-			elementsAtPosition.ForEach(x => positionImages.Add(GetMapPositionTilePathWithFileName(x, visited)));
-			return positionImages;
-		}
-
-		private string GetMapPositionTilePathWithFileName(DungeonElement element, bool visited)
-		{
-			TileCategory tileCategory = TileCategory.Error;
-			TileSubCategory tileSubCategory = TileSubCategory.Error;
-			string pngName = "";
-
-			if(!visited)
-				return $"UniversalDesign.Resources.Tiles.rltiles.{TileCategory.Dungeon.Value}.unseen.png";
-
-			switch (element.ElementType)
-			{
-				case DungeonElementType.Wall:
-					tileCategory = TileCategory.Dungeon;
-					tileSubCategory = TileDungeonSubCategory.Wall;
-					pngName = "catacombs0.png";
-					break;
-				case DungeonElementType.StartPoint:
-					tileCategory = TileCategory.Dungeon;
-					tileSubCategory = TileDungeonSubCategory.Gateways;
-					pngName = "bazaar_portal.png";
-					break;
-				case DungeonElementType.EndPoint:
-					tileCategory = TileCategory.Dungeon;
-					tileSubCategory = TileDungeonSubCategory.Gateways;
-					pngName = "exit_dungeon.png";
-					break;
-				case DungeonElementType.Item:
-					tileCategory = TileCategory.Item;
-					tileSubCategory = TileItemSubCategory.Armour;
-					pngName = "ring_mail1.png";
-					break;
-				case DungeonElementType.Player:
-					tileCategory = TileCategory.Monster;
-					tileSubCategory = TileMonsterSubCategory.Humanoids;
-					pngName = "dwarf.png";
-					break;
-				case DungeonElementType.Monster:
-					tileCategory = TileCategory.Monster;
-					tileSubCategory = TileMonsterSubCategory.Demons;
-					pngName = "crimson_imp.png";
-					break;
-				case DungeonElementType.UpStairs:
-					tileCategory = TileCategory.Dungeon;
-					tileSubCategory = TileDungeonSubCategory.Gateways;
-					pngName = "stone_stairs_up.png";
-					break;
-				case DungeonElementType.DownStairs:
-					tileCategory = TileCategory.Dungeon;
-					tileSubCategory = TileDungeonSubCategory.Gateways;
-					pngName = "stone_stairs_down.png";
-					break;
-				case DungeonElementType.Way:
-					tileCategory = TileCategory.Dungeon;
-					tileSubCategory = TileDungeonSubCategory.Floor;
-					pngName = "sand1.png";
-					break;
-				default:
-					break;
-			}
-
-			return $"UniversalDesign.Resources.Tiles.rltiles.{tileCategory.Value}.{tileSubCategory.Value}.{pngName}";
-		}
-
-		private BitmapImage MergeImages(List<string> imagesPathWithFileNames)
-		{
-			BitmapImage result = new BitmapImage();
-			Assembly ass = AppDomain.CurrentDomain.GetAssemblies().
-								SingleOrDefault(assembly => assembly.GetName().Name == "UniversalDesign");
-				
-			if (imagesPathWithFileNames.Count == 0)
-				return result;
-
-			Bitmap baseImage = new Bitmap(32, 32);
-			
-			using (var g = Graphics.FromImage(baseImage))
-			{
-				foreach (var image in imagesPathWithFileNames)
-				{
-					g.DrawImage(System.Drawing.Image.FromStream(ass.GetManifestResourceStream(image)), 0, 0);
-				}
-			}
-			using (var ms = new MemoryStream())
-			{
-				baseImage.Save(ms, ImageFormat.Png);
-				ms.Seek(0, SeekOrigin.Begin);
-
-				var bitmapImage = new BitmapImage();
-				bitmapImage.BeginInit();
-				bitmapImage.CacheOption = BitmapCacheOption.OnLoad;
-				bitmapImage.StreamSource = ms;
-				bitmapImage.EndInit();
-
-				return bitmapImage;
-			}			
 		}
 		#endregion methods
 	}

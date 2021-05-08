@@ -1,9 +1,10 @@
-﻿using System.Collections.Generic;
+﻿using DungeonRpg.Models.Helpers;
+using System.Collections.Generic;
 using System.Windows.Media.Imaging;
 
-namespace DungeonRpg.ViewModels
+namespace DungeonRpg.Models
 {
-	public class MapItem : BindableBaseViewModel
+	public class MapItem : ModelBase
 	{
 		public static int Rows;
 		public static int Columns;

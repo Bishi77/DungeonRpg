@@ -1,11 +1,12 @@
-﻿using DungeonRpg.ViewModels.Helpers;
+﻿using DungeonRpg.Models.Helpers;
+using DungeonRpg.ViewModels.Helpers;
 using System.Collections.Generic;
 using System.Linq;
 using System.Windows.Input;
 
 namespace DungeonRpg.ViewModels
 {
-	public class MainWindowViewModel : BindableBaseViewModel
+	public class MainWindowViewModel : ModelBase
 	{
 		#region commands
 		public ICommand InventoryCommand { get; set; }
@@ -19,8 +20,8 @@ namespace DungeonRpg.ViewModels
 				if (_changePageCommand == null)
 				{
 					_changePageCommand = new RelayCommand(
-						p => ChangeViewModel((BindableBaseViewModel)p),
-						p => p is BindableBaseViewModel);
+						p => ChangeViewModel((ModelBase)p),
+						p => p is ModelBase);
 				}
 
 				return _changePageCommand;
@@ -29,20 +30,20 @@ namespace DungeonRpg.ViewModels
 		#endregion commands
 
 		#region properties
-		private List<BindableBaseViewModel> _pageViewModels = new List<BindableBaseViewModel>();
-		public List<BindableBaseViewModel> PageViewModels
+		private List<ModelBase> _pageViewModels = new List<ModelBase>();
+		public List<ModelBase> PageViewModels
 		{
 			get
 			{
 				if (_pageViewModels == null)
-					_pageViewModels = new List<BindableBaseViewModel>();
+					_pageViewModels = new List<ModelBase>();
 
 				return _pageViewModels;
 			}
 		}
 
-		private BindableBaseViewModel _currentPageViewModel = new BindableBaseViewModel();
-		public BindableBaseViewModel CurrentPageViewModel
+		private ModelBase _currentPageViewModel = new ModelBase();
+		public ModelBase CurrentPageViewModel
 		{
 			get
 			{
@@ -72,7 +73,7 @@ namespace DungeonRpg.ViewModels
 		#endregion ctor
 
 		#region methods
-		private void ChangeViewModel(BindableBaseViewModel viewModel)
+		private void ChangeViewModel(ModelBase viewModel)
 		{
 			if (!PageViewModels.Contains(viewModel))
 				PageViewModels.Add(viewModel);

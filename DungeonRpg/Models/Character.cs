@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace DungeonRpg.Models
+﻿namespace DungeonRpg.Models
 {
 	public class Character 
 	{

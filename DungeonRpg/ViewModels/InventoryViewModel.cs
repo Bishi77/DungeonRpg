@@ -1,11 +1,11 @@
 ﻿using DungeonRpg.Models;
+using DungeonRpg.Models.Helpers;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.Windows.Input;
 
 namespace DungeonRpg.ViewModels
 {
-	public class InventoryViewModel : BindableBaseViewModel, INotifyPropertyChanged
+	public class InventoryViewModel : ModelBase
 	{
 		private Inventory _inventory = new Inventory(null);
 

@@ -3,9 +3,9 @@ using System.ComponentModel;
 using System.Diagnostics;
 using System.Runtime.CompilerServices;
 
-namespace DungeonRpg.ViewModels
+namespace DungeonRpg.Models.Helpers
 {
-	public class BindableBaseViewModel : INotifyPropertyChanged
+	public class ModelBase : INotifyPropertyChanged
     {
         #region INotifyPropertyChanged
         public event PropertyChangedEventHandler PropertyChanged = delegate { };
