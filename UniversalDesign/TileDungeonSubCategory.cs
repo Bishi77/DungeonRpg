@@ -1,12 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace UniversalDesign
+﻿namespace UniversalDesign
 {
-    public class TileDungeonSubCategory : TileSubCategory
+	public class TileDungeonSubCategory : TileSubCategory
     {
         private TileDungeonSubCategory(string value) : base(value) {}
 

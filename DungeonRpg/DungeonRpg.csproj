@@ -111,8 +111,8 @@
     <Compile Include="Models\InventoryItemGenerator.cs" />
     <Compile Include="ViewModels\MainWindowViewModel.cs" />
     <Compile Include="ViewModels\MapItem.cs" />
-    <Compile Include="Views\Inventory.xaml.cs">
-      <DependentUpon>Inventory.xaml</DependentUpon>
+    <Compile Include="Views\InventoryView.xaml.cs">
+      <DependentUpon>InventoryView.xaml</DependentUpon>
     </Compile>
     <Compile Include="ViewModels\Helpers\CanEnableFieldHelper.cs" />
     <Compile Include="Models\CharacterGenerator.cs" />
@@ -122,23 +122,23 @@
     <Compile Include="Models\Character.cs" />
     <Compile Include="Models\Inventory.cs" />
     <Compile Include="ViewModels\GameViewModel.cs" />
-    <Compile Include="Views\MainWindow.xaml.cs">
-      <DependentUpon>MainWindow.xaml</DependentUpon>
+    <Compile Include="Views\MainWindowView.xaml.cs">
+      <DependentUpon>MainWindowView.xaml</DependentUpon>
     </Compile>
     <Compile Include="VML\ViewModelLocator.cs" />
-    <Page Include="Views\Inventory.xaml">
+    <Page Include="Views\InventoryView.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Views\MainWindow.xaml">
+    <Page Include="Views\MainWindowView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Views\Start.xaml">
+    <Page Include="Views\StartView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Views\Game.xaml">
+    <Page Include="Views\GameView.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
@@ -147,11 +147,11 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="ViewModels\Helpers\CommandImplementation.cs" />
-    <Compile Include="Views\Start.xaml.cs">
-      <DependentUpon>Start.xaml</DependentUpon>
+    <Compile Include="Views\StartView.xaml.cs">
+      <DependentUpon>StartView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\Game.xaml.cs">
-      <DependentUpon>Game.xaml</DependentUpon>
+    <Compile Include="Views\GameView.xaml.cs">
+      <DependentUpon>GameView.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
   </ItemGroup>
@@ -194,10 +194,7 @@
       <Install>false</Install>
     </BootstrapperPackage>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Resources\" />
-    <Folder Include="Services\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <ProjectReference Include="..\UniversalDesign\UniversalDesign.csproj">
       <Project>{f4b62255-76a8-4d5b-b30b-e5ef32a10f8b}</Project>
