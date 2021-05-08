@@ -24,6 +24,13 @@
 		</DataTemplate>
 	</Window.Resources>
 
+	<Window.InputBindings>
+		<KeyBinding Command="{Binding MoveCommand}" CommandParameter="U" Key="Up"/>
+		<KeyBinding Command="{Binding MoveCommand}" CommandParameter="D" Key="Down"/>
+		<KeyBinding Command="{Binding MoveCommand}" CommandParameter="L" Key="Left"/>
+		<KeyBinding Command="{Binding MoveCommand}" CommandParameter="R" Key="Right"/>
+	</Window.InputBindings>
+
 	<Grid>
 		<ContentControl Content="{Binding CurrentPageViewModel}" />
 	</Grid>

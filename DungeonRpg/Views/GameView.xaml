@@ -7,8 +7,7 @@
 			 xmlns:helpers="clr-namespace:DungeonRpg.ViewModels.Helpers"
 			 mc:Ignorable="d"
 		HorizontalAlignment="Stretch"
-		VerticalAlignment="Stretch"
-			 >
+		VerticalAlignment="Stretch">
 	<UserControl.Resources>
 		<vm:GameViewModel x:Key="ViewModel" />
 	</UserControl.Resources>

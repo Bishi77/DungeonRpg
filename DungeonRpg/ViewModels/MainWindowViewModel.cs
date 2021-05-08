@@ -11,6 +11,7 @@ namespace DungeonRpg.ViewModels
 		#region commands
 		public ICommand InventoryCommand { get; set; }
 		public ICommand MainCommand { get; set; }
+		public ICommand MoveCommand { get; set; }
 
 		private ICommand _changePageCommand;
 		public ICommand ChangePageCommand
@@ -69,6 +70,7 @@ namespace DungeonRpg.ViewModels
 			PageViewModels.Add(gamevm);
 			PageViewModels.Add(inventory);
 			CurrentPageViewModel = gamevm;
+			MoveCommand = gamevm.MoveCommand;
 		}
 		#endregion ctor
 
