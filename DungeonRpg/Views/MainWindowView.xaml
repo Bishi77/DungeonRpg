@@ -1,4 +1,4 @@
-﻿<Window x:Class="DungeonRpg.Views.MainWindow"
+﻿<Window x:Class="DungeonRpg.Views.MainWindowView"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
@@ -17,10 +17,13 @@
 
 	<Window.Resources>
 		<DataTemplate DataType="{x:Type vm:GameViewModel}">
-			<local:Game/>
+			<local:GameView/>
 		</DataTemplate>
 		<DataTemplate DataType="{x:Type vm:InventoryViewModel}">
-			<local:Inventory />
+			<local:InventoryView />
+		</DataTemplate>
+		<DataTemplate DataType="{x:Type vm:BattleViewModel}">
+			<local:BattleView />
 		</DataTemplate>
 	</Window.Resources>
 

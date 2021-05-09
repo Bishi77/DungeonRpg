@@ -1,8 +1,8 @@
 ﻿namespace DungeonRpg.Views
 {
-	public partial class GameView
+	public partial class BattleView
 	{
-		public GameView()
+		public BattleView()
 		{
 			InitializeComponent();
 		}

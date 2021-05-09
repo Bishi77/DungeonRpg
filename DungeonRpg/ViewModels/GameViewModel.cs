@@ -45,6 +45,8 @@ namespace DungeonRpg.ViewModels
 			}
 		}
 
+		public Monster Enemy => Dungeon.GetMonsterForBattle(Player.Position.Item1, Player.Position.Item2);
+
 		public string PossibleDirections
 		{
 			get { return _possibleDirections; }
@@ -98,6 +100,11 @@ namespace DungeonRpg.ViewModels
 				RefreshMapItems(new List<ValueTuple<int, int>> { oldPosition, Player.Position }, Player.VisibilityRange);
 				SetPossibleDirection();
 				OnPropertyChanged(nameof(MapItems));
+
+				if (Dungeon.LevelPositionHasDungeonElementType(Player.Position.Item1, Player.Position.Item2, DungeonElementType.MonsterType))
+				{
+					GoToInventoryCommand.Execute("Battle");
+				}
 			}
 		}
 

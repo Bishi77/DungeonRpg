@@ -17,7 +17,7 @@ namespace DungeonRpg.Views
 		{
 			try
 			{
-				MainWindow main = new MainWindow();
+				MainWindowView main = new MainWindowView();
 				App.Current.MainWindow = (Window)main;
 				this.Close();
 				main.Show();

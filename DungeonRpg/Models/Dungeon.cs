@@ -50,6 +50,15 @@ namespace DungeonRpg.Models
 		#endregion ctor
 
 		#region methods
+		public Monster GetMonsterForBattle(int row, int col)
+		{
+			var monster = GetDungeonElementByTypeFromLevelPosition(row, col, DungeonElementType.MonsterType);
+			if (monster == null)
+				return null;
+
+			return Monsters[monster.ElementID];
+		}
+
 		/// <summary>
 		/// Elemtípus keresése. Első előfordulás pozíciója a pályán
 		/// </summary>

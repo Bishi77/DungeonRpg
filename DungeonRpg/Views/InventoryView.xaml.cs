@@ -5,14 +5,14 @@ namespace DungeonRpg.Views
 	/// <summary>
 	/// Interaction logic for Window1.xaml
 	/// </summary>
-	public partial class Inventory
+	public partial class InventoryView
 	{
-		public Inventory()
+		public InventoryView()
 		{
 			InitializeComponent();
 		}
 
-		public Inventory(ViewModels.InventoryViewModel vm)
+		public InventoryView(ViewModels.InventoryViewModel vm)
 		{
 			this.DataContext = vm;
 			InitializeComponent();
