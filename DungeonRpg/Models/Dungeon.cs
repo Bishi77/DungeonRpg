@@ -160,7 +160,6 @@ namespace DungeonRpg.Models
 		private string GetPositionKeyValue(int row, int col)
 		{
 			int sum = 0;
-			string result = "";
 			if (!LevelVisited[row, col])
 				return "-1";
 			LevelData[row, col].ForEach(x => sum += (int)x.ElementType);
@@ -178,10 +177,23 @@ namespace DungeonRpg.Models
 			mapItem.Row = row;
 			mapItem.Column = col;
 			mapItem.ImagesSumValue = GetPositionKeyValue(row, col).ToString();
+			mapItem.Tooltip = GetPositionToolTip(row, col, LevelVisited[row, col]);
 			if (!MapItem.MapItemCache.ContainsKey(mapItem.ImagesSumValue))
 				mapItem.Image = ImageConstructor.MergeImages(GetMapPositionTilesPathsWithFileName(LevelData[row, col], LevelVisited[row, col]));
 
 			return mapItem;
+		}
+
+		private string GetPositionToolTip(int row, int col, bool visited)
+		{
+			if (!visited)
+				return "";
+			List<DungeonElement> elements = LevelData[row, col];
+			var element = elements.FirstOrDefault(c => c.ElementType == DungeonElementType.MonsterType);
+			if (element != null)
+				return Monsters[element.ElementID].Name;
+
+			return ""; 
 		}
 
 		private List<string> GetMapPositionTilesPathsWithFileName(List<DungeonElement> elementsAtPosition, bool visited)

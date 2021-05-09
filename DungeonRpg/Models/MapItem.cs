@@ -36,6 +36,16 @@ namespace DungeonRpg.Models
 			}
 		}
 
+		private string _tooltip;
+		public string Tooltip
+		{
+			get => _tooltip;
+			set
+			{
+				SetProperty(ref _tooltip, value);
+			}
+		}
+
 		public BitmapImage Image
 		{
 			get => MapItemCache[ImagesSumValue]; 
@@ -44,6 +54,6 @@ namespace DungeonRpg.Models
 				MapItemCache[ImagesSumValue] = value;
 				OnPropertyChanged(nameof(Image));
 			}
-		}		
+		}
 	}
 }

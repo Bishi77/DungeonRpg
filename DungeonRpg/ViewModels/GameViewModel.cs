@@ -145,6 +145,7 @@ namespace DungeonRpg.ViewModels
 					oldMapItem.Column = poz.Item2;
 				}
 				oldMapItem.ImagesSumValue = newMapitem.ImagesSumValue;
+				oldMapItem.Tooltip = newMapitem.Tooltip;
 			}
 		}
 		#endregion methods
