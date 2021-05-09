@@ -8,9 +8,12 @@ namespace DungeonRpg.Models
 {
 	public class Dice
 	{
+		//Kocka oldalainak a száma
 		private int DiceSide;
-		private Random _rnd = new Random();
+		private static Random _rnd = new Random();
+		public static Random Rnd { get => _rnd; }
 
+		///Dobás összege
 		public int SumRolls = 0;
 
 		#region ctor
@@ -45,7 +48,7 @@ namespace DungeonRpg.Models
 
 		private int RollDice()
 		{
-			return _rnd.Next(DiceSide) + 1;
+			return Rnd.Next(DiceSide) + 1;
 		}
 		#endregion methods
 	}

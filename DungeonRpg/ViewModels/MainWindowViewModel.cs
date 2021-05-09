@@ -62,7 +62,7 @@ namespace DungeonRpg.ViewModels
 		public MainWindowViewModel()
 		{
 			var gamevm = new GameViewModel();
-			var inventory = new InventoryViewModel(gamevm.Character.Inventory);
+			var inventory = new InventoryViewModel(gamevm.Player.Inventory);
 
 			gamevm.StartGame();
 			gamevm.GoToInventoryCommand = new CommandImplementation(OnNav);

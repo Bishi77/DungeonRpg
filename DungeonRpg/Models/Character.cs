@@ -1,4 +1,6 @@
-﻿namespace DungeonRpg.Models
+﻿using System;
+
+namespace DungeonRpg.Models
 {
 	public class Character 
 	{
@@ -112,23 +114,16 @@
 
 		#endregion properties
 
-		#region ctor		
-		public Character()
+		#region ctor
+		public Character(){}
+
+		public Character(int diceSize, int diceNr, ValueTuple<int, int> startPosition)
 		{
-			Dice dice = new Dice(6);
 			Level = 1;
 			VisibilityRange = 1;
-
-			Strength = dice.ResetSum().RollDices(3).SumRolls;
-			Dexterity = dice.ResetSum().RollDices(3).SumRolls; ;
-			Intelligence = dice.ResetSum().RollDices(3).SumRolls;
-			Constitution = dice.ResetSum().RollDices(3).SumRolls;
-			Wisdom = dice.ResetSum().RollDices(3).SumRolls;
-			Charisma = dice.ResetSum().RollDices(3).SumRolls;
-			MP = MaxMp;
-			HP = MaxHp;
-
 			_inventory = new Inventory();
+			Position = startPosition;
+			SetAttributes(diceSize, diceNr);			
 		}
 		#endregion ctor
 
@@ -150,13 +145,26 @@
 				case Dungeon.Direction.RIGHT:
 					Position = (Position.Item1, Position.Item2 + 1);
 					break;
-				default:
-					break;
 			}
 
 			dungeon.SetVisitedArea(Position, VisibilityRange);
 			dungeon.MoveItem(oldPosition, Position, DungeonElementType.Player);
 		}
 		#endregion public methods
+
+		private void SetAttributes(int diceSize, int diceNr)
+		{
+			Dice dice = new Dice(diceSize);
+
+			Strength = dice.ResetSum().RollDices(diceNr).SumRolls;
+			Dexterity = dice.ResetSum().RollDices(diceNr).SumRolls; ;
+			Intelligence = dice.ResetSum().RollDices(diceNr).SumRolls;
+			Constitution = dice.ResetSum().RollDices(diceNr).SumRolls;
+			Wisdom = dice.ResetSum().RollDices(diceNr).SumRolls;
+			Charisma = dice.ResetSum().RollDices(diceNr).SumRolls;
+
+			MP = MaxMp;
+			HP = MaxHp;
+		}
 	}
 }

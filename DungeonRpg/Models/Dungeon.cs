@@ -1,6 +1,7 @@
 ﻿using DungeonRpg.Models.Helpers;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using UniversalDesign;
 
 namespace DungeonRpg.Models
@@ -9,6 +10,7 @@ namespace DungeonRpg.Models
 	{
 		public enum Direction { UP = 'U', DOWN = 'D', LEFT = 'L', RIGHT = 'R' };
 
+		#region properties
 		/// <summary>
 		/// Pálya adatai.
 		/// 2 dimenziós tömb, 1. sorok, 2. oszlopok pozíciója, a pozíciókban DungeonElement listák vannak, jelölve a artalmat
@@ -27,6 +29,10 @@ namespace DungeonRpg.Models
 		private bool[,] _levelVisited = new bool[0, 0];
 		public bool[,] LevelVisited { get => _levelVisited; set => _levelVisited = value; }
 
+		private Dictionary<int, Monster> _monsters = new Dictionary<int, Monster>();
+		public Dictionary<int, Monster> Monsters { get => _monsters; set => _monsters = value; }
+		#endregion properties
+
 		#region ctor
 		public Dungeon(List<DungeonElement>[,] levelData)
 		{
@@ -36,7 +42,7 @@ namespace DungeonRpg.Models
 				for (int column = 0; column < levelData.GetLength(1); column++)
 				{
 					if (_levelData[row, column] == null)
-						_levelData[row, column] = new List<DungeonElement>{new DungeonElement(DungeonElementType.Wall, -1)};
+						_levelData[row, column] = new List<DungeonElement>{new DungeonElement(DungeonElementType.Wall)};
 				}
 			}
 			_levelVisited = new bool[levelData.GetLength(0), levelData.GetLength(1)];
@@ -72,6 +78,20 @@ namespace DungeonRpg.Models
 			if (rowPosition < 0 || columnPosition < 0 || rowPosition >= LevelData.GetLength(0) || columnPosition >= LevelData.GetLength(1))
 				return false;
 			return LevelData[rowPosition, columnPosition].Exists(x => x.ElementType == elementType);
+		}
+
+		/// <summary>
+		/// Adott pozíción keresett elem kérése
+		/// </summary>
+		/// <param name="rowPosition">sor pozíció</param>
+		/// <param name="columnPosition">oszlop pozció</param>
+		/// <param name="elementType">keresett elemtípus</param>
+		/// <returns>Keresett elem, vagy null, ha nincs</returns>
+		public DungeonElement GetDungeonElementByTypeFromLevelPosition(int rowPosition, int columnPosition, DungeonElementType elementType)
+		{
+			if (rowPosition < 0 || columnPosition < 0 || rowPosition >= LevelData.GetLength(0) || columnPosition >= LevelData.GetLength(1))
+				return null;
+			return LevelData[rowPosition, columnPosition].FirstOrDefault(x => x.ElementType == elementType);
 		}
 
 		/// <summary>
@@ -134,16 +154,22 @@ namespace DungeonRpg.Models
 		public void MoveItem((int, int) oldPosition, (int, int) newPosition, DungeonElementType elementType)
 		{
 			LevelData[oldPosition.Item1, oldPosition.Item2].RemoveAll(x => x.ElementType == elementType);
-			LevelData[newPosition.Item1, newPosition.Item2].Add(new DungeonElement(elementType, -1));
+			LevelData[newPosition.Item1, newPosition.Item2].Add(new DungeonElement(elementType));
 		}
 
-		private int GetPositionSumValue(int row, int col)
+		private string GetPositionKeyValue(int row, int col)
 		{
-			int result = 0;
+			int sum = 0;
+			string result = "";
 			if (!LevelVisited[row, col])
-				return -1;
-			LevelData[row, col].ForEach(x => result += (int)x.ElementType);
-			return result;
+				return "-1";
+			LevelData[row, col].ForEach(x => sum += (int)x.ElementType);
+			var monster = GetDungeonElementByTypeFromLevelPosition(row, col, DungeonElementType.MonsterType);
+			if (monster != null)
+			{
+				return $"{sum}_{Monsters[monster.ElementID].ImageName}";
+			}
+			return sum.ToString();
 		}
 		#region mapitems
 		public MapItem GetMapItemByPosition(int row, int col)
@@ -151,7 +177,7 @@ namespace DungeonRpg.Models
 			MapItem mapItem = new MapItem();
 			mapItem.Row = row;
 			mapItem.Column = col;
-			mapItem.ImagesSumValue = GetPositionSumValue(row, col);
+			mapItem.ImagesSumValue = GetPositionKeyValue(row, col).ToString();
 			if (!MapItem.MapItemCache.ContainsKey(mapItem.ImagesSumValue))
 				mapItem.Image = ImageConstructor.MergeImages(GetMapPositionTilesPathsWithFileName(LevelData[row, col], LevelVisited[row, col]));
 
@@ -201,11 +227,10 @@ namespace DungeonRpg.Models
 					tileSubCategory = TileMonsterSubCategory.Humanoids;
 					pngName = "dwarf.png";
 					break;
-				case DungeonElementType.Monster:
+				case DungeonElementType.MonsterType:
 					tileCategory = TileCategory.Monster;
 					tileSubCategory = TileMonsterSubCategory.Demons;
-					pngName = "crimson_imp.png";
-					break;
+					return Monsters[element.ElementID].ImageName;
 				case DungeonElementType.UpStairs:
 					tileCategory = TileCategory.Dungeon;
 					tileSubCategory = TileDungeonSubCategory.Gateways;

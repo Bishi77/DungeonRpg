@@ -86,17 +86,17 @@
 				<Label Grid.Column="1" Grid.Row="6" Content="Bölcsesség: "/>
 				<Label Grid.Column="1" Grid.Row="7" Content="Karizma: "/>
 
-				<Label Grid.Column="2" Grid.Row="2" Content="{Binding Character.Strength}"/>
-				<Label Grid.Column="2" Grid.Row="3" Content="{Binding Character.Dexterity}"/>
-				<Label Grid.Column="2" Grid.Row="4" Content="{Binding Character.Constitution}"/>
-				<Label Grid.Column="2" Grid.Row="5" Content="{Binding Character.Intelligence}"/>
-				<Label Grid.Column="2" Grid.Row="6" Content="{Binding Character.Wisdom}"/>
-				<Label Grid.Column="2" Grid.Row="7" Content="{Binding Character.Charisma}"/>
+				<Label Grid.Column="2" Grid.Row="2" Content="{Binding Player.Strength}"/>
+				<Label Grid.Column="2" Grid.Row="3" Content="{Binding Player.Dexterity}"/>
+				<Label Grid.Column="2" Grid.Row="4" Content="{Binding Player.Constitution}"/>
+				<Label Grid.Column="2" Grid.Row="5" Content="{Binding Player.Intelligence}"/>
+				<Label Grid.Column="2" Grid.Row="6" Content="{Binding Player.Wisdom}"/>
+				<Label Grid.Column="2" Grid.Row="7" Content="{Binding Player.Charisma}"/>
 
 				<Grid Grid.Column="4" Grid.Row="2">
 					<ProgressBar Name="pbHp"
-							 Maximum="{Binding Character.MaxHp}" Minimum="0"  
-								 Value="{Binding Character.HP}" 
+							 Maximum="{Binding Player.MaxHp}" Minimum="0"  
+								 Value="{Binding Player.HP}" 
 							 Foreground="ForestGreen" Background="White"
 							 BorderThickness="2" BorderBrush="White"/>
 					<TextBlock HorizontalAlignment="Center" VerticalAlignment="Center"
@@ -105,8 +105,8 @@
 
 				<Grid Grid.Column="4" Grid.Row="3">
 					<ProgressBar Name="pbMana"
-							 Maximum="{Binding Character.MaxMp}" Minimum="0" 
-								 Value="{Binding Character.MP}" 
+							 Maximum="{Binding Player.MaxMp}" Minimum="0" 
+								 Value="{Binding Player.MP}" 
 							 Foreground="Blue" Background="White"
 							 BorderThickness="2" BorderBrush="White"/>
 					<TextBlock HorizontalAlignment="Center" VerticalAlignment="Center"

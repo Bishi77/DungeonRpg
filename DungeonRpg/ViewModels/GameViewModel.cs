@@ -13,7 +13,7 @@ namespace DungeonRpg.ViewModels
 	{
 		#region fields
 		private Dungeon _dungeon = new Dungeon(new List<DungeonElement>[0, 0]);
-		private Character _character = new Character();
+		private Player _player = new Player();
 		private ObservableCollection<MapItem> _mapItems = new ObservableCollection<MapItem>();
 		private string _possibleDirections = "";
 		private readonly CanEnableFieldHelper _helper;
@@ -35,13 +35,13 @@ namespace DungeonRpg.ViewModels
 			}
 		}
 
-		public Character Character
+		public Player Player
 		{
-			get { return _character; }
+			get { return _player; }
 			set
 			{
-				_character = value;
-				OnPropertyChanged(nameof(Character));
+				_player = value;
+				OnPropertyChanged(nameof(Player));
 			}
 		}
 
@@ -81,8 +81,8 @@ namespace DungeonRpg.ViewModels
 		{
 			DungeonGenerator _generator = new DungeonGenerator(20, 20, 5, 70, 70, 5);
 			Dungeon = _generator.GenerateDungeon();
-			Character = CharacterGenerator.Generate(Dungeon.GetFirstDungeonElementPosition(DungeonElementType.StartPoint), Dungeon);
-			Dungeon.SetVisitedArea(Character.Position, Character.VisibilityRange);
+			Player = CharacterGenerator.GeneratePlayer(Dungeon.GetFirstDungeonElementPosition(DungeonElementType.StartPoint), Dungeon, 6, 3);
+			Dungeon.SetVisitedArea(Player.Position, Player.VisibilityRange);
 			DrawMap();
 			SetPossibleDirection();
 		}
@@ -93,9 +93,9 @@ namespace DungeonRpg.ViewModels
 		{
 			if (PossibleDirections.Contains(obj.ToString()))
 			{
-				(int, int) oldPosition = Character.Position;
-				Character.Move((Dungeon.Direction)obj.ToString()[0], Dungeon);
-				RefreshMapItems(new List<ValueTuple<int, int>> { oldPosition, Character.Position }, Character.VisibilityRange);
+				(int, int) oldPosition = Player.Position;
+				Player.Move((Dungeon.Direction)obj.ToString()[0], Dungeon);
+				RefreshMapItems(new List<ValueTuple<int, int>> { oldPosition, Player.Position }, Player.VisibilityRange);
 				SetPossibleDirection();
 				OnPropertyChanged(nameof(MapItems));
 			}
@@ -103,7 +103,7 @@ namespace DungeonRpg.ViewModels
 
 		private void SetPossibleDirection()
 		{
-			PossibleDirections = Dungeon.GetPossibleMoveDirections(Character.Position.Item1, Character.Position.Item2);
+			PossibleDirections = Dungeon.GetPossibleMoveDirections(Player.Position.Item1, Player.Position.Item2);
 		}
 
 		private void DrawMap()

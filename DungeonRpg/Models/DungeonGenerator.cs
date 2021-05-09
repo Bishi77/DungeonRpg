@@ -1,4 +1,5 @@
-﻿using System;
+﻿using DungeonRpg.Models.Helpers;
+using System;
 using System.Collections.Generic;
 
 namespace DungeonRpg.Models
@@ -50,7 +51,8 @@ namespace DungeonRpg.Models
         {
             Dungeon generated = GenerateDungeonLevel(_height, _width);
             AddWaysToDungeonLevel(generated);
-            AddPlacePOIsToDungeonLevel(generated, true, true);
+            AddStairsToDungeon(generated, true, true);
+            AddMonstersToDungeon(generated);
 
             return generated;
         }
@@ -86,7 +88,7 @@ namespace DungeonRpg.Models
 			while (actCellNr < wayCellNr)
 			{
                 //hozzáadjuk az utat
-				dungeon.AddDungeonElementByPosition(pos.Item1, pos.Item2, new DungeonElement(DungeonElementType.Way, 1), true);
+				dungeon.AddDungeonElementByPosition(pos.Item1, pos.Item2, new DungeonElement(DungeonElementType.Way), true);
                 //szomszédban van út?
                 possibleDirs = GetPossibleWayGenerationDirection(dungeon, pos.Item1, pos.Item2);
                 //ha nincs, akkor keresünk egy falat, úttal szomszédosan
@@ -196,21 +198,27 @@ namespace DungeonRpg.Models
         /// <param name="isStartLevel">Kezdőszint-e. Ehhez kellő elemeket generáljon-e. (Kezdő pont)</param>
         /// <param name="isEndLevel">Vég szint-e. Ehhez kellő elemeket generáljon-e. (Vég pont)</param>
         /// <returns>pálya teljes adata</returns>
-        private Dungeon AddPlacePOIsToDungeonLevel(Dungeon dungeon, bool isStartLevel, bool isEndLevel)
+        private Dungeon AddStairsToDungeon(Dungeon dungeon, bool isStartLevel, bool isEndLevel)
         {
             ValueTuple<int, int> point = GetRandomFieldTypePointFromLevel(dungeon, DungeonElementType.Way, true);
-            if(point.Item1 != -1 && point.Item2!=-1)
-			{
-                var newElement = new DungeonElement(isStartLevel ? DungeonElementType.StartPoint : DungeonElementType.DownStairs, -1);
+            if (point.Item1 != -1 && point.Item2 != -1)
+            {
+                var newElement = new DungeonElement(isStartLevel ? DungeonElementType.StartPoint : DungeonElementType.DownStairs);
                 dungeon.AddDungeonElementByPosition(point.Item1, point.Item2, newElement, true);
-			}
+            }
 
             point = GetRandomFieldTypePointFromLevel(dungeon, DungeonElementType.Way, true);
             if (point.Item1 != -1 && point.Item2 != -1)
             {
-                var newElement = new DungeonElement(isEndLevel ? DungeonElementType.EndPoint : DungeonElementType.UpStairs, -1);
+                var newElement = new DungeonElement(isEndLevel ? DungeonElementType.EndPoint : DungeonElementType.UpStairs);
                 dungeon.AddDungeonElementByPosition(point.Item1, point.Item2, newElement, true);
             }
+            return dungeon;
+        }
+
+        private Dungeon AddMonstersToDungeon(Dungeon dungeon)
+        {
+            ValueTuple<int, int> point = GetRandomFieldTypePointFromLevel(dungeon, DungeonElementType.Way, true);
 
             int monsterNumber = dungeon.LevelData.GetLength(0) * dungeon.LevelData.GetLength(1) * _monsterGeneratePercent / 100;
             int actMonster = 0;
@@ -222,13 +230,13 @@ namespace DungeonRpg.Models
                 if (point.Item1 == -1 && point.Item2 == -1)
                     break;
 
-                if(point != startPoint)
+                if (point != startPoint)
                 {
-                    dungeon.AddDungeonElementByPosition(point.Item1, point.Item2, GenerateMonster(), true);
+                    dungeon.AddDungeonElementByPosition(point.Item1, point.Item2, GenerateMonster(dungeon, point), true);
                     actMonster++;
                 }
             }
-            
+
             return dungeon;
         }
 
@@ -237,9 +245,11 @@ namespace DungeonRpg.Models
         /// Az aktuális szörny komplett generálása 
         /// </summary>
         /// <returns></returns>
-        private DungeonElement GenerateMonster()
+        private DungeonElement GenerateMonster(Dungeon dungeon, ValueTuple<int, int> position)
         {
-            return new DungeonElement(DungeonElementType.Monster, -1);
+            Monster newMonster = CharacterGenerator.GenerateMonster(position, dungeon, 4, 3);
+            dungeon.Monsters.Add(newMonster.MonsterID, newMonster);
+            return new DungeonElement(DungeonElementType.MonsterType, newMonster.MonsterID);
         }
 		#endregion monster generating
 		#endregion POI generating

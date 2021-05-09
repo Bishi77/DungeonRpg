@@ -27,7 +27,7 @@
     <UpdatePeriodically>false</UpdatePeriodically>
     <UpdateRequired>false</UpdateRequired>
     <MapFileExtensions>true</MapFileExtensions>
-    <ApplicationRevision>1</ApplicationRevision>
+    <ApplicationRevision>2</ApplicationRevision>
     <ApplicationVersion>0.0.1.%2a</ApplicationVersion>
     <UseApplicationTrust>false</UseApplicationTrust>
     <PublishWizardCompleted>true</PublishWizardCompleted>
@@ -107,6 +107,8 @@
     <Compile Include="Models\DungeonElement.cs" />
     <Compile Include="Models\Helpers\ImageConstructor.cs" />
     <Compile Include="Models\Helpers\ModelBase.cs" />
+    <Compile Include="Models\Player.cs" />
+    <Compile Include="Monster.cs" />
     <Compile Include="ViewModels\Helpers\RelayCommand.cs" />
     <Compile Include="ViewModels\InventoryViewModel.cs" />
     <Compile Include="Models\InventoryItemGenerator.cs" />

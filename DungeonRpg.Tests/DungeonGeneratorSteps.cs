@@ -33,7 +33,7 @@ namespace DungeonRpg.Tests
         [When(@"hozzáadunk egy utat az (.*) (.*) pozícióba")]
         public void MajdHozzaadunkEgyUtatAzPozicioba(int row, int col)
         {
-            dungeon.AddDungeonElementByPosition(row, col, new DungeonElement(DungeonElementType.Way, -1), true);
+            dungeon.AddDungeonElementByPosition(row, col, new DungeonElement(DungeonElementType.Way), true);
         }
 
         [Then(@"nem lehet fal az (.*) (.*) pozíción")]
@@ -45,7 +45,7 @@ namespace DungeonRpg.Tests
         [When(@"hozzáadunk megint egy utat az (.*) (.*) pozícióba")]
         public void MajdHozzaadunkMegintEgyUtatAzPozicioba(int row, int col)
         {
-            dungeon.AddDungeonElementByPosition(row, col, new DungeonElement(DungeonElementType.Way, -1), true);
+            dungeon.AddDungeonElementByPosition(row, col, new DungeonElement(DungeonElementType.Way), true);
         }
 
         [Then(@"az (.*) (.*) pozícióban csak (.*) út lehet, és más nem")]

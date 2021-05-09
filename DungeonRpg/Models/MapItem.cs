@@ -9,8 +9,8 @@ namespace DungeonRpg.Models
 		public static int Rows;
 		public static int Columns;
 
-		private static Dictionary<int, BitmapImage> _mapItemCache = new Dictionary<int, BitmapImage>();
-		public static Dictionary<int, BitmapImage> MapItemCache
+		private static Dictionary<string, BitmapImage> _mapItemCache = new Dictionary<string, BitmapImage>();
+		public static Dictionary<string, BitmapImage> MapItemCache
 		{
 			get { return _mapItemCache; }
 			set
@@ -25,8 +25,8 @@ namespace DungeonRpg.Models
 		private int _column;
 		public int Column { get => _column; set => _column = value; }
 
-		private int _imagesSumValue;
-		public int ImagesSumValue
+		private string _imagesSumValue;
+		public string ImagesSumValue
 		{
 			get => _imagesSumValue;
 			set

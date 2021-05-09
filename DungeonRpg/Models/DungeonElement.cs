@@ -3,7 +3,7 @@
 	/// <summary>
 	/// Pálya elem típusa, típus függő speciális működés lehet szükséges
 	/// </summary>
-	public enum DungeonElementType { Wall = 0, StartPoint = 1, EndPoint = 2, Item = 1000, Player = 4, Monster = 2000, UpStairs = 8, DownStairs = 16, Way = 32 }
+	public enum DungeonElementType { Wall = 0, StartPoint = 1, EndPoint = 2, Item = 1000, Player = 4, UpStairs = 8, DownStairs = 16, Way = 32, MonsterType = 64 }
 	
 	public class DungeonElement
 	{
@@ -19,7 +19,7 @@
 		public DungeonElementType ElementType => _elementType;
 		public int ElementID => _elementID;
 
-		public DungeonElement(DungeonElementType elementType, int elementID)
+		public DungeonElement(DungeonElementType elementType, int elementID = -1)
 		{
 			_elementType = elementType;
 			this._elementID = elementID;
