@@ -19,7 +19,7 @@
 						<ColumnDefinition Width="1*"/>
 						<ColumnDefinition Width="1*"/>
 						<ColumnDefinition Width="20"/>
-						<ColumnDefinition Width="1*"/>
+						<ColumnDefinition Width="1*" MinWidth="80"/>
 						<ColumnDefinition Width="10"/>
 					</Grid.ColumnDefinitions>
 					<Grid.RowDefinitions>
@@ -86,7 +86,7 @@
 						<ColumnDefinition Width="1*"/>
 						<ColumnDefinition Width="1*"/>
 						<ColumnDefinition Width="20"/>
-						<ColumnDefinition Width="1*"/>
+						<ColumnDefinition Width="1*" MinWidth="80"/>
 						<ColumnDefinition Width="10"/>
 					</Grid.ColumnDefinitions>
 					<Grid.RowDefinitions>
@@ -102,7 +102,8 @@
 						<Image  Source="{Binding EnemyImage}" Margin="0" MaxHeight="40" MaxWidth="40" ToolTip="{Binding Tooltip}"/>
 						<Label Content="{Binding Enemy.Name}"/>
 					</StackPanel>
-
+					<Label Grid.Column="1" Grid.Row="2" Content="Életerő "/>
+					<Label Grid.Column="1" Grid.Row="3" Content="Mana "/>
 					<Grid Grid.Column="4" Grid.Row="2">
 						<ProgressBar Name="pbEnemyHp"
 							 Maximum="{Binding Enemy.MaxHp}" Minimum="0"  

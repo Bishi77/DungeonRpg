@@ -77,7 +77,7 @@
 				</Grid.RowDefinitions>
 				<Label Grid.Column="1" Grid.ColumnSpan="3" HorizontalAlignment="Center"
 					   Grid.Row="1" 
-					   Content="Karakter neve"/>
+					   Content="{Binding Player.Name}"/>
 				<Label Grid.Column="1" Grid.Row="2" Content="Erő: "/>
 				<Label Grid.Column="1" Grid.Row="3" Content="Ügyesség: "/>
 				<Label Grid.Column="1" Grid.Row="4" Content="Egészség: "/>

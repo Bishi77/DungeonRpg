@@ -107,6 +107,7 @@
     <Compile Include="Models\DungeonElement.cs" />
     <Compile Include="Models\Helpers\ImageConstructor.cs" />
     <Compile Include="Models\Helpers\ModelBase.cs" />
+    <Compile Include="Models\List.cs" />
     <Compile Include="Models\Player.cs" />
     <Compile Include="Monster.cs" />
     <Compile Include="ViewModels\BattleViewModel.cs" />
