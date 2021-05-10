@@ -44,7 +44,7 @@
 				</ItemsControl.ItemsPanel>
 				<ItemsControl.ItemTemplate>
 					<DataTemplate>
-						<Image  Source="{Binding Image}" Margin="0" MaxHeight="30" MaxWidth="30" ToolTip="{Binding Tooltip}"/>
+						<Image  Source="{Binding Image}" Margin="0" MaxHeight="40" MaxWidth="40" ToolTip="{Binding Tooltip}"/>
 					</DataTemplate>
 				</ItemsControl.ItemTemplate>
 			</ItemsControl>

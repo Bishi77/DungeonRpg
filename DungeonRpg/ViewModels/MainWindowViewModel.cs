@@ -63,7 +63,7 @@ namespace DungeonRpg.ViewModels
 		{
 			var gamevm = new GameViewModel();
 			var inventory = new InventoryViewModel(gamevm.Player.Inventory);
-			var battle = new BattleViewModel(gamevm.Player, gamevm.Enemy);
+			var battle = new BattleViewModel(null, null, null, null);
 
 			gamevm.StartGame();
 			gamevm.GoToInventoryCommand = new CommandImplementation(OnNav);
@@ -106,7 +106,12 @@ namespace DungeonRpg.ViewModels
 				case "Battle":
 					PageViewModels.Remove(PageViewModels.First(x => x.GetType().Name == "BattleViewModel"));
 					GameViewModel gamevm = (GameViewModel)PageViewModels.First(x => x.GetType().Name == "GameViewModel");
-					PageViewModels.Add(new BattleViewModel(gamevm.Player, gamevm.Enemy));
+					var mapItem = gamevm.MapItems.FirstOrDefault(x => x.Row == gamevm.Player.Position.Item1 && x.Column == gamevm.Player.Position.Item2);
+					PageViewModels.Add(new BattleViewModel(
+											gamevm.Player, 
+											gamevm.Enemy,
+											gamevm.GetMapItemWithoutDungeonELementType(mapItem, Models.DungeonElementType.MonsterType),
+											gamevm.GetMapItemWithoutDungeonELementType(mapItem, Models.DungeonElementType.Player)));
 					ChangeViewModel("BattleViewModel");
 					break;
 			}

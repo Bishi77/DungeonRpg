@@ -205,7 +205,7 @@ namespace DungeonRpg.Models
 			return ""; 
 		}
 
-		private List<string> GetMapPositionTilesPathsWithFileName(List<DungeonElement> elementsAtPosition, bool visited)
+		public List<string> GetMapPositionTilesPathsWithFileName(List<DungeonElement> elementsAtPosition, bool visited)
 		{
 			List<string> positionImages = new List<string>();
 			elementsAtPosition.ForEach(x => positionImages.Add(GetMapPositionTilePathWithFileName(x, visited)));

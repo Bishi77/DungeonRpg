@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Windows.Input;
+using System.Windows.Media.Imaging;
 
 namespace DungeonRpg.ViewModels
 {
@@ -91,6 +92,22 @@ namespace DungeonRpg.ViewModels
 		#endregion View Commands
 
 		#region methods
+		public BitmapImage GetMapItemWithoutDungeonELementType(MapItem source, DungeonElementType elementType)
+		{
+			string key = source.ImagesSumValue;
+			string[] keyParts = key.Split('_');
+			int keyNr = int.Parse(keyParts[0]);
+			keyNr = keyNr - (int)elementType;
+			key = keyNr.ToString();
+			if (elementType != DungeonElementType.MonsterType)
+				key += $"_{String.Join("_", keyParts.Skip(1))}";
+
+			if (MapItem.MapItemCache.ContainsKey(key))
+				return MapItem.MapItemCache[key];
+			else
+				return ImageConstructor.MergeImages(Dungeon.GetMapPositionTilesPathsWithFileName(Dungeon.LevelData[source.Row, source.Column].Where(w => w.ElementType != elementType).ToList(), Dungeon.LevelVisited[source.Row, source.Column]));
+		}
+
 		private void MoveCharacter(object obj)
 		{
 			if (PossibleDirections.Contains(obj.ToString()))

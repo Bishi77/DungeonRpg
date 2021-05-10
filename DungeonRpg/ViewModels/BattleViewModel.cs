@@ -1,6 +1,7 @@
 ﻿using DungeonRpg.Models;
 using DungeonRpg.Models.Helpers;
 using System.Windows.Input;
+using System.Windows.Media.Imaging;
 
 namespace DungeonRpg.ViewModels
 {
@@ -12,16 +13,33 @@ namespace DungeonRpg.ViewModels
 		private Player _player;
 		public Player Player { get => _player; set => _player = value; }
 
-		public ICommand ChangeContentCommand { get; set; }
-
-		public BattleViewModel()
-		{
+		private BitmapImage _playerImage;
+		public BitmapImage PlayerImage { 
+			get 
+			{ 
+				return _playerImage; 
+			} 
 		}
 
-		public BattleViewModel(Player player, Monster enemy)
+		private BitmapImage _enemyImage;
+		public BitmapImage EnemyImage 
+		{ 
+			get 
+			{ 
+				return _enemyImage; 
+			} 
+		}
+
+		public ICommand ChangeContentCommand { get; set; }
+
+		public BattleViewModel(){}
+
+		public BattleViewModel(Player player, Monster enemy, BitmapImage playerImg, BitmapImage enemyImg)
 		{
 			Player = player;
 			Enemy = enemy;
+			_playerImage = playerImg;
+			_enemyImage = enemyImg;
 		}
 
 		

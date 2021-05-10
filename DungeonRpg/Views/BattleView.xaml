@@ -37,9 +37,12 @@
 						<RowDefinition Height="auto" />
 						<RowDefinition Height="10" />
 					</Grid.RowDefinitions>
-					<Label Grid.Column="1" Grid.ColumnSpan="3" HorizontalAlignment="Center"
-					   Grid.Row="1" 
-					   Content="{Binding Player.Name}"/>
+					<StackPanel Grid.Column="1" Grid.ColumnSpan="3" HorizontalAlignment="Center"
+							   Grid.Row="1" >
+						<Image  Source="{Binding PlayerImage}" Margin="0" MaxHeight="40" MaxWidth="40" ToolTip="{Binding Tooltip}"/>
+						<Label Content="{Binding Player.Name}"/>
+					</StackPanel>
+						
 					<Label Grid.Column="1" Grid.Row="2" Content="Erő: "/>
 					<Label Grid.Column="1" Grid.Row="3" Content="Ügyesség: "/>
 					<Label Grid.Column="1" Grid.Row="4" Content="Egészség: "/>
@@ -93,9 +96,12 @@
 						<RowDefinition Height="auto" />
 						<RowDefinition Height="10" />
 					</Grid.RowDefinitions>
-					<Label Grid.Column="1" Grid.ColumnSpan="3" HorizontalAlignment="Center"
-					   Grid.Row="1" 
-					   Content="{Binding Enemy.Name}"/>
+
+					<StackPanel Grid.Column="1" Grid.ColumnSpan="3" HorizontalAlignment="Center"
+							   Grid.Row="1" >
+						<Image  Source="{Binding EnemyImage}" Margin="0" MaxHeight="40" MaxWidth="40" ToolTip="{Binding Tooltip}"/>
+						<Label Content="{Binding Enemy.Name}"/>
+					</StackPanel>
 
 					<Grid Grid.Column="4" Grid.Row="2">
 						<ProgressBar Name="pbEnemyHp"
