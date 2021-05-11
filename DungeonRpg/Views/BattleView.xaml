@@ -136,7 +136,7 @@
 
 		<Grid Grid.Column="2">
 			<StackPanel Orientation="Vertical" HorizontalAlignment="Center">
-				<Button x:Name="Run" Content="Futás"/>
+				<Button x:Name="Run" Content="Futás" Command="{Binding RunAwayCommand}" />
 				<Button x:Name="Fight" Content="Harc"/>
 				<Button x:Name="Persuade" Content="Meggyőzés"/>
 				<Button x:Name="Inventory" Content="Leltár"/>

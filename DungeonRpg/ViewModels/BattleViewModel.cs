@@ -1,5 +1,7 @@
 ﻿using DungeonRpg.Models;
 using DungeonRpg.Models.Helpers;
+using DungeonRpg.ViewModels.Helpers;
+using System;
 using System.Windows.Input;
 using System.Windows.Media.Imaging;
 
@@ -14,23 +16,13 @@ namespace DungeonRpg.ViewModels
 		public Player Player { get => _player; set => _player = value; }
 
 		private BitmapImage _playerImage;
-		public BitmapImage PlayerImage { 
-			get 
-			{ 
-				return _playerImage; 
-			} 
-		}
+		public BitmapImage PlayerImage { get => _playerImage; set => _playerImage = value; }
 
 		private BitmapImage _enemyImage;
-		public BitmapImage EnemyImage 
-		{ 
-			get 
-			{ 
-				return _enemyImage; 
-			} 
-		}
+		public BitmapImage EnemyImage { get => _enemyImage; set => _enemyImage = value; }
 
-		public ICommand ChangeContentCommand { get; set; }
+		public ICommand GoToGameCommand { get; set; }
+		public ICommand RunAwayCommand { get; set; }
 
 		public BattleViewModel(){}
 
@@ -40,8 +32,17 @@ namespace DungeonRpg.ViewModels
 			Enemy = enemy;
 			_playerImage = playerImg;
 			_enemyImage = enemyImg;
+			RunAwayCommand = new CommandImplementation(Run);
 		}
 
-		
+		private void Run(object obj)
+		{
+			if(Dice.Rnd.Next(20) + (Player.GetAttributeModify(Player.Dexterity)) < (Dice.Rnd.Next(20) + (Monster.GetAttributeModify(Enemy.Dexterity))))
+			{
+				Player.HP -= Enemy.Attack();
+			}
+			GoToGameCommand.Execute("Game");
+
+		}
 	}
 }

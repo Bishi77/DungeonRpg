@@ -109,7 +109,7 @@
     <Compile Include="Models\Helpers\ModelBase.cs" />
     <Compile Include="Models\List.cs" />
     <Compile Include="Models\Player.cs" />
-    <Compile Include="Monster.cs" />
+    <Compile Include="Models\Monster.cs" />
     <Compile Include="ViewModels\BattleViewModel.cs" />
     <Compile Include="ViewModels\Helpers\RelayCommand.cs" />
     <Compile Include="ViewModels\InventoryViewModel.cs" />

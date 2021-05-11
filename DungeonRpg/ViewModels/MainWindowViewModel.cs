@@ -68,7 +68,7 @@ namespace DungeonRpg.ViewModels
 			gamevm.StartGame();
 			gamevm.GoToInventoryCommand = new CommandImplementation(OnNav);
 			inventory.GoToGameCommand = new CommandImplementation(OnNav);
-			battle.ChangeContentCommand = new CommandImplementation(OnNav);
+			battle.GoToGameCommand = new CommandImplementation(OnNav);
 			PageViewModels.Add(gamevm);
 			PageViewModels.Add(inventory);
 			PageViewModels.Add(battle);
@@ -104,14 +104,13 @@ namespace DungeonRpg.ViewModels
 					ChangeViewModel("InventoryViewModel");
 					break;
 				case "Battle":
-					PageViewModels.Remove(PageViewModels.First(x => x.GetType().Name == "BattleViewModel"));
+					var vm = (BattleViewModel)PageViewModels.First(x => x.GetType().Name == "BattleViewModel");
 					GameViewModel gamevm = (GameViewModel)PageViewModels.First(x => x.GetType().Name == "GameViewModel");
 					var mapItem = gamevm.MapItems.FirstOrDefault(x => x.Row == gamevm.Player.Position.Item1 && x.Column == gamevm.Player.Position.Item2);
-					PageViewModels.Add(new BattleViewModel(
-											gamevm.Player, 
-											gamevm.Enemy,
-											gamevm.GetMapItemWithoutDungeonELementType(mapItem, Models.DungeonElementType.MonsterType),
-											gamevm.GetMapItemWithoutDungeonELementType(mapItem, Models.DungeonElementType.Player)));
+					vm.Player = gamevm.Player;
+					vm.Enemy = gamevm.Enemy;
+					vm.PlayerImage = gamevm.GetMapItemWithoutDungeonELementType(mapItem, Models.DungeonElementType.MonsterType);
+					vm.EnemyImage = gamevm.GetMapItemWithoutDungeonELementType(mapItem, Models.DungeonElementType.Player);
 					ChangeViewModel("BattleViewModel");
 					break;
 			}

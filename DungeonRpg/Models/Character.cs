@@ -150,6 +150,16 @@ namespace DungeonRpg.Models
 			dungeon.SetVisitedArea(Position, VisibilityRange);
 			dungeon.MoveItem(oldPosition, Position, DungeonElementType.Player);
 		}
+
+		public static int GetAttributeModify(int attributeValue)
+		{
+			return (attributeValue - 10) / 2;
+		}
+
+		public int Attack()
+		{
+			return Dice.Rnd.Next(6) + 1;
+		}
 		#endregion public methods
 
 		private void SetAttributes(int diceSize, int diceNr)

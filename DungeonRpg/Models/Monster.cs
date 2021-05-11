@@ -2,7 +2,7 @@
 using System;
 using UniversalDesign;
 
-namespace DungeonRpg
+namespace DungeonRpg.Models
 {
 	public class Monster : Character
 	{
