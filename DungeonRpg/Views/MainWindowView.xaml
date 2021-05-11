@@ -9,7 +9,6 @@
         Title="Dungeon RPG" 
 		HorizontalAlignment="Center"
 		VerticalAlignment="Center"
-		SizeToContent="WidthAndHeight" MinHeight="400" MinWidth="700"
 		WindowStartupLocation="CenterScreen">
 	<Window.DataContext>
 		<vm:MainWindowViewModel/>

@@ -5,130 +5,161 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:vm="clr-namespace:DungeonRpg.ViewModels"
              mc:Ignorable="d" 
-             d:DesignHeight="450" d:DesignWidth="800">
+			 d:DesignHeight="450" d:DesignWidth="800">
 	<UserControl.Resources>
 		<vm:BattleViewModel x:Key="ViewModel" />
 	</UserControl.Resources>
 
-	<Grid>
-		<StackPanel Orientation="Vertical">
-			<StackPanel Orientation="Horizontal">
-				<Grid x:Name="Player">
-					<Grid.ColumnDefinitions>
-						<ColumnDefinition Width="10"/>
-						<ColumnDefinition Width="1*"/>
-						<ColumnDefinition Width="1*"/>
-						<ColumnDefinition Width="20"/>
-						<ColumnDefinition Width="1*" MinWidth="80"/>
-						<ColumnDefinition Width="10"/>
-					</Grid.ColumnDefinitions>
-					<Grid.RowDefinitions>
-						<RowDefinition Height="10" />
-						<RowDefinition Height="auto" />
-						<RowDefinition Height="auto" />
-						<RowDefinition Height="auto" />
-						<RowDefinition Height="auto" />
-						<RowDefinition Height="auto" />
-						<RowDefinition Height="auto" />
-						<RowDefinition Height="auto" />
-						<RowDefinition Height="auto" />
-						<RowDefinition Height="auto" />
-						<RowDefinition Height="auto" />
-						<RowDefinition Height="auto" />
-						<RowDefinition Height="10" />
-					</Grid.RowDefinitions>
-					<StackPanel Grid.Column="1" Grid.ColumnSpan="3" HorizontalAlignment="Center"
-							   Grid.Row="1" >
-						<Image  Source="{Binding PlayerImage}" Margin="0" MaxHeight="40" MaxWidth="40" ToolTip="{Binding Tooltip}"/>
-						<Label Content="{Binding Player.Name}"/>
-					</StackPanel>
-						
-					<Label Grid.Column="1" Grid.Row="2" Content="Erő: "/>
-					<Label Grid.Column="1" Grid.Row="3" Content="Ügyesség: "/>
-					<Label Grid.Column="1" Grid.Row="4" Content="Egészség: "/>
-					<Label Grid.Column="1" Grid.Row="5" Content="Intelligencia: "/>
-					<Label Grid.Column="1" Grid.Row="6" Content="Bölcsesség: "/>
-					<Label Grid.Column="1" Grid.Row="7" Content="Karizma: "/>
+	<Grid Background="White">
+		<Grid.ColumnDefinitions>
+			<ColumnDefinition Width="Auto" />
+			<ColumnDefinition Width="Auto" />
+			<ColumnDefinition Width="*" />
+		</Grid.ColumnDefinitions>
+		<Grid.RowDefinitions>
+			<RowDefinition Height="Auto"/>
+			<RowDefinition Height="*"/>
+		</Grid.RowDefinitions>
 
-					<Label Grid.Column="2" Grid.Row="2" Content="{Binding Player.Strength}"/>
-					<Label Grid.Column="2" Grid.Row="3" Content="{Binding Player.Dexterity}"/>
-					<Label Grid.Column="2" Grid.Row="4" Content="{Binding Player.Constitution}"/>
-					<Label Grid.Column="2" Grid.Row="5" Content="{Binding Player.Intelligence}"/>
-					<Label Grid.Column="2" Grid.Row="6" Content="{Binding Player.Wisdom}"/>
-					<Label Grid.Column="2" Grid.Row="7" Content="{Binding Player.Charisma}"/>
+		<Grid Grid.Column="0" x:Name="Player">
+			<Grid.ColumnDefinitions>
+				<ColumnDefinition Width="10"/>
+				<ColumnDefinition Width="1*"/>
+				<ColumnDefinition Width="1*"/>
+				<ColumnDefinition Width="20"/>
+				<ColumnDefinition Width="1*" MinWidth="80"/>
+				<ColumnDefinition Width="10"/>
+			</Grid.ColumnDefinitions>
+			<Grid.RowDefinitions>
+				<RowDefinition Height="10" />
+				<RowDefinition Height="auto" />
+				<RowDefinition Height="auto" />
+				<RowDefinition Height="auto" />
+				<RowDefinition Height="auto" />
+				<RowDefinition Height="auto" />
+				<RowDefinition Height="auto" />
+				<RowDefinition Height="auto" />
+				<RowDefinition Height="auto" />
+				<RowDefinition Height="auto" />
+				<RowDefinition Height="auto" />
+				<RowDefinition Height="auto" />
+				<RowDefinition Height="10" />
+			</Grid.RowDefinitions>
+			
+			<StackPanel Grid.Column="1"  Grid.Row="1" Grid.ColumnSpan="3" HorizontalAlignment="Center">
+				<Image  Source="{Binding PlayerImage}" Margin="0" MaxHeight="40" MaxWidth="40"/>
+				<Label Content="{Binding Player.Name}"/>
+			</StackPanel>
 
-					<Grid Grid.Column="4" Grid.Row="2">
-						<ProgressBar Name="pbPlayerHp"
+			<Label Grid.Column="1" Grid.Row="2" Content="Erő: "/>
+			<Label Grid.Column="1" Grid.Row="3" Content="Ügyesség: "/>
+			<Label Grid.Column="1" Grid.Row="4" Content="Egészség: "/>
+			<Label Grid.Column="1" Grid.Row="5" Content="Intelligencia: "/>
+			<Label Grid.Column="1" Grid.Row="6" Content="Bölcsesség: "/>
+			<Label Grid.Column="1" Grid.Row="7" Content="Karizma: "/>
+
+			<Label Grid.Column="2" Grid.Row="2" Content="{Binding Player.Strength}"/>
+			<Label Grid.Column="2" Grid.Row="3" Content="{Binding Player.Dexterity}"/>
+			<Label Grid.Column="2" Grid.Row="4" Content="{Binding Player.Constitution}"/>
+			<Label Grid.Column="2" Grid.Row="5" Content="{Binding Player.Intelligence}"/>
+			<Label Grid.Column="2" Grid.Row="6" Content="{Binding Player.Wisdom}"/>
+			<Label Grid.Column="2" Grid.Row="7" Content="{Binding Player.Charisma}"/>
+
+			<Grid Grid.Column="4" Grid.Row="2">
+				<ProgressBar Name="pbPlayerHp"
 							 Maximum="{Binding Player.MaxHp}" Minimum="0"  
 								 Value="{Binding Player.HP}" 
 							 Foreground="ForestGreen" Background="White"
 							 BorderThickness="2" BorderBrush="White"/>
-						<TextBlock HorizontalAlignment="Center" VerticalAlignment="Center"
+				<TextBlock HorizontalAlignment="Center" VerticalAlignment="Center"
 							   Text="{Binding ElementName=pbPlayerHp, Path=Value}"/>
-					</Grid>
+			</Grid>
 
-					<Grid Grid.Column="4" Grid.Row="3">
-						<ProgressBar Name="pbPlayerMana"
+			<Grid Grid.Column="4" Grid.Row="3">
+				<ProgressBar Name="pbPlayerMana"
 							 Maximum="{Binding Player.MaxMp}" Minimum="0" 
 								 Value="{Binding Player.MP}" 
 							 Foreground="Blue" Background="White"
 							 BorderThickness="2" BorderBrush="White"/>
-						<TextBlock HorizontalAlignment="Center" VerticalAlignment="Center"
+				<TextBlock HorizontalAlignment="Center" VerticalAlignment="Center"
 							   Text="{Binding ElementName=pbPlayerMana, Path=Value}"/>
-					</Grid>
+			</Grid>
 
-					<Label Grid.Column="4" Grid.Row="4" Content="Rövidkard D6+2"/>
-				</Grid>
+			<Label Grid.Column="4" Grid.Row="4" Content="Rövidkard D6+2"/>
+		</Grid>
 
-				<Grid x:Name="Enemy">
-					<Grid.ColumnDefinitions>
-						<ColumnDefinition Width="10"/>
-						<ColumnDefinition Width="1*"/>
-						<ColumnDefinition Width="1*"/>
-						<ColumnDefinition Width="20"/>
-						<ColumnDefinition Width="1*" MinWidth="80"/>
-						<ColumnDefinition Width="10"/>
-					</Grid.ColumnDefinitions>
-					<Grid.RowDefinitions>
-						<RowDefinition Height="10" />
-						<RowDefinition Height="auto" />
-						<RowDefinition Height="auto" />
-						<RowDefinition Height="auto" />
-						<RowDefinition Height="10" />
-					</Grid.RowDefinitions>
+		<Grid Grid.Column="1" x:Name="Enemy">
+			<Grid.ColumnDefinitions>
+				<ColumnDefinition Width="10"/>
+				<ColumnDefinition Width="1*"/>
+				<ColumnDefinition Width="1*"/>
+				<ColumnDefinition Width="20"/>
+				<ColumnDefinition Width="1*" MinWidth="80"/>
+				<ColumnDefinition Width="10"/>
+			</Grid.ColumnDefinitions>
+			<Grid.RowDefinitions>
+				<RowDefinition Height="10" />
+				<RowDefinition Height="auto" />
+				<RowDefinition Height="auto" />
+				<RowDefinition Height="auto" />
+				<RowDefinition Height="10" />
+			</Grid.RowDefinitions>
 
-					<StackPanel Grid.Column="1" Grid.ColumnSpan="3" HorizontalAlignment="Center"
+			<StackPanel Grid.Column="1" Grid.ColumnSpan="3" HorizontalAlignment="Center"
 							   Grid.Row="1" >
-						<Image  Source="{Binding EnemyImage}" Margin="0" MaxHeight="40" MaxWidth="40" ToolTip="{Binding Tooltip}"/>
-						<Label Content="{Binding Enemy.Name}"/>
-					</StackPanel>
-					<Label Grid.Column="1" Grid.Row="2" Content="Életerő "/>
-					<Label Grid.Column="1" Grid.Row="3" Content="Mana "/>
-					<Grid Grid.Column="4" Grid.Row="2">
-						<ProgressBar Name="pbEnemyHp"
+				<Image  Source="{Binding EnemyImage}" Margin="0" MaxHeight="40" MaxWidth="40"/>
+				<Label Content="{Binding Enemy.Name}"/>
+			</StackPanel>
+			<Label Grid.Column="1" Grid.Row="2" Content="Életerő "/>
+			<Label Grid.Column="1" Grid.Row="3" Content="Mana "/>
+			
+			<Grid Grid.Column="4" Grid.Row="2">
+				<ProgressBar Name="pbEnemyHp"
 							 Maximum="{Binding Enemy.MaxHp}" Minimum="0"  
 								 Value="{Binding Enemy.HP}" 
 							 Foreground="ForestGreen" Background="White"
 							 BorderThickness="2" BorderBrush="White"/>
-						<TextBlock HorizontalAlignment="Center" VerticalAlignment="Center"
+				<TextBlock HorizontalAlignment="Center" VerticalAlignment="Center"
 							   Text="{Binding ElementName=pbEnemyHp, Path=Value}"/>
-					</Grid>
+			</Grid>
 
-					<Grid Grid.Column="4" Grid.Row="3">
-						<ProgressBar Name="pbEnemyMana"
+			<Grid Grid.Column="4" Grid.Row="3">
+				<ProgressBar Name="pbEnemyMana"
 							 Maximum="{Binding Enemy.MaxMp}" Minimum="0" 
 								 Value="{Binding Enemy.MP}" 
 							 Foreground="Blue" Background="White"
 							 BorderThickness="2" BorderBrush="White"/>
-						<TextBlock HorizontalAlignment="Center" VerticalAlignment="Center"
+				<TextBlock HorizontalAlignment="Center" VerticalAlignment="Center"
 							   Text="{Binding ElementName=pbEnemyMana, Path=Value}"/>
-					</Grid>
-				</Grid>
-			</StackPanel>
-			<StackPanel Orientation="Horizontal">
-				
-			</StackPanel>
+			</Grid>
+		</Grid>
 
-		</StackPanel>
+		<Grid Grid.Column="2">
+			<StackPanel Orientation="Vertical" HorizontalAlignment="Center">
+				<Button x:Name="Run" Content="Futás"/>
+				<Button x:Name="Fight" Content="Harc"/>
+				<Button x:Name="Persuade" Content="Meggyőzés"/>
+				<Button x:Name="Inventory" Content="Leltár"/>
+			</StackPanel>
+		</Grid>
+
+		<Grid x:Name="grdInfo" Grid.Column="0" Grid.Row="1" Grid.ColumnSpan="3">
+			<ScrollViewer Height="{Binding Path=ActualHeight, ElementName=grdInfo}"
+                Width="{Binding Path=ActualWidth, ElementName=grdInfo}">
+				<TextBlock x:Name="info" 
+					
+					TextWrapping="Wrap" 
+					ScrollViewer.CanContentScroll="True"
+						   ScrollViewer.VerticalScrollBarVisibility="Visible"
+					Foreground="Black"
+					Text="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Nisl tincidunt eget nullam non. Quis hendrerit dolor magna eget est lorem ipsum dolor sit. Volutpat odio facilisis mauris sit amet massa. Commodo odio aenean sed adipiscing diam donec adipiscing tristique. Mi eget mauris pharetra et. Non tellus orci ac auctor augue. Elit at imperdiet dui accumsan sit. Ornare arcu dui vivamus arcu felis. Egestas integer eget aliquet nibh praesent. In hac habitasse platea dictumst quisque sagittis purus. Pulvinar elementum integer enim neque volutpat ac.
+
+		Senectus et netus et malesuada. Nunc pulvinar sapien et ligula ullamcorper malesuada proin. Neque convallis a cras semper auctor. Libero id faucibus nisl tincidunt eget. Leo a diam sollicitudin tempor id. A lacus vestibulum sed arcu non odio euismod lacinia. In tellus integer feugiat scelerisque. Feugiat in fermentum posuere urna nec tincidunt praesent. Porttitor rhoncus dolor purus non enim praesent elementum facilisis. Nisi scelerisque eu ultrices vitae auctor eu augue ut lectus. Ipsum faucibus vitae aliquet nec ullamcorper sit amet risus. Et malesuada fames ac turpis egestas sed. Sit amet nisl suscipit adipiscing bibendum est ultricies. Arcu ac tortor dignissim convallis aenean et tortor at. Pretium viverra suspendisse potenti nullam ac tortor vitae purus. Eros donec ac odio tempor orci dapibus ultrices. Elementum nibh tellus molestie nunc. Et magnis dis parturient montes nascetur. Est placerat in egestas erat imperdiet. Consequat interdum varius sit amet mattis vulputate enim.
+
+		Sit amet nulla facilisi morbi tempus. Nulla facilisi cras fermentum odio eu. Etiam erat velit scelerisque in dictum non consectetur a erat. Enim nulla aliquet porttitor lacus luctus accumsan tortor posuere. Ut sem nulla pharetra diam. Fames ac turpis egestas maecenas. Bibendum neque egestas congue quisque egestas diam. Laoreet id donec ultrices tincidunt arcu non sodales neque. Eget felis eget nunc lobortis mattis aliquam faucibus purus. Faucibus interdum posuere lorem ipsum dolor sit." >
+				</TextBlock>
+			</ScrollViewer>
+		</Grid>
+			
 	</Grid>
 </UserControl>
